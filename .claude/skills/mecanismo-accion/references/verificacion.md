@@ -16,6 +16,7 @@ Revisa cada PNG con Read y corrige hasta que todo se cumpla.
 - [ ] No se muestra una pose de unión sin estructura cristalográfica que la respalde.
 - [ ] Los rótulos de honestidad están presentes (estructura real, esquema, sin escala).
 - [ ] El error frecuente y la pregunta de autoevaluación son correctos y útiles para el examen.
+- [ ] El glosario explica todas las siglas de las láminas y del material (`scripts/glosario.py` sin pendientes).
 
 ## Licencias
 - [ ] El pie de cada lámina cita todas las fuentes que usa.

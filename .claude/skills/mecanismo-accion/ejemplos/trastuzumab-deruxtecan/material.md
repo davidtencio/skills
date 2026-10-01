@@ -131,6 +131,44 @@ Su efecto no depende solo de bloquear la señal de HER2. Basta con que entren al
 - Las superficies proteicas son de estructuras reales, pero recortadas o simplificadas.
 - La topoisomerasa I del núcleo es una ilustración genérica de proteína.
 
+## Glosario
+
+- **ADC:** Conjugado anticuerpo-fármaco (del inglés antibody-drug conjugate).
+- **ADCC:** Citotoxicidad celular dependiente de anticuerpos (en español, CCDA).
+- **ADN:** Ácido desoxirribonucleico.
+- **AEMPS:** Agencia Española de Medicamentos y Productos Sanitarios.
+- **AKT:** Proteína cinasa B, una de las cinasas de la vía PI3K/AKT de supervivencia celular.
+- **BLA:** Solicitud de licencia de un producto biológico ante la FDA (Biologics License Application).
+- **CIMA:** Centro de Información de Medicamentos de la AEMPS, donde se consultan las fichas técnicas españolas.
+- **CPNM:** Cáncer de pulmón no microcítico.
+- **CYP3A:** Subfamilia 3A del citocromo P450.
+- **CYP3A4:** Isoenzima 3A4 del citocromo P450.
+- **DM1:** Derivado de la maitansina que inhibe los microtúbulos; es la carga de T-DM1.
+- **DXd:** Derivado de exatecán, inhibidor de la topoisomerasa I; es la carga de trastuzumab deruxtecán.
+- **EGFR:** Receptor del factor de crecimiento epidérmico (HER1).
+- **EMA:** Agencia Europea de Medicamentos.
+- **ERBB2:** Gen que codifica HER2.
+- **FDA:** Administración de Alimentos y Medicamentos de EE. UU.
+- **HER:** Familia de receptores del factor de crecimiento epidérmico humano (EGFR/HER1 a HER4).
+- **HER2:** Receptor 2 del factor de crecimiento epidérmico humano.
+- **HER3:** Receptor 3 del factor de crecimiento epidérmico humano.
+- **HER4:** Receptor 4 del factor de crecimiento epidérmico humano.
+- **IgG:** Inmunoglobulina G.
+- **IgG1:** Inmunoglobulina G de subclase 1.
+- **IHC:** Inmunohistoquímica (IHC 3+: expresión alta de HER2).
+- **MAPK:** Proteína cinasa activada por mitógenos, vía de proliferación celular.
+- **OATP1B:** Polipéptidos transportadores de aniones orgánicos 1B (captación hepática).
+- **PDB:** Protein Data Bank, banco de estructuras tridimensionales de proteínas.
+- **PI3K:** Fosfatidilinositol 3-cinasa, vía de supervivencia celular.
+- **PMID:** Identificador de un artículo en PubMed.
+- **RCSB:** Research Collaboratory for Structural Bioinformatics, que mantiene el PDB.
+- **RH:** Receptores hormonales (de estrógenos o progesterona).
+- **SN-38:** Metabolito activo de irinotecán, inhibidor de la topoisomerasa I.
+- **T-DM1:** Trastuzumab emtansina.
+- **THP:** Taxano, trastuzumab y pertuzumab.
+- **TOP1:** Topoisomerasa I (gen y enzima).
+- **UE:** Unión Europea.
+
 ## Fuentes
 
 - AEMPS, CIMA: ficha técnica de Enhertu 100 mg, secciones 4.1, 4.2, 4.4, 4.5, 4.6, 4.8, 5.1 y 5.2.

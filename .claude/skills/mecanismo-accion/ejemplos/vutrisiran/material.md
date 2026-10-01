@@ -151,6 +151,46 @@ La TTR transporta en sangre la proteína de unión al retinol (RBP4). Al bajar l
 - Ago2 se representa con una ilustración genérica de proteína; su forma real se muestra con la estructura PDB 9CMP.
 - Las curvas de la lámina 5 son un esquema cualitativo: las cifras están en las tarjetas y en este material.
 
+## Glosario
+
+- **ADN:** Ácido desoxirribonucleico.
+- **AEMPS:** Agencia Española de Medicamentos y Productos Sanitarios.
+- **ALT:** Alanina aminotransferasa, enzima hepática que se mide en sangre.
+- **APOLLO:** Ensayo de fase 3 de patisiran; su grupo placebo sirvió de comparación externa en HELIOS-A.
+- **ARN:** Ácido ribonucleico.
+- **ARNi:** Interferencia por ARN, mecanismo celular que silencia genes degradando su ARNm.
+- **ARNm:** ARN mensajero, copia del gen que el ribosoma traduce en proteína.
+- **ARNpi:** ARN pequeño de interferencia (en inglés, siRNA).
+- **ASGPR:** Receptor de asialoglucoproteínas del hepatocito; reconoce galactosa y GalNAc.
+- **ATC:** Clasificación Anatómica, Terapéutica y Química de la OMS.
+- **ATTR:** Amiloidosis por transtiretina.
+- **ATTRh:** Amiloidosis por transtiretina hereditaria (variante del gen TTR).
+- **ATTRwt:** Amiloidosis por transtiretina nativa (wild type), sin variante en el gen.
+- **CDA-AMC:** Agencia de Medicamentos de Canadá (Canada's Drug Agency / Agence des médicaments du Canada).
+- **CIMA:** Centro de Información de Medicamentos de la AEMPS, donde se consultan las fichas técnicas españolas.
+- **CV:** Cardiovascular.
+- **CYP:** Citocromo P450, familia de enzimas que metabolizan fármacos.
+- **CYP450:** Citocromo P450, familia de enzimas que metabolizan fármacos.
+- **EMA:** Agencia Europea de Medicamentos.
+- **FDA:** Administración de Alimentos y Medicamentos de EE. UU.
+- **GalNAc:** N-acetilgalactosamina, azúcar que reconoce el ASGPR del hepatocito.
+- **HELIOS-A:** Ensayo de fase 3 de vutrisiran en polineuropatía por ATTR hereditaria.
+- **HELIOS-B:** Ensayo de fase 3 de vutrisiran en miocardiopatía por ATTR.
+- **HR:** Hazard ratio o cociente de riesgos instantáneos; menor de 1 indica menos eventos con el tratamiento.
+- **mNIS+7:** Puntuación de alteración de la neuropatía +7 modificada (0 a 304; más alta, peor).
+- **NCI:** Instituto Nacional del Cáncer de EE. UU.
+- **NDA:** Solicitud de autorización de un fármaco nuevo ante la FDA (New Drug Application).
+- **NICE:** Instituto Nacional para la Excelencia en Salud y Atención del Reino Unido.
+- **PD:** Farmacodinamia.
+- **PDB:** Protein Data Bank, banco de estructuras tridimensionales de proteínas.
+- **PK:** Farmacocinética.
+- **PMID:** Identificador de un artículo en PubMed.
+- **RBP4:** Proteína 4 de unión al retinol, que transporta la vitamina A en sangre.
+- **RISC:** Complejo silenciador inducido por ARN, cuyo núcleo es Ago2.
+- **RR:** Riesgo relativo.
+- **TTR:** Transtiretina.
+- **UE:** Unión Europea.
+
 ## Fuentes
 
 - **AEMPS, CIMA:** ficha técnica de Amvuttra 25 mg (n.º de registro 1221681001), secciones 4.1–4.8, 5.1–5.3 y 9.

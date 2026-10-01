@@ -98,6 +98,46 @@ Actúan en puntos distintos de la misma vía. La leuprorelina (TPA) reduce la pr
 - La DHT se muestra como el andrógeno principal en la próstata; la testosterona también puede unirse al RA.
 - La TPA aparece en la lámina 1 (sitios de acción) y en la lámina 4; no se dibuja en la célula.
 
+## Glosario
+
+- **ADN:** Ácido desoxirribonucleico.
+- **AEMPS:** Agencia Española de Medicamentos y Productos Sanitarios.
+- **ALT:** Alanina aminotransferasa, enzima hepática que se mide en sangre.
+- **ARAMIS:** Ensayo clínico de darolutamida cuyos datos de seguridad recoge la ficha técnica.
+- **ARANOTE:** Ensayo clínico de darolutamida cuyos datos de seguridad recoge la ficha técnica.
+- **ARE:** Elemento de respuesta a andrógenos: secuencia del ADN a la que se une el RA.
+- **ARN:** Ácido ribonucleico.
+- **ARNm:** ARN mensajero, copia del gen que el ribosoma traduce en proteína.
+- **AST:** Aspartato aminotransferasa, enzima hepática que se mide en sangre.
+- **BCRP:** Proteína de resistencia del cáncer de mama, transportador de salida de fármacos.
+- **CIMA:** Centro de Información de Medicamentos de la AEMPS, donde se consultan las fichas técnicas españolas.
+- **CYP17:** 17α-hidroxilasa/17,20-liasa, enzima de la síntesis de andrógenos (gen CYP17A1).
+- **CYP17A1:** Gen de la enzima CYP17.
+- **CYP3A4:** Isoenzima 3A4 del citocromo P450.
+- **DBD:** Dominio de unión al ADN del receptor.
+- **DHEA:** Dehidroepiandrosterona, andrógeno suprarrenal.
+- **DHT:** Dihidrotestosterona, el andrógeno más potente.
+- **FDA:** Administración de Alimentos y Medicamentos de EE. UU.
+- **FSH:** Hormona foliculoestimulante.
+- **GnRH:** Hormona liberadora de gonadotropinas.
+- **HSP90:** Proteína de choque térmico de 90 kDa, chaperona que mantiene al receptor inactivo.
+- **KLK3:** Gen del PSA (calicreína 3).
+- **LBD:** Dominio de unión al ligando del receptor.
+- **LH:** Hormona luteinizante.
+- **NCOA1:** Coactivador 1 de receptores nucleares.
+- **NTD:** Dominio aminoterminal del receptor, que activa la transcripción.
+- **OATP1B1:** Polipéptido transportador de aniones orgánicos 1B1, captación hepática (gen SLCO1B1).
+- **PDB:** Protein Data Bank, banco de estructuras tridimensionales de proteínas.
+- **PMID:** Identificador de un artículo en PubMed.
+- **PSA:** Antígeno prostático específico.
+- **RA:** Receptor de andrógenos.
+- **RCSB:** Research Collaboratory for Structural Bioinformatics, que mantiene el PDB.
+- **RE:** Retículo endoplásmico.
+- **SHBG:** Globulina transportadora de hormonas sexuales.
+- **TPA:** Terapia de privación de andrógenos.
+- **UGT1A1:** UDP-glucuronosiltransferasa 1A1, enzima de conjugación.
+- **UGT1A9:** UDP-glucuronosiltransferasa 1A9, enzima de conjugación.
+
 ## Fuentes
 
 - AEMPS, CIMA: ficha técnica de Nubeqa 300 mg (n.º registro 1201432001), secciones 4.1, 4.2, 4.5, 4.8, 5.1 y 5.2.
