@@ -5,7 +5,7 @@ Uso:
     python3 scripts/pdf.py ejemplos/<farmaco> --portada 3  # lámina que ilustra la portada
 
 Lee `material.md` y todas las `lamina-N.png` de la carpeta (sin límite de número). El diseño es
-A4: portada, índice con números de página, una lámina por página en horizontal y la ficha en
+A4: portada, índice con números de página, glosario de siglas, una lámina por página en horizontal y la ficha en
 vertical con tipografía editorial (Source Serif 4 para títulos, Inter para el texto).
 """
 
@@ -30,7 +30,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto
 # Secciones del material con tratamiento visual propio (por el comienzo del título).
 DESTACADAS = {"puntos clave": "clave", "error frecuente": "error", "pregunta de autoevaluación": "pregunta",
               "no verificado": "pendiente", "fuentes": "fuentes", "simplificaciones": "simplificaciones",
-              "lista de verificación": "pendiente", "glosario": "glosario"}
+              "lista de verificación": "pendiente"}
 # Fuentes que se reconocen en el material para resumirlas en la portada.
 SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Ficha técnica FDA"), ("EMA", "EMA"),
           ("ChEMBL", "ChEMBL"), ("UniProt", "UniProt"), ("NCBI Gene", "NCBI Gene"),
@@ -113,7 +113,16 @@ def fecha_es(d):
     return f"{d.day} de {MESES[d.month - 1]} de {d.year}"
 
 
-def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None):
+def separar_glosario(md):
+    """Saca la sección «## Glosario» del material: el PDF la muestra tras el índice, no al final."""
+    m = re.search(r"^## Glosario\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)
+    if not m:
+        return md, ""
+    lista = markdown.markdown(_normalizar_listas(m.group(1).strip()), extensions=["sane_lists"])
+    return md[:m.start()] + md[m.end():], lista
+
+
+def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None, glosario=""):
     paginas = paginas or {}
     total = len(lams)
     num = lambda ident: paginas.get(ident, "")  # noqa: E731
@@ -128,6 +137,12 @@ def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, pagi
         f'<span class="tit">{html.escape(t)}</span></header>'
         f'<div class="imagen" role="img" aria-label="{html.escape(t)}" '
         f'style="background-image:url({p.resolve().as_uri()})"></div></section>' for n, t, p in lams)
+    indice_glosario = (f'<h3>Antes de empezar</h3><ol><li><a href="#glosario"><span class="n">G</span>'
+                       f'<span class="t">Glosario de siglas y abreviaturas</span><span class="pag">{num("glosario")}'
+                       f'</span></a></li></ol>') if glosario else ""
+    pagina_glosario = (f'<section class="glosario" id="glosario"><h1>Glosario</h1><p class="intro">Siglas y '
+                       f'abreviaturas que aparecen en las láminas y en la ficha del mecanismo.</p>{glosario}'
+                       f'</section>') if glosario else ""
     heroe = next((p for n, _, p in lams if n == portada), lams[0][2] if lams else None)
     sellos_html = "".join(f"<li>{html.escape(s)}</li>" for s in sellos)
     hoy = fecha_es(date.today())
@@ -189,11 +204,11 @@ a {{ color: inherit; text-decoration: none; }}
 /* Índice */
 .indice {{ break-after: page; }}
 .indice h1 {{ font-size: 26pt; margin: 0 0 2mm; }}
-.indice .intro {{ color: var(--suave); margin: 0 0 6mm; }}
+.indice .intro {{ color: var(--suave); margin: 0 0 4mm; }}
 .indice h3 {{ font: 600 8pt Inter; letter-spacing: .16em; text-transform: uppercase; color: var(--azul);
-             margin: 6mm 0 1.5mm; border-bottom: .3mm solid var(--linea); padding-bottom: 1.5mm; }}
-.indice ol {{ list-style: none; padding: 0; margin: 0; }}
-.indice li a {{ display: flex; align-items: baseline; gap: 4mm; padding: 1.3mm 0; border-bottom: .2mm dotted #c6ced6; }}
+             margin: 5mm 0 1.2mm; border-bottom: .3mm solid var(--linea); padding-bottom: 1.2mm; }}
+.indice ol {{ list-style: none; padding: 0; margin: 0; font-size: 9.5pt; }}
+.indice li a {{ display: flex; align-items: baseline; gap: 4mm; padding: 1mm 0; border-bottom: .2mm dotted #c6ced6; }}
 .indice .n {{ font: 600 9pt Inter; color: var(--azul); width: 7mm; }}
 .indice .t {{ flex: 1; }}
 .indice .pag {{ font-weight: 600; color: var(--suave); font-variant-numeric: tabular-nums; }}
@@ -248,10 +263,13 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 .simplificaciones .contenido {{ color: var(--suave); font-size: 9pt; }}
 .fuentes .contenido {{ font-size: 8.4pt; color: #3a4652; columns: 2; column-gap: 8mm; }}
 .fuentes .contenido li {{ break-inside: avoid; }}
-.glosario .contenido ul {{ list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 8mm; font-size: 9pt; }}
-.glosario .contenido li {{ break-inside: avoid; margin: 0 0 1.6mm; padding-left: 0; line-height: 1.35; }}
-.glosario .contenido li::before {{ content: none; }}
-.glosario .contenido strong {{ color: var(--azul); }}
+.glosario {{ break-before: page; }}
+.glosario h1 {{ font-size: 26pt; margin: 0 0 2mm; }}
+.glosario .intro {{ color: var(--suave); margin: 0 0 6mm; }}
+.glosario ul {{ list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 8mm; font-size: 9pt; }}
+.glosario li {{ break-inside: avoid; margin: 0 0 1.8mm; padding-left: 0; line-height: 1.35; }}
+.glosario li::before {{ content: none; }}
+.glosario strong {{ color: var(--azul); }}
 .cierre {{ margin-top: 8mm; padding-top: 3mm; border-top: .3mm solid var(--linea); font-size: 7.8pt;
           color: var(--suave); }}
 </style></head><body>
@@ -276,11 +294,12 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 <section class="indice">
   <h1>Contenido</h1>
   <p class="intro">Láminas para proyectar o imprimir y ficha del mecanismo con la fuente de cada dato.</p>
+  {indice_glosario}
   <h3>Láminas</h3><ol>{indice_laminas}</ol>
   <h3>Ficha del mecanismo</h3><ol>{indice_ficha}</ol>
-  <h3>Fuentes consultadas</h3><ul class="sellos" style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:1.5mm">
-  {sellos_html.replace('<li>', '<li style="font-size:8pt;background:#f3f6f9;border:.25mm solid #d9e0e6;border-radius:4mm;padding:.5mm 2.5mm;margin:0">')}</ul>
 </section>
+
+{pagina_glosario}
 
 {paginas_laminas}
 
@@ -299,12 +318,16 @@ def _imprimir(pagina, ruta_html, ruta_pdf):
 
 
 def _paginas(ruta_pdf, lams, secciones):
-    """Busca en qué página quedó cada lámina y cada sección (para el índice)."""
+    """Busca en qué página quedó el glosario, cada lámina y cada sección (para el índice)."""
     import pymupdf
     doc = pymupdf.open(ruta_pdf)
     textos = [p.get_text() for p in doc]
     res, desde = {}, 2
     plano = [re.sub(r"\s+", " ", t).lower() for t in textos]
+    for i in range(desde, len(textos)):
+        if "siglas y abreviaturas que aparecen" in plano[i]:
+            res["glosario"], desde = i + 1, i + 1
+            break
     for n, titulo, _ in lams:
         for i in range(desde, len(textos)):
             if re.sub(r"\s+", " ", titulo).lower()[:40] in plano[i]:
@@ -328,6 +351,7 @@ def generar(carpeta, portada=None, salida=None):
     if portada is None:  # por defecto, la lámina del mecanismo
         portada = next((n for n, t, _ in lams if re.match(r"(cómo actúa|mecanismo)", t, re.I)), lams[0][0])
     subtitulo = "De la diana molecular al paciente"
+    md, glosario = separar_glosario(md)
     cuerpo, secciones = cuerpo_html(md)
     seccion = re.search(r"^## Fuentes\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)  # solo lo citado como fuente
     texto_fuentes = seccion.group(1) if seccion else md
@@ -337,11 +361,12 @@ def generar(carpeta, portada=None, salida=None):
         ruta_html = Path(tmp) / "documento.html"
         navegador = p.chromium.launch(executable_path=ejecutable())
         pagina = navegador.new_page()
-        ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada), encoding="utf-8")
+        ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada,
+                                       glosario=glosario), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)  # primera pasada: medir páginas
         paginas = _paginas(salida, lams, secciones)
-        ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas),
-                             encoding="utf-8")
+        ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas,
+                                       glosario), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)
         navegador.close()
     import pymupdf

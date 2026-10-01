@@ -91,7 +91,7 @@ Reglas de estilo en `references/estilo.md`.
 ### 8. Material de apoyo
 Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título `# <Fármaco>: ¿cómo actúa?`, lista numerada de láminas con enlace (`1. [Título](lamina-1.png)`), puntos clave, recorrido de cada lámina, farmacocinética, clase farmacológica, error frecuente, pregunta de autoevaluación con respuesta, simplificaciones, **glosario** y fuentes, con la cita de cada afirmación. Termina con **«No verificado»**: solo los datos que no se pudieron confirmar (idealmente, ninguno). Usa listas con línea en blanco antes y sangría de 3–4 espacios para las sublistas, y cita con `*[Fuente]*`.
 
-**Glosario (obligatorio):** sección `## Glosario`, justo antes de `## Fuentes`, con cada sigla o abreviatura que aparezca en las láminas o en el material, en orden alfabético y con el formato `- **SIGLA:** Desarrollo en español y, si hace falta, qué es en una frase.` Incluye también las de las fuentes (CIMA, FDA, PDB, PMID…), las de los ensayos clínicos y los símbolos de genes y proteínas. Comprueba que no falte ninguna con `python3 scripts/glosario.py ejemplos/<farmaco>`, que lista las siglas sin definición y termina con error si falta alguna.
+**Glosario (obligatorio):** sección `## Glosario` (en el material, justo antes de `## Fuentes`; en el PDF, `pdf.py` la coloca tras el índice), con cada sigla o abreviatura que aparezca en las láminas o en el material, en orden alfabético y con el formato `- **SIGLA:** Desarrollo en español y, si hace falta, qué es en una frase.` Incluye también las de las fuentes (CIMA, FDA, PDB, PMID…), las de los ensayos clínicos y los símbolos de genes y proteínas. Comprueba que no falte ninguna con `python3 scripts/glosario.py ejemplos/<farmaco>`, que lista las siglas sin definición y termina con error si falta alguna.
 
 ### 9. PDF final y entrega
 `python3 scripts/pdf.py ejemplos/<farmaco>` crea `ejemplos/<farmaco>/<farmaco>.pdf` (A4) con:
@@ -99,7 +99,7 @@ Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título 
 - Índice con números de página y marcadores.
 - Una lámina por página, en horizontal.
 - La ficha del mecanismo con diseño editorial: puntos clave en tarjetas, tablas, citas como etiquetas y recuadros para el error frecuente, la autoevaluación y lo no verificado.
-- El glosario de siglas, en dos columnas.
+- El glosario de siglas, en dos columnas, justo después del índice y antes de las láminas, para conocer las abreviaturas antes de empezar a leer.
 
 Antes de generarlo, `python3 scripts/glosario.py ejemplos/<farmaco>` debe terminar sin siglas pendientes.
 
