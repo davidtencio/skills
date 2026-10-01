@@ -1,8 +1,8 @@
-"""Genera el PDF final de un fármaco: portada, índice, láminas y ficha del mecanismo.
+"""Genera el PDF final de una enfermedad: portada, índice, glosario, láminas y ficha de la enfermedad.
 
 Uso:
-    python3 scripts/pdf.py ejemplos/<farmaco>            # crea ejemplos/<farmaco>/<farmaco>.pdf
-    python3 scripts/pdf.py ejemplos/<farmaco> --portada 3  # lámina que ilustra la portada
+    python3 scripts/pdf.py ejemplos/<enfermedad>            # crea ejemplos/<enfermedad>/<enfermedad>.pdf
+    python3 scripts/pdf.py ejemplos/<enfermedad> --portada 3  # lámina que ilustra la portada
 
 Lee `material.md` y todas las `lamina-N.png` de la carpeta (sin límite de número). El diseño es
 A4: portada, índice con números de página, glosario de siglas, una lámina por página en horizontal y la ficha en
@@ -32,12 +32,14 @@ DESTACADAS = {"puntos clave": "clave", "error frecuente": "error", "pregunta de 
               "no verificado": "pendiente", "fuentes": "fuentes", "simplificaciones": "simplificaciones",
               "lista de verificación": "pendiente"}
 # Fuentes que se reconocen en el material para resumirlas en la portada.
-SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Ficha técnica FDA"), ("EMA", "EMA"),
+SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Fichas de la FDA"), ("EMA", "EMA"),
           ("ChEMBL", "ChEMBL"), ("UniProt", "UniProt"), ("NCBI Gene", "NCBI Gene"),
           ("NCI Thesaurus", "NCI Thesaurus"), ("Reactome", "Reactome"), ("PMID", "PubMed / Europe PMC"),
           ("LiverTox", "LiverTox"), ("MedlinePlus", "MedlinePlus"), ("PDB", "RCSB PDB"),
           ("AlphaFold", "AlphaFold"), ("PubChem", "PubChem"), ("BindingDB", "BindingDB"), ("CPIC", "CPIC"), ("LactMed", "LactMed"),
-          ("openFDA", "openFDA"),
+          ("openFDA", "openFDA"), ("ADA", "ADA (diabetes.org)"), ("EASD", "Consenso ADA/EASD"), ("NIDDK", "NIDDK (NIH)"),
+          ("OMS", "OMS"), ("OPS", "OPS"), ("MeSH", "MeSH"), ("MONDO", "MONDO"), ("ESC", "Guías ESC"),
+          ("KDIGO", "KDIGO"),
           # Fuentes en otros idiomas (traducidas al español)
           ("Käypä hoito", "Käypä hoito (Finlandia)"), ("AWMF", "AWMF (Alemania)"),
           ("VersorgungsLeitlinie", "NVL (Alemania)"), ("IQWiG", "IQWiG (Alemania)"),
@@ -148,29 +150,29 @@ def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, pagi
                        f'<span class="t">Glosario de siglas y abreviaturas</span><span class="pag">{num("glosario")}'
                        f'</span></a></li></ol>') if glosario else ""
     pagina_glosario = (f'<section class="glosario" id="glosario"><h1>Glosario</h1><p class="intro">Siglas y '
-                       f'abreviaturas que aparecen en las láminas y en la ficha del mecanismo.</p>{glosario}'
+                       f'abreviaturas que aparecen en las láminas y en la ficha de la enfermedad.</p>{glosario}'
                        f'</section>') if glosario else ""
     heroe = next((p for n, _, p in lams if n == portada), lams[0][2] if lams else None)
     sellos_html = "".join(f"<li>{html.escape(s)}</li>" for s in sellos)
     hoy = fecha_es(date.today())
     nombre_pie = html.escape(farmaco).replace('"', "")
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
-<title>{html.escape(farmaco)} · Mecanismo de acción</title>
+<title>{html.escape(farmaco)} · Fisiopatología y tratamiento</title>
 <link rel="stylesheet" href="{FUENTES_CSS.as_uri()}">
 <style>
 :root {{ --tinta:#1d2733; --suave:#5b6773; --linea:#d9e0e6; --azul:#0b5d99; --azul-osc:#0a2f4d;
         --verde:#007a5e; --naranja:#c4520a; --morado:#8a3f7a; --fondo:#f3f6f9; }}
 @page {{ size: A4; margin: 22mm 20mm 20mm 20mm;
-  @top-right {{ content: "{nombre_pie} · Mecanismo de acción"; font: 500 7.5pt Inter, sans-serif;
+  @top-right {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 500 7.5pt Inter, sans-serif;
                color: #7d8893; letter-spacing: .04em; }}
-  @bottom-left {{ content: "Material docente · Prototipo pendiente de revisión farmacológica";
+  @bottom-left {{ content: "Material profesional · Prototipo pendiente de revisión clínica";
                  font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 @page portada {{ margin: 0; @top-right {{ content: none; }} @bottom-left {{ content: none; }}
                  @bottom-right {{ content: none; }} }}
 @page apaisada {{ size: A4 landscape; margin: 14mm 14mm 14mm 14mm;
   @top-right {{ content: none; }}
-  @bottom-left {{ content: "{nombre_pie} · Mecanismo de acción"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
+  @bottom-left {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 * {{ box-sizing: border-box; }}
 html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
@@ -283,7 +285,7 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 
 <section class="portada">
   <div class="banda">
-    <div class="marca">Mecanismo de acción · Material docente</div>
+    <div class="marca">Fisiopatología · Material profesional</div>
     <h1>{html.escape(farmaco)}</h1>
     <div class="sub">{html.escape(subtitulo)}</div>
     <div class="regla"></div>
@@ -291,29 +293,29 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
   {f'<div class="heroe"><img src="{heroe.resolve().as_uri()}"></div>' if heroe else ''}
   <div class="verificado"><b>Datos verificados en</b><ul class="sellos">{sellos_html}</ul></div>
   <div class="datos">
-    <div><b>Dirigido a</b><span>Estudiantes de farmacia</span></div>
-    <div><b>Contenido</b><span>{total} láminas · ficha del mecanismo</span></div>
+    <div><b>Dirigido a</b><span>Profesionales de salud</span></div>
+    <div><b>Contenido</b><span>{total} láminas · ficha de la enfermedad</span></div>
     <div><b>Fecha</b><span>{hoy}</span></div>
   </div>
-  <div class="aviso">Prototipo pendiente de revisión farmacológica. No sustituye la ficha técnica vigente.</div>
+  <div class="aviso">Prototipo pendiente de revisión clínica. No sustituye las guías de práctica clínica vigentes.</div>
 </section>
 
 <section class="indice">
   <h1>Contenido</h1>
-  <p class="intro">Láminas para proyectar o imprimir y ficha del mecanismo con la fuente de cada dato.</p>
+  <p class="intro">Láminas para proyectar o imprimir y ficha de la enfermedad con la fuente de cada dato.</p>
   {indice_glosario}
   <h3>Láminas</h3><ol>{indice_laminas}</ol>
-  <h3>Ficha del mecanismo</h3><ol>{indice_ficha}</ol>
+  <h3>Ficha de la enfermedad</h3><ol>{indice_ficha}</ol>
 </section>
 
 {pagina_glosario}
 
 {paginas_laminas}
 
-<header class="ficha-cabecera"><div class="marca">Ficha del mecanismo</div><h1>{html.escape(farmaco)}</h1></header>
+<header class="ficha-cabecera"><div class="marca">Ficha de la enfermedad</div><h1>{html.escape(farmaco)}</h1></header>
 {cuerpo}
-<p class="cierre">Generado el {hoy}. Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Estructuras: RCSB PDB (CC0)
-y PubChem/RDKit. Prototipo pendiente de revisión farmacológica; no sustituye la ficha técnica vigente.</p>
+<p class="cierre">Generado el {hoy}. Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Prototipo pendiente de revisión clínica;
+no sustituye las guías de práctica clínica vigentes ni el juicio clínico.</p>
 </body></html>"""
 
 
@@ -355,9 +357,9 @@ def generar(carpeta, portada=None, salida=None):
     titulo, titulos, md = leer_material(carpeta)
     farmaco = titulo.split(":")[0].strip()
     lams = laminas(carpeta, titulos)
-    if portada is None:  # por defecto, la lámina del mecanismo
-        portada = next((n for n, t, _ in lams if re.match(r"(cómo actúa|mecanismo)", t, re.I)), lams[0][0])
-    subtitulo = "De la diana molecular al paciente"
+    if portada is None:  # por defecto, la primera lámina de fisiopatología
+        portada = next((n for n, t, _ in lams if re.search(r"fisiopatolog|resistencia|falla|daño", t, re.I)), lams[0][0])
+    subtitulo = "De la fisiopatología al tratamiento"
     md, glosario = separar_glosario(md)
     cuerpo, secciones = cuerpo_html(md)
     seccion = re.search(r"^## Fuentes\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)  # solo lo citado como fuente
@@ -378,9 +380,9 @@ def generar(carpeta, portada=None, salida=None):
         navegador.close()
     import pymupdf
     doc = pymupdf.open(salida)
-    doc.set_metadata({"title": f"{farmaco} · Mecanismo de acción", "author": "Skill mecanismo-accion",
-                      "subject": "Material docente para estudiantes de farmacia",
-                      "keywords": f"{farmaco}, mecanismo de acción, farmacología"})
+    doc.set_metadata({"title": f"{farmaco} · Fisiopatología y tratamiento", "author": "Skill fisiopatologia",
+                      "subject": "Material educativo para profesionales de salud",
+                      "keywords": f"{farmaco}, fisiopatología, diagnóstico, tratamiento"})
     doc.saveIncr()
     return salida
 

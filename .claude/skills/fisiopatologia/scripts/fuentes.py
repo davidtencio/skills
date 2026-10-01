@@ -1,4 +1,4 @@
-"""Consulta de fuentes abiertas para láminas de mecanismo de acción.
+"""Consulta de fuentes abiertas para el material de fisiopatología de una enfermedad.
 
 Cada función devuelve datos verificables y registra la procedencia en
 `assets/ilustraciones/registro.json` cuando guarda un archivo.
@@ -34,7 +34,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 ILUSTRACIONES = RAIZ / "assets" / "ilustraciones"
 REGISTRO = ILUSTRACIONES / "registro.json"
-CACHE = Path("/tmp/mecanismo-accion-cache")
+CACHE = Path("/tmp/fisiopatologia-cache")
 CACHE.mkdir(exist_ok=True)
 
 LICENCIAS = {
@@ -53,7 +53,7 @@ def _get(url, timeout=60, datos=None, cabeceras=None, intentos=4):
     """Descarga una URL. Reintenta con espera creciente si el servidor limita la frecuencia (429) o falla (5xx)."""
     import time
     import urllib.error
-    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": "mecanismo-accion/1.0"})
+    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": "fisiopatologia/1.0"})
     for intento in range(intentos):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -597,6 +597,65 @@ def fda_indicaciones(nombre, ultimas=6, cartas=True):
             "ficha_vigente": ficha, "aprobaciones_recientes": historial}
 
 
+# --- Enfermedades: definiciones, ontologías y guías ------------------------------------
+
+def mesh(termino):
+    """Definición curada de MeSH (NLM) y su identificador. termino: en inglés."""
+    base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+    q = urllib.parse.quote(termino)
+    ids = json.loads(_get(f"{base}/esearch.fcgi?db=mesh&term={q}&retmode=json"))["esearchresult"]["idlist"][:3]
+    salida = []
+    for uid in ids:
+        r = json.loads(_get(f"{base}/esummary.fcgi?db=mesh&id={uid}&retmode=json"))["result"][uid]
+        salida.append({"uid": uid, "termino": (r.get("ds_meshterms") or [""])[0],
+                       "definicion": r.get("ds_scopenote", "").strip()})
+    return salida
+
+
+def mondo(termino):
+    """Enfermedad en la ontología MONDO (EBI OLS): identificador, definición y sinónimos. termino: en inglés."""
+    q = urllib.parse.quote(termino)
+    d = json.loads(_get(f"https://www.ebi.ac.uk/ols4/api/search?q={q}&ontology=mondo&rows=3"))
+    return [{"id": x.get("obo_id"), "nombre": x.get("label"), "definicion": " ".join(x.get("description") or [])}
+            for x in d["response"]["docs"]]
+
+
+def guias(enfermedad, maximo=10):
+    """Guías de práctica clínica y consensos recientes en PubMed (filtro de tipo de publicación).
+    Cada resultado lleva su PMCID si el texto completo está en PMC (léelo con pmc_texto)."""
+    consulta = (f"({enfermedad}) AND (practice guideline[pt] OR guideline[pt] OR consensus[ti] OR "
+                f'"standards of care"[ti]) AND ("last 5 years"[dp])')
+    resultados = pubmed(consulta, maximo=maximo)
+    for r in resultados:
+        r["pmcid"] = pmcid(r["pmid"])
+    return resultados
+
+
+def pmcid(pmid):
+    """PMCID de un artículo de PubMed, o None si no está en PMC."""
+    d = json.loads(_get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&db=pmc"
+                        f"&linkname=pubmed_pmc&id={pmid}&retmode=json"))
+    enlaces = [l for c in d.get("linksets", []) for l in c.get("linksetdbs", []) if l.get("linkname") == "pubmed_pmc"]
+    return f"PMC{enlaces[0]['links'][0]}" if enlaces and enlaces[0].get("links") else None
+
+
+def pmc_texto(pmcid, patrones=(), contexto=350):
+    """Texto completo de un artículo de PMC cuando la editorial lo permite (p. ej., acceso abierto).
+
+    Devuelve los fragmentos que contienen cada patrón (regex). Si la editorial no permite descargar el texto
+    completo, lo indica: en ese caso, usa el resumen de PubMed o busca una versión en acceso abierto.
+    """
+    numero = str(pmcid).upper().replace("PMC", "")
+    xml = _get(f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id={numero}&retmode=xml",
+               timeout=180).decode("utf-8", "ignore")
+    if "does not allow downloading of the full text" in xml:
+        return {"pmcid": f"PMC{numero}", "texto_completo": False}
+    texto = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", xml)))
+    fragmentos = {p: [texto[max(0, m.start() - contexto):m.end() + contexto] for m in re.finditer(p, texto)][:3]
+                  for p in patrones}
+    return {"pmcid": f"PMC{numero}", "texto_completo": True, "caracteres": len(texto), "fragmentos": fragmentos}
+
+
 def pagina(url, patrones=(), contexto=300):
     """Texto de una página web pública (guía, ficha técnica nacional, página de un instituto), en cualquier idioma.
     Quita el HTML y devuelve, para cada patrón (regex en el idioma de la página), los fragmentos donde aparece.
@@ -618,7 +677,8 @@ def pagina(url, patrones=(), contexto=300):
 if __name__ == "__main__":
     accion, *args = sys.argv[1:]
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
-                  "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones"):
+                  "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones", "mesh", "mondo",
+                  "guias"):
         args = [" ".join(args)]
     funciones = {"pubchem": pubchem, "chembl": chembl, "pdb-buscar": pdb_buscar, "pdb-ligandos": pdb_ligandos,
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
@@ -630,6 +690,8 @@ if __name__ == "__main__":
                  "lactmed": lactmed, "openfda": openfda, "openfda-eventos": openfda_eventos, "cpic": cpic,
                  "actividad": lambda nombre, diana=None: chembl_actividad(nombre, diana),
                  "bindingdb": bindingdb, "epar": ema_epar, "fda-indicaciones": fda_indicaciones,
+                 "mesh": mesh, "mondo": mondo, "guias": guias,
+                 "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones),
                  "pagina": lambda url, *patrones: pagina(url, patrones)}
     resultado = funciones[accion](*args)
     print(json.dumps(resultado, indent=2, ensure_ascii=False, default=str))
