@@ -151,6 +151,49 @@ Durvalumab funciona porque reactiva linfocitos T. Si antes de empezar se suprime
 - Las superficies proteicas son de estructuras reales, pero se muestran sin glicanos y orientadas para ver la interfaz.
 - El anticuerpo se dibuja unido por un brazo y sin escala.
 
+## Glosario
+
+- **AEMPS:** Agencia Española de Medicamentos y Productos Sanitarios.
+- **ATC:** Clasificación Anatómica, Terapéutica y Química de la OMS.
+- **AVAC:** Año de vida ajustado por calidad (en inglés, QALY).
+- **BCG:** Bacilo de Calmette-Guérin, usado como inmunoterapia intravesical.
+- **BLA:** Solicitud de licencia de un producto biológico ante la FDA (Biologics License Application).
+- **CCDA:** Citotoxicidad celular dependiente de anticuerpos (en inglés, ADCC).
+- **CD274:** Gen que codifica PD-L1.
+- **CD3ζ:** Cadena zeta del complejo CD3, que transmite la señal del TCR.
+- **CD80:** Proteína coestimuladora (B7.1); se une a CD28, CTLA-4 y PD-L1.
+- **CD86:** Proteína coestimuladora (B7.2); se une a CD28 y CTLA-4.
+- **CIMA:** Centro de Información de Medicamentos de la AEMPS, donde se consultan las fichas técnicas españolas.
+- **CPNM:** Cáncer de pulmón no microcítico.
+- **CTLA-4:** Antígeno 4 del linfocito T citotóxico, receptor inhibidor del linfocito T.
+- **CYP:** Citocromo P450, familia de enzimas que metabolizan fármacos.
+- **dMMR:** Deficiencia del sistema de reparación de errores de emparejamiento del ADN.
+- **EMA:** Agencia Europea de Medicamentos.
+- **FDA:** Administración de Alimentos y Medicamentos de EE. UU.
+- **FLOT:** Quimioterapia con fluorouracilo, leucovorina, oxaliplatino y docetaxel.
+- **IFN-γ:** Interferón gamma, citocina inflamatoria del linfocito activado.
+- **IgG1κ:** Inmunoglobulina G1 con cadena ligera kappa.
+- **LACOG:** Grupo Cooperativo Latinoamericano de Oncología (Latin American Cooperative Oncology Group).
+- **MHC:** Complejo mayor de histocompatibilidad, que presenta péptidos al linfocito T.
+- **NCI:** Instituto Nacional del Cáncer de EE. UU.
+- **NICE:** Instituto Nacional para la Excelencia en Salud y Atención del Reino Unido.
+- **PACIFIC:** Ensayo de fase 3 de durvalumab tras quimiorradioterapia en CPNM estadio III.
+- **PACIFIC-R:** Estudio observacional internacional de durvalumab en la práctica clínica (vida real).
+- **PD-1:** Proteína 1 de muerte celular programada, receptor inhibidor del linfocito T.
+- **PDB:** Protein Data Bank, banco de estructuras tridimensionales de proteínas.
+- **PD-L1:** Ligando 1 de muerte programada, que se une a PD-1 y a CD80.
+- **PD-L2:** Ligando 2 de muerte programada, que se une a PD-1.
+- **PKCθ:** Proteína cinasa C theta, de la señal del TCR.
+- **PMID:** Identificador de un artículo en PubMed.
+- **pMMR:** Sistema de reparación de errores de emparejamiento del ADN competente.
+- **PTPN11:** Gen que codifica la fosfatasa SHP-2.
+- **QT:** Quimioterapia.
+- **SHP-2:** Tirosina fosfatasa que recluta PD-1 (gen PTPN11).
+- **TCR:** Receptor del linfocito T.
+- **UE:** Unión Europea.
+- **USD:** Dólares estadounidenses.
+- **ZAP70:** Cinasa asociada a la cadena zeta, de la señal del TCR.
+
 ## Fuentes
 
 - **AEMPS, CIMA:** ficha técnica de Imfinzi 50 mg/ml concentrado para solución para perfusión (n.º de registro 1181322001), secciones 4.1, 4.2, 4.4, 4.5, 4.6, 4.8, 5.1, 5.2 y 5.3.

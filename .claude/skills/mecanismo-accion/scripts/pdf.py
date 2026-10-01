@@ -30,7 +30,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto
 # Secciones del material con tratamiento visual propio (por el comienzo del título).
 DESTACADAS = {"puntos clave": "clave", "error frecuente": "error", "pregunta de autoevaluación": "pregunta",
               "no verificado": "pendiente", "fuentes": "fuentes", "simplificaciones": "simplificaciones",
-              "lista de verificación": "pendiente"}
+              "lista de verificación": "pendiente", "glosario": "glosario"}
 # Fuentes que se reconocen en el material para resumirlas en la portada.
 SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Ficha técnica FDA"), ("EMA", "EMA"),
           ("ChEMBL", "ChEMBL"), ("UniProt", "UniProt"), ("NCBI Gene", "NCBI Gene"),
@@ -248,6 +248,10 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 .simplificaciones .contenido {{ color: var(--suave); font-size: 9pt; }}
 .fuentes .contenido {{ font-size: 8.4pt; color: #3a4652; columns: 2; column-gap: 8mm; }}
 .fuentes .contenido li {{ break-inside: avoid; }}
+.glosario .contenido ul {{ list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 8mm; font-size: 9pt; }}
+.glosario .contenido li {{ break-inside: avoid; margin: 0 0 1.6mm; padding-left: 0; line-height: 1.35; }}
+.glosario .contenido li::before {{ content: none; }}
+.glosario .contenido strong {{ color: var(--azul); }}
 .cierre {{ margin-top: 8mm; padding-top: 3mm; border-top: .3mm solid var(--linea); font-size: 7.8pt;
           color: var(--suave); }}
 </style></head><body>

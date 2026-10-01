@@ -141,6 +141,54 @@ Porque buena parte del efecto depende de que el hepatocito aumente sus receptore
 - Las superficies de la enzima muestran solo la región del sitio activo (radio de 16 Å), cortada para ver el ligando.
 - En la lámina 4, OATP1B1, BCRP/P-gp y CYP3A4 son ilustraciones genéricas de proteínas. Los valores de IC50 vienen de ensayos in vitro y no equivalen a concentraciones en el paciente.
 
+## Glosario
+
+- **AAS:** Ácido acetilsalicílico.
+- **Acetil-CoA:** Acetil-coenzima A, molécula de partida de la síntesis de colesterol.
+- **ATC:** Clasificación Anatómica, Terapéutica y Química de la OMS.
+- **AVAC:** Año de vida ajustado por calidad (en inglés, QALY).
+- **BCRP:** Proteína de resistencia del cáncer de mama, transportador de salida de fármacos.
+- **BRISA:** Base Regional de Informes de Evaluación de Tecnologías en Salud de las Américas (OPS).
+- **CIMA:** Centro de Información de Medicamentos de la AEMPS, donde se consultan las fichas técnicas españolas.
+- **CPIC:** Clinical Pharmacogenetics Implementation Consortium, consorcio que publica guías de farmacogenética.
+- **CRELES:** Estudio de Longevidad y Envejecimiento Saludable de Costa Rica.
+- **CYP3A4:** Isoenzima 3A4 del citocromo P450.
+- **CYP3A5:** Isoenzima 3A5 del citocromo P450.
+- **eEML:** Lista Modelo de Medicamentos Esenciales de la OMS en formato electrónico.
+- **ELSA-Brasil:** Estudio Longitudinal de Salud del Adulto, cohorte de Brasil.
+- **EMA:** Agencia Europea de Medicamentos.
+- **EPAR:** Informe público europeo de evaluación de la EMA.
+- **FDA:** Administración de Alimentos y Medicamentos de EE. UU.
+- **HMG-CoA:** 3-hidroxi-3-metilglutaril-coenzima A, sustrato de la enzima que bloquean las estatinas.
+- **HMGCR:** HMG-CoA reductasa (enzima y gen), diana de las estatinas.
+- **IC50:** Concentración que inhibe el 50 % de la actividad medida (in vitro).
+- **LDL:** Lipoproteína de baja densidad.
+- **LDLR:** Receptor de LDL.
+- **MSK:** Musculoesquelético (subestudio del ELSA-Brasil).
+- **NADAC:** Costo medio nacional de adquisición de medicamentos en EE. UU. (Medicaid).
+- **NCBI:** Centro Nacional de Información Biotecnológica de EE. UU.
+- **NDA:** Solicitud de autorización de un fármaco nuevo ante la FDA (New Drug Application).
+- **NICE:** Instituto Nacional para la Excelencia en Salud y Atención del Reino Unido.
+- **NPC1L1:** Proteína Niemann-Pick C1-like 1, que absorbe colesterol en el intestino.
+- **OATP1B1:** Polipéptido transportador de aniones orgánicos 1B1, captación hepática (gen SLCO1B1).
+- **OATP1B3:** Polipéptido transportador de aniones orgánicos 1B3, captación hepática.
+- **OH:** Grupo hidroxilo (orto-OH y para-OH: metabolitos hidroxilados).
+- **OMS:** Organización Mundial de la Salud.
+- **OPS:** Organización Panamericana de la Salud.
+- **PCSK9:** Proproteína convertasa subtilisina/kexina tipo 9, que degrada el receptor de LDL.
+- **PDB:** Protein Data Bank, banco de estructuras tridimensionales de proteínas.
+- **P-gp:** Glucoproteína P, transportador de salida de fármacos.
+- **PIB:** Producto interno bruto.
+- **PMID:** Identificador de un artículo en PubMed.
+- **QRISK3:** Calculadora británica del riesgo cardiovascular a 10 años.
+- **RE:** Retículo endoplásmico.
+- **RedETSA:** Red de Evaluación de Tecnologías en Salud de las Américas.
+- **SCAP:** Proteína activadora del corte de SREBP.
+- **SLCO1B1:** Gen que codifica el transportador OATP1B1.
+- **SREBP-2:** Proteína 2 de unión al elemento regulador de esteroles, factor de transcripción.
+- **SUS:** Sistema Único de Salud de Brasil.
+- **VIH:** Virus de la inmunodeficiencia humana.
+
 ## Fuentes
 
 - AEMPS, CIMA: ficha técnica de atorvastatina (secciones 4.1–4.8, 5.1, 5.2).
