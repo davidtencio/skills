@@ -1,13 +1,13 @@
 ---
 name: mecanismo-accion
-description: Crea láminas ilustradas del mecanismo de acción de un medicamento para estudiantes de farmacia y un PDF profesional con las láminas y la ficha del mecanismo, combinando ilustraciones profesionales (Servier Medical Art, Bioicons, NIH BioArt), estructuras químicas exactas (PubChem + RDKit), la estructura real de la diana (PDB/AlphaFold) y datos verificados (ficha técnica, ChEMBL, PubMed, NIH), con farmacoeconomía y estudios de vida real priorizando Costa Rica y Latinoamérica. Úsala siempre que se pida explicar visualmente cómo actúa un fármaco, hacer una imagen, infografía, lámina, esquema o diapositiva de su mecanismo de acción, farmacodinamia o diana, o material didáctico de farmacología, aunque no se mencione la palabra «skill» ni el formato exacto.
+description: Crea láminas ilustradas del mecanismo de acción de un medicamento para estudiantes de farmacia y un PDF profesional con las láminas y la ficha del mecanismo, combinando ilustraciones profesionales (Servier Medical Art, Bioicons, NIH BioArt), estructuras químicas exactas (PubChem + RDKit), la estructura real de la diana (PDB/AlphaFold) y datos verificados (ficha técnica, ChEMBL, PubMed, NIH), con farmacoeconomía y estudios de vida real priorizando Costa Rica y Latinoamérica. Úsala siempre que se pida explicar visualmente cómo actúa un fármaco, hacer una imagen, infografía, lámina, esquema o diapositiva de su mecanismo de acción, farmacodinamia o diana, o material didáctico de farmacología, aunque no se mencione la palabra «skill» ni el formato exacto. También cuando se pida la «ficha del mecanismo de acción» o una «ficha técnica» que explique cómo actúa el fármaco; no confundir con la ficha técnica institucional de compra (especificaciones, empaque, rotulación), que no es objeto de esta skill.
 ---
 
 # Láminas de mecanismo de acción
 
 Produce una serie de **láminas 16:9** (SVG + PNG; tantas como necesite el fármaco), un **material de apoyo** en Markdown y un **PDF final** con diseño profesional que explican cómo actúa un medicamento a estudiantes de farmacia. El objetivo es que el estudiante entienda la causa (fisiología → acción del fármaco → consecuencias), no que memorice listas.
 
-Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/` y `ejemplos/trastuzumab-deruxtecan/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
+Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/`, `ejemplos/trastuzumab-deruxtecan/` y `ejemplos/durvalumab/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
 
 ## Principios
 
@@ -52,7 +52,6 @@ Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha,
    - Agencias: NICE (`valor.py nice`); `valor.py agencias` da las rutas de CONITEC, IETS, CONETEC, CENETEC, IETSI, BRISA/RedETSA, HAS, G-BA, ICER, PBAC y CDA-AMC.
    - Precio de referencia de genéricos: `valor.py nadac`.
    - Registros observacionales: `valor.py observacionales <nombre> latam` (ClinicalTrials.gov) y `valor.py ema-rwd` (catálogo de vida real de la EMA).
-   - **Costa Rica:** los precios adjudicados por la CCSS se obtienen con la skill `estudio-mercado-sicop`, que necesita el navegador de la persona usuaria; si no está disponible, indícalo en «No verificado».
    - Cada dato económico lleva país, año, moneda y fuente. Los estudios observacionales se presentan como asociaciones, con su diseño y tamaño.
 11. **Estructura de la diana:** `fuentes.py pdb-buscar "<diana> <fármaco>"` y `pdb-ligandos <ID>`; busca un complejo con el fármaco y otro con el sustrato o ligando natural.
 12. Si una fuente no responde, nombra el dominio a la persona usuaria y sigue con la siguiente; nunca rellenes el hueco con suposiciones.
@@ -61,7 +60,7 @@ Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha,
 Redacta la ficha con la plantilla de `references/ficha-mecanismo.md`, con la fuente de cada dato, y continúa directamente. No pidas a la persona usuaria que revise la ficha técnica ni que apruebe la ficha. Si un dato no se puede verificar tras recorrer todas las fuentes, **no lo incluyas en las láminas**; anótalo en la lista final del material. Solo pregunta antes de dibujar si hay una decisión que no se puede resolver con fuentes (p. ej., cuál de varios mecanismos ilustrar cuando el encargo es ambiguo).
 
 ### 4. Elegir la plantilla y el número de láminas
-Según la clase de mecanismo, ver `references/plantillas.md` (receptor nuclear, receptor de membrana, enzima, canal iónico, transportador, conjugado anticuerpo-fármaco). La serie sigue siempre el mismo arco, pero **el número de láminas no es fijo**: usa las que el fármaco necesite para que cada lámina explique una sola idea (ver «Densidad» en `references/estilo.md`).
+Según la clase de mecanismo, ver `references/plantillas.md` (receptor nuclear, receptor de membrana, enzima, canal iónico, transportador, conjugado anticuerpo-fármaco, anticuerpo contra un punto de control inmunitario). La serie sigue siempre el mismo arco, pero **el número de láminas no es fijo**: usa las que el fármaco necesite para que cada lámina explique una sola idea (ver «Densidad» en `references/estilo.md`).
 1. **Contexto:** de dónde viene la señal y dónde actúa cada fármaco de la vía.
 2. **Fisiología normal:** la vía paso a paso en una célula ilustrada.
 3. **Mecanismo del fármaco:** el sitio de unión (estructura real si existe) y los puntos de bloqueo en la célula.

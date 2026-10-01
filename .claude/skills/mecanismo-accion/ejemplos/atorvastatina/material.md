@@ -89,7 +89,6 @@ Cada cifra depende del país, el año, la moneda, el comparador y el umbral de d
 - **Brasil y Colombia, 2014:** con precios reales de cada país, rosuvastatina frente a atorvastatina costaría más de 700 000 $ por AVAC en prevención primaria y más de 200 000 $ en secundaria en Colombia, con resultados parecidos. En Brasil, los precios eran similares y las razones resultaron menores. *[PMID 29702787]*
 - **Reino Unido (NICE NG238, 2023):** las estatinas de alta intensidad son clínicamente eficaces y coste-efectivas frente a no tratar o a intensidades menores. NICE recomienda atorvastatina 20 mg en prevención primaria con QRISK3 ≥ 10 %. *[NICE NG238]*
 - **Precio de referencia de un genérico (EE. UU., septiembre de 2026):** entre 0,023 US$ (10 mg) y 0,069 US$ (80 mg) por comprimido. *[NADAC, Medicaid]*
-- **Costa Rica:** los precios adjudicados por la CCSS se consultan en SICOP con la skill de estudio de mercado, que necesita el navegador. No se incluyen en esta versión.
 
 ## Estudios de vida real
 
@@ -161,6 +160,6 @@ Porque buena parte del efecto depende de que el hepatocito aumente sus receptore
 
 ## No verificado
 
-Nada. Todos los datos se comprobaron en las fuentes citadas. No se incluyeron los precios de la CCSS (SICOP necesita el navegador) ni informes de BRISA/RedETSA (el sitio rechaza las consultas automáticas). Atorvastatina no tiene informe de evaluación de la EMA (EPAR) porque se autorizó por procedimientos nacionales. Los datos de farmacocinética se tomaron de las fichas técnicas de CIMA y de la FDA.
+Nada. Todos los datos se comprobaron en las fuentes citadas. No se incluyeron informes de BRISA/RedETSA (el sitio rechaza las consultas automáticas). Atorvastatina no tiene informe de evaluación de la EMA (EPAR) porque se autorizó por procedimientos nacionales. Los datos de farmacocinética se tomaron de las fichas técnicas de CIMA y de la FDA.
 
 Queda, como en todo prototipo, la revisión farmacológica del nivel y los mensajes para estudiantes de pregrado.
