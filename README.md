@@ -21,3 +21,7 @@ Python 3 con `rdkit playwright python-pptx pymupdf markdown`, y Chromium. Para e
 - Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0); detalle en `assets/ilustraciones/ATRIBUCION.md`.
 - Tipografías: Inter y Source Serif 4 (SIL Open Font License).
 - Estructuras: RCSB PDB (CC0).
+
+## Fichas técnicas
+
+`fichas-tecnicas/<medicamento>/` guarda fichas técnicas institucionales de medicamentos en Word, junto con el script que las genera (`python3 generar_ficha.py`, requiere `python-docx`).
