@@ -45,4 +45,12 @@ Ejemplo: `ejemplos/trastuzumab-deruxtecan/`.
 - L3: estructura del ADC (anticuerpo + enlazador + carga útil, con el número de moléculas por anticuerpo); unión al antígeno → internalización → lisosoma → liberación de la carga → daño al blanco → apoptosis; efecto espectador si la carga atraviesa membranas.
 - L4: efecto, error frecuente (confusión con el anticuerpo solo), farmacocinética del conjugado y de la carga, toxicidades características.
 
+## Anticuerpo contra un punto de control inmunitario (anti-PD-L1, anti-PD-1, anti-CTLA-4)
+Ejemplo: `ejemplos/durvalumab/`.
+- Escena común: sinapsis inmunitaria con dos membranas horizontales (linfocito T arriba, célula tumoral abajo) y las proteínas como dominios de inmunoglobulina.
+- L1: reconocimiento (TCR–MHC con péptido) y frenos (PD-1/PD-L1, CTLA-4), con los fármacos de cada diana.
+- L2: activación del linfocito, inducción de PD-L1 por IFN-γ y freno por PD-1 → SHP-2 → desfosforilación de CD3ζ y ZAP70.
+- L3: estructuras reales del ligando con su receptor y con el Fab del fármaco (contactos comunes calculados), y la sinapsis con el freno bloqueado.
+- L4: el fármaco no es citotóxico (error frecuente) y los efectos adversos son inmunomediados.
+
 Si el fármaco no encaja en ninguna, combina elementos y explica la elección en la ficha del mecanismo.

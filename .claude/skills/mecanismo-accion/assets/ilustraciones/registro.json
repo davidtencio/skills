@@ -68,5 +68,12 @@
     "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/antibody-3.svg",
     "fecha": "2026-10-01",
     "notas": "viewBox recortado para quitar el símbolo de la base"
+  },
+  "servier-t-lymphocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/t-lymphocyte.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
   }
 }
