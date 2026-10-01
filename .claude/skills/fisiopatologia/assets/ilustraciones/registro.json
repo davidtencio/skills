@@ -1,0 +1,135 @@
+{
+  "servier4-hipofisis.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 3, Group 233",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-rinon-suprarrenal.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 6, Group 113",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-testiculo.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 11, Group 641",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-vejiga-prostata.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Urinary-system.pptx, diapositiva 3, Group 500",
+    "fecha": "2026-10-01",
+    "notas": "recorte (620, 300, 722, 445)"
+  },
+  "servier4-higado.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Digestive-system.pptx, diapositiva 17, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-intestino-delgado.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Digestive-system.pptx, diapositiva 24, Group 111",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-ldl.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Lipids.pptx, diapositiva 6, Group 42",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-antibody-3.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/antibody-3.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-cancerous-cell-3.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Oncology/Servier/cancerous-cell-3.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-antibody-3-recortado.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/antibody-3.svg",
+    "fecha": "2026-10-01",
+    "notas": "viewBox recortado para quitar el símbolo de la base"
+  },
+  "servier-t-lymphocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/t-lymphocyte.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-nervio.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Nervous-system.pptx, diapositiva 28, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-corazon.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Heart-physiology.pptx, diapositiva 3, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-syringe.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/syringe.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-langerhans-islet-pancreas.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/langerhans-islet-pancreas.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-muscle-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/muscle-1.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-adipocyte-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/adipocyte-2.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-kidney-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/kidney-2.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-pancreas-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/pancreas-2.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  }
+}
