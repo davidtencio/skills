@@ -75,5 +75,26 @@
     "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/t-lymphocyte.svg",
     "fecha": "2026-10-01",
     "notas": ""
+  },
+  "servier4-nervio.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Nervous-system.pptx, diapositiva 28, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-corazon.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Heart-physiology.pptx, diapositiva 3, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-syringe.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/syringe.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
   }
 }

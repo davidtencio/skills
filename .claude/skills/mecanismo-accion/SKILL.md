@@ -7,7 +7,7 @@ description: Crea láminas ilustradas del mecanismo de acción de un medicamento
 
 Produce una serie de **láminas 16:9** (SVG + PNG; tantas como necesite el fármaco), un **material de apoyo** en Markdown y un **PDF final** con diseño profesional que explican cómo actúa un medicamento a estudiantes de farmacia. El objetivo es que el estudiante entienda la causa (fisiología → acción del fármaco → consecuencias), no que memorice listas.
 
-Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/`, `ejemplos/trastuzumab-deruxtecan/` y `ejemplos/durvalumab/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
+Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/`, `ejemplos/trastuzumab-deruxtecan/`, `ejemplos/durvalumab/` y `ejemplos/vutrisiran/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
 
 ## Principios
 
@@ -60,7 +60,7 @@ Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha,
 Redacta la ficha con la plantilla de `references/ficha-mecanismo.md`, con la fuente de cada dato, y continúa directamente. No pidas a la persona usuaria que revise la ficha técnica ni que apruebe la ficha. Si un dato no se puede verificar tras recorrer todas las fuentes, **no lo incluyas en las láminas**; anótalo en la lista final del material. Solo pregunta antes de dibujar si hay una decisión que no se puede resolver con fuentes (p. ej., cuál de varios mecanismos ilustrar cuando el encargo es ambiguo).
 
 ### 4. Elegir la plantilla y el número de láminas
-Según la clase de mecanismo, ver `references/plantillas.md` (receptor nuclear, receptor de membrana, enzima, canal iónico, transportador, conjugado anticuerpo-fármaco, anticuerpo contra un punto de control inmunitario). La serie sigue siempre el mismo arco, pero **el número de láminas no es fijo**: usa las que el fármaco necesite para que cada lámina explique una sola idea (ver «Densidad» en `references/estilo.md`).
+Según la clase de mecanismo, ver `references/plantillas.md` (receptor nuclear, receptor de membrana, enzima, canal iónico, transportador, conjugado anticuerpo-fármaco, anticuerpo contra un punto de control inmunitario, ARN de interferencia). La serie sigue siempre el mismo arco, pero **el número de láminas no es fijo**: usa las que el fármaco necesite para que cada lámina explique una sola idea (ver «Densidad» en `references/estilo.md`).
 1. **Contexto:** de dónde viene la señal y dónde actúa cada fármaco de la vía.
 2. **Fisiología normal:** la vía paso a paso en una célula ilustrada.
 3. **Mecanismo del fármaco:** el sitio de unión (estructura real si existe) y los puntos de bloqueo en la célula.
