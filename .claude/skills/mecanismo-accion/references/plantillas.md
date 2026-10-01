@@ -53,4 +53,13 @@ Ejemplo: `ejemplos/durvalumab/`.
 - L3: estructuras reales del ligando con su receptor y con el Fab del fármaco (contactos comunes calculados), y la sinapsis con el freno bloqueado.
 - L4: el fármaco no es citotóxico (error frecuente) y los efectos adversos son inmunomediados.
 
+## ARN pequeño de interferencia conjugado con GalNAc (vutrisiran, inclisiran, givosiran)
+Ejemplo: `ejemplos/vutrisiran/`.
+- L1: la proteína diana, de su síntesis en el hígado a su efecto patológico, con los fármacos de cada paso (silenciadores del ARNm frente a fármacos que actúan sobre la proteína).
+- L2: gen → ARNm → proteína en el hepatocito, y función de la proteína en sangre.
+- L3: entrada en el hepatocito: GalNAc → ASGPR (estructura real con GalNAc) → endocitosis → citoplasma; el receptor se recicla.
+- L4: interferencia por ARN: carga en Ago2 (RISC), apareamiento con el ARNm, corte y ciclo catalítico (estructura real de Ago2 con guía y diana).
+- Lámina de farmacocinética: semivida plasmática de horas frente a un efecto de meses (el efecto depende de la concentración hepática).
+- Error frecuente: confundirlo con edición génica o con un fármaco que actúa sobre la proteína.
+
 Si el fármaco no encaja en ninguna, combina elementos y explica la elección en la ficha del mecanismo.
