@@ -1,0 +1,72 @@
+{
+  "servier4-hipofisis.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 3, Group 233",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-rinon-suprarrenal.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 6, Group 113",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-testiculo.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Endocrinology.pptx, diapositiva 11, Group 641",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-vejiga-prostata.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Urinary-system.pptx, diapositiva 3, Group 500",
+    "fecha": "2026-10-01",
+    "notas": "recorte (620, 300, 722, 445)"
+  },
+  "servier4-higado.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Digestive-system.pptx, diapositiva 17, Group 3",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-intestino-delgado.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Digestive-system.pptx, diapositiva 24, Group 111",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier4-ldl.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Lipids.pptx, diapositiva 6, Group 42",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-antibody-3.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/antibody-3.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-cancerous-cell-3.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Oncology/Servier/cancerous-cell-3.svg",
+    "fecha": "2026-10-01",
+    "notas": ""
+  },
+  "servier-antibody-3-recortado.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/antibody-3.svg",
+    "fecha": "2026-10-01",
+    "notas": "viewBox recortado para quitar el símbolo de la base"
+  }
+}
