@@ -52,7 +52,6 @@ Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha,
    - Agencias: NICE (`valor.py nice`); `valor.py agencias` da las rutas de CONITEC, IETS, CONETEC, CENETEC, IETSI, BRISA/RedETSA, HAS, G-BA, ICER, PBAC y CDA-AMC.
    - Precio de referencia de genéricos: `valor.py nadac`.
    - Registros observacionales: `valor.py observacionales <nombre> latam` (ClinicalTrials.gov) y `valor.py ema-rwd` (catálogo de vida real de la EMA).
-   - **Costa Rica:** los precios adjudicados por la CCSS se obtienen con la skill `estudio-mercado-sicop`, que necesita el navegador de la persona usuaria; si no está disponible, indícalo en «No verificado».
    - Cada dato económico lleva país, año, moneda y fuente. Los estudios observacionales se presentan como asociaciones, con su diseño y tamaño.
 11. **Estructura de la diana:** `fuentes.py pdb-buscar "<diana> <fármaco>"` y `pdb-ligandos <ID>`; busca un complejo con el fármaco y otro con el sustrato o ligando natural.
 12. Si una fuente no responde, nombra el dominio a la persona usuaria y sigue con la siguiente; nunca rellenes el hueco con suposiciones.

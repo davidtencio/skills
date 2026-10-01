@@ -172,6 +172,5 @@ Durvalumab funciona porque reactiva linfocitos T. Si antes de empezar se suprime
 ## No verificado
 
 - **ChEMBL:** el servidor (www.ebi.ac.uk) devolvió error 500 durante la consulta. El mecanismo y la diana se confirmaron con la ficha técnica, la FDA, el NCI Thesaurus y UniProt. No se incluyen datos de afinidad (Kd).
-- **Costa Rica:** los precios adjudicados por la CCSS no se consultaron, porque requieren SICOP desde el navegador de la persona usuaria; se pueden añadir con la skill `estudio-mercado-sicop`.
 
 Queda, como en todo prototipo, la revisión farmacológica del nivel y los mensajes para estudiantes de pregrado.

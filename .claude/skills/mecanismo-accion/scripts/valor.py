@@ -170,8 +170,6 @@ def ema_rwd(nombre, maximo=10):
 AGENCIAS = [
     ("Costa Rica", "CCSS: Lista Oficial de Medicamentos y Comité Central de Farmacoterapia",
      "https://www.ccss.sa.cr/lom", "el sitio corta las conexiones desde la nube: consultar con el navegador"),
-    ("Costa Rica", "SICOP: precios adjudicados y Banco de Precios",
-     "https://www.sicop.go.cr", "requiere navegador: usar la skill estudio-mercado-sicop"),
     ("Américas", "BRISA/RedETSA (OPS): informes de evaluación de tecnologías de la región",
      "https://redetsa.bvsalud.org", "BRISA (pesquisa.bvsalud.org/brisa) rechaza consultas automáticas (403): consultar con el navegador"),
     ("Brasil", "CONITEC: relatorios de recomendación con coste-efectividad e impacto presupuestario",

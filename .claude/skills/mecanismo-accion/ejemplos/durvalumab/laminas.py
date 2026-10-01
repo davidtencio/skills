@@ -415,14 +415,14 @@ def lamina_6():
         f, alto = ficha(830, y, 730, titulo, lineas, fuente, AZUL)
         c += f
         y += alto
-    c += (f'<rect x="830" y="{y + 4}" width="730" height="186" rx="12" fill="#FFF4EE" stroke="{NARANJA}" '
+    c += (f'<rect x="830" y="{y + 4}" width="730" height="160" rx="12" fill="#FFF4EE" stroke="{NARANJA}" '
           f'stroke-width="1.4"/>')
     c += texto(852, y + 34, "Cómo leer estos datos", tam=16, peso="bold", color=NARANJA)
     c += texto(852, y + 58, ["• Precio, umbral y comparador cambian con el país y el año.",
                              "• Los estudios observacionales muestran asociaciones, no causas:",
                              "  confirman o matizan los ensayos, no los sustituyen.",
-                             "• Costa Rica: los precios adjudicados por la CCSS están en SICOP",
-                             "  (se añaden con la skill de estudio de mercado)."], tam=15, interlineado=1.4)
+                             "• AVAC: año de vida ajustado por calidad; la razón de costo-",
+                             "  efectividad compara el costo extra con los AVAC ganados."], tam=15, interlineado=1.4)
     return lamina(6, "Valor y vida real", "Del ensayo a la práctica: valor y vida real",
                   "Qué dicen las evaluaciones económicas y los estudios en la práctica clínica, con prioridad para Latinoamérica.",
                   c)
