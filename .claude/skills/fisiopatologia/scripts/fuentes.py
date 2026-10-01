@@ -656,6 +656,24 @@ def pmc_texto(pmcid, patrones=(), contexto=350):
     return {"pmcid": f"PMC{numero}", "texto_completo": True, "caracteres": len(texto), "fragmentos": fragmentos}
 
 
+def pagina(url, patrones=(), contexto=300):
+    """Texto de una página web pública (guía, ficha técnica nacional, página de un instituto), en cualquier idioma.
+    Quita el HTML y devuelve, para cada patrón (regex en el idioma de la página), los fragmentos donde aparece.
+    Si el texto es muy corto, la página probablemente se genera con JavaScript: búscala en otra fuente."""
+    crudo = _get(url, cabeceras={"User-Agent": "Mozilla/5.0 (compatible; skills-docencia/1.0)",
+                                 "Accept-Language": "es,en;q=0.8,*;q=0.5"}).decode("utf-8", "ignore")
+    titulo = re.search(r"<title[^>]*>(.*?)</title>", crudo, re.S | re.I)
+    idioma = re.search(r'<html[^>]*\blang="([^"]+)"', crudo, re.I)
+    texto = re.sub(r"<script.*?</script>|<style.*?</style>|<noscript.*?</noscript>", " ", crudo, flags=re.S | re.I)
+    texto = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", texto))).strip()
+    fragmentos = {p: [texto[max(0, m.start() - contexto):m.end() + contexto]
+                      for m in list(re.finditer(p, texto, re.I))[:3]] for p in patrones}
+    return {"url": url, "titulo": html.unescape(titulo.group(1).strip()) if titulo else None,
+            "idioma": idioma.group(1) if idioma else None, "caracteres": len(texto),
+            "aviso": "texto muy corto: puede requerir JavaScript" if len(texto) < 2000 else None,
+            "fragmentos": fragmentos}
+
+
 if __name__ == "__main__":
     accion, *args = sys.argv[1:]
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
@@ -673,6 +691,7 @@ if __name__ == "__main__":
                  "actividad": lambda nombre, diana=None: chembl_actividad(nombre, diana),
                  "bindingdb": bindingdb, "epar": ema_epar, "fda-indicaciones": fda_indicaciones,
                  "mesh": mesh, "mondo": mondo, "guias": guias,
-                 "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones)}
+                 "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones),
+                 "pagina": lambda url, *patrones: pagina(url, patrones)}
     resultado = funciones[accion](*args)
     print(json.dumps(resultado, indent=2, ensure_ascii=False, default=str))

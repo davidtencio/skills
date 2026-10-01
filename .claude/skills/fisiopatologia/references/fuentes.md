@@ -9,17 +9,19 @@
    - Guías o consensos de acceso abierto, buscados con `fuentes.py guias`.
    - Fichas técnicas de los fármacos para el mecanismo: FDA sección 12.1 (`fuentes.py openfda`) y CIMA 5.1 (`fuentes.py cima`).
 5. Literatura (PubMed, Europe PMC, con PMID).
-6. Si nada de lo anterior lo confirma, el dato queda como «pendiente de verificar».
+6. Fuentes en otros idiomas (guías nacionales, literatura con filtro de idioma), traducidas al español: ver `idiomas.md`.
+7. Si nada de lo anterior lo confirma, el dato queda como «pendiente de verificar».
 
 | Papel | Fuente preferida | Alternativas | Herramienta |
 |---|---|---|---|
 | Definición y sinónimos | MeSH (NLM, NIH), con la nota de alcance | MONDO (EBI OLS), NCI Thesaurus | `fuentes.py mesh`, `mondo`, `nci` |
 | Fisiopatología | Revisión de referencia con texto completo en PMC | Resúmenes de PubMed; Europe PMC | `fuentes.py pubmed`, `pmc <PMCID> <regex…>` |
 | Vías moleculares | Reactome | UniProt (función con PMID), NCBI Gene | `fuentes.py reactome`, `uniprot`, `gen` |
-| Criterios diagnósticos | Página de la sociedad científica (p. ej., diabetes.org) o del instituto del NIH (p. ej., NIDDK) | Guía de práctica clínica en PMC | `curl` + extracción de texto; `fuentes.py pmc` |
-| Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `curl`; `fuentes.py medlineplus` |
+| Criterios diagnósticos | Página de la sociedad científica (p. ej., diabetes.org) o del instituto del NIH (p. ej., NIDDK) | Guía de práctica clínica en PMC | `fuentes.py pagina`, `pmc` |
+| Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `fuentes.py pagina`, `medlineplus` |
 | Algoritmo de tratamiento | Guía o consenso de acceso abierto (texto completo en PMC) | Resumen de la guía en PubMed | `fuentes.py guias`, `pmc` |
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
+| Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pubmed` |
 | Afirmaciones sueltas | PubMed (por relevancia) y Europe PMC (por citas) | — | `fuentes.py pubmed`, `europepmc` |
 | Órganos, tejidos y células | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier), kits de Servier | `recursos.py`, `fuentes.py bioicons`, `servier-*` |
 | Flechas, pasos, rótulos, tarjetas | Biblioteca propia | — | `componentes.py`, `piezas.py` |

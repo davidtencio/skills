@@ -37,7 +37,14 @@ SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Ficha técnica FDA")
           ("NCI Thesaurus", "NCI Thesaurus"), ("Reactome", "Reactome"), ("PMID", "PubMed / Europe PMC"),
           ("LiverTox", "LiverTox"), ("MedlinePlus", "MedlinePlus"), ("PDB", "RCSB PDB"),
           ("AlphaFold", "AlphaFold"), ("PubChem", "PubChem"), ("BindingDB", "BindingDB"), ("CPIC", "CPIC"), ("LactMed", "LactMed"),
-          ("openFDA", "openFDA")]
+          ("openFDA", "openFDA"),
+          # Fuentes en otros idiomas (traducidas al español)
+          ("Käypä hoito", "Käypä hoito (Finlandia)"), ("AWMF", "AWMF (Alemania)"),
+          ("VersorgungsLeitlinie", "NVL (Alemania)"), ("IQWiG", "IQWiG (Alemania)"),
+          ("Helsedirektoratet", "Helsedirektoratet (Noruega)"), ("Felleskatalogen", "Felleskatalogen (Noruega)"),
+          ("pro.medicin.dk", "pro.medicin.dk (Dinamarca)"), ("FASS", "FASS (Suecia)"), ("Janusinfo", "Janusinfo (Suecia)"),
+          ("Farmacotherapeutisch Kompas", "Farmacotherapeutisch Kompas (Países Bajos)"), ("HAS", "HAS (Francia)"),
+          ("AIFA", "AIFA (Italia)")]
 
 
 def _slug(texto):

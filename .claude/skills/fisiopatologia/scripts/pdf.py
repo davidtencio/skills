@@ -39,7 +39,14 @@ SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Fichas de la FDA"), 
           ("AlphaFold", "AlphaFold"), ("PubChem", "PubChem"), ("BindingDB", "BindingDB"), ("CPIC", "CPIC"), ("LactMed", "LactMed"),
           ("openFDA", "openFDA"), ("ADA", "ADA (diabetes.org)"), ("EASD", "Consenso ADA/EASD"), ("NIDDK", "NIDDK (NIH)"),
           ("OMS", "OMS"), ("OPS", "OPS"), ("MeSH", "MeSH"), ("MONDO", "MONDO"), ("ESC", "Guías ESC"),
-          ("KDIGO", "KDIGO")]
+          ("KDIGO", "KDIGO"),
+          # Fuentes en otros idiomas (traducidas al español)
+          ("Käypä hoito", "Käypä hoito (Finlandia)"), ("AWMF", "AWMF (Alemania)"),
+          ("VersorgungsLeitlinie", "NVL (Alemania)"), ("IQWiG", "IQWiG (Alemania)"),
+          ("Helsedirektoratet", "Helsedirektoratet (Noruega)"), ("Felleskatalogen", "Felleskatalogen (Noruega)"),
+          ("pro.medicin.dk", "pro.medicin.dk (Dinamarca)"), ("FASS", "FASS (Suecia)"), ("Janusinfo", "Janusinfo (Suecia)"),
+          ("Farmacotherapeutisch Kompas", "Farmacotherapeutisch Kompas (Países Bajos)"), ("HAS", "HAS (Francia)"),
+          ("AIFA", "AIFA (Italia)")]
 
 
 def _slug(texto):
