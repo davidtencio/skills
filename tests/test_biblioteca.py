@@ -31,3 +31,17 @@ def test_licencias_reutilizables(skill):
             assert datos.get(campo), f"{nombre}: falta «{campo}»"
         assert not re.search(r"\bN[CD]\b|NonCommercial|NoDeriv", datos["licencia"], re.I), \
             f"{nombre}: licencia no reutilizable ({datos['licencia']})"
+
+
+@pytest.mark.parametrize("skill", SKILLS)
+def test_catalogo_clasifica_cada_ilustracion(skill):
+    """Cada ilustración tiene categoría y términos en español en catalogo.py, para encontrarla al buscar."""
+    import json as _json
+
+    from conftest import ejecutar
+    codigo = ("import json, sys; sys.path.insert(0, sys.argv[1]); import catalogo; "
+              "print(json.dumps([i['nombre'] for i in catalogo.catalogo() if i['categoria'] == 'sin clasificar']))")
+    r = ejecutar("-c", codigo, SKILLS_DIR / skill / "scripts")
+    assert r.returncode == 0, r.stderr[-2000:]
+    sin_clasificar = _json.loads(r.stdout.strip().splitlines()[-1])
+    assert not sin_clasificar, f"Añade estas ilustraciones a TERMINOS en scripts/catalogo.py: {sin_clasificar}"

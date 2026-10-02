@@ -33,7 +33,7 @@ Las fuentes en línea pueden estar bloqueadas por la red del entorno. Prueba ant
 Fármaco, público (por defecto: estudiantes de farmacia de pregrado) y uso (proyectar, imprimir). Si el fármaco tiene varios mecanismos, acordar cuál se ilustra.
 
 ### 2. Investigar y verificar
-Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha, PMID, identificador). Solo lo que no aparezca en ninguna queda como «pendiente de verificar»; no lo presentes como confirmado.
+Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha, PMID, identificador). Puedes registrar cada cifra de las láminas con su frase literal en `ejemplos/<farmaco>/evidencias.json` y comprobarlas con `python3 scripts/verificar_evidencias.py ejemplos/<farmaco> --en-linea` (formato en el propio script). Solo lo que no aparezca en ninguna queda como «pendiente de verificar»; no lo presentes como confirmado.
 
 1. **Ficha técnica**, primero en español: `python3 scripts/fuentes.py cima <nombre>` (AEMPS; secciones 4.1, 4.2, 4.5, 4.8, 5.1, 5.2, 5.3). Contrasta con `fuentes.py dailymed <nombre en inglés>` (FDA) o con la EMA. Si las fichas difieren en una cifra, muestra el rango y cita ambas. En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), la sección 12.1 de la FDA suele remitir a la 12.4 *Microbiology*, que es donde están el mecanismo, la actividad y los mecanismos de resistencia: `dailymed` la incluye y `openfda` la devuelve en el campo `microbiology` (ver «Antimicrobianos: sección 12.4» en `references/fuentes.md`).
 2. **Fármaco y diana en bases curadas:** `fuentes.py chembl <nombre en inglés>` (mecanismo y diana), `fuentes.py pubchem <nombre>` (SMILES, fórmula, CID del fármaco y de los ligandos o sustratos naturales), `fuentes.py uniprot <GEN>` (función de la diana, con PMID).
@@ -83,7 +83,7 @@ Sigue el orden de `references/fuentes.md`: biblioteca local → kits de Servier 
 
 ### 6. Componer
 Crea `ejemplos/<farmaco>/laminas.py` a partir del de darolutamida. Bibliotecas disponibles:
-- `scripts/recursos.py` → `ilustracion(nombre, x, y, w, h, ...)` para insertar SVG de `assets/ilustraciones/`.
+- `scripts/recursos.py` → `ilustracion(nombre, x, y, w, h, ...)` para insertar SVG de `assets/ilustraciones/`. Busca qué hay con `python3 scripts/catalogo.py <término>` (en español); al añadir una pieza, regístrala en `registro.json` y en `TERMINOS` de `catalogo.py`.
 - `scripts/estructuras.py` → `molecula(smiles, formula)` y `estructura(mol, x, y, w, h)` (RDKit).
 - `scripts/superficie.py` → `superficie_corte(pdb, cadena, ligando)` y `como_imagen(...)`: superficie real de la diana cortada para ver el bolsillo.
 - `scripts/fuentes.py` → descargas (PubChem, ChEMBL, PDB, AlphaFold, Bioicons, kits de Servier).
@@ -91,7 +91,7 @@ Crea `ejemplos/<farmaco>/laminas.py` a partir del de darolutamida. Bibliotecas d
 Reglas de estilo en `references/estilo.md`.
 
 ### 7. Renderizar y verificar
-`python3 scripts/renderizar.py lamina-N.svg` y **mira cada PNG con Read**. Corrige hasta que pase la lista de `references/verificacion.md` (textos que se pisan, elementos sobre la membrana, tamaño mínimo de letra, atribuciones, rótulos de esquema). Es normal necesitar 2–4 rondas por lámina.
+`python3 scripts/revisar_lamina.py <carpeta>` mide las láminas en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro; corrige esos errores. Después, `python3 scripts/renderizar.py lamina-N.svg` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni elementos tapados. Corrige hasta que pase la lista de `references/verificacion.md` (textos que se pisan, elementos sobre la membrana, tamaño mínimo de letra, atribuciones, rótulos de esquema). Es normal necesitar 2–4 rondas por lámina.
 
 ### 8. Material de apoyo
 Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título `# <Fármaco>: ¿cómo actúa?`, lista numerada de láminas con enlace (`1. [Título](lamina-1.png)`), puntos clave, recorrido de cada lámina, farmacocinética, clase farmacológica, error frecuente, pregunta de autoevaluación con respuesta, simplificaciones, **glosario** y fuentes, con la cita de cada afirmación. Termina con **«No verificado»**: solo los datos que no se pudieron confirmar (idealmente, ninguno). Usa listas con línea en blanco antes y sangría de 3–4 espacios para las sublistas, y cita con `*[Fuente]*`.
@@ -108,7 +108,7 @@ Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título 
 
 Antes de generarlo, `python3 scripts/glosario.py ejemplos/<farmaco>` debe terminar sin siglas pendientes.
 
-Usa `--portada N` para elegir otra lámina de portada. Revisa las páginas convertidas a PNG (pymupdf) con Read antes de entregar. Entrega el PDF (con SendUserFile si está disponible), los PNG y el material, y en el mensaje final resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
+Las láminas entran en el PDF como SVG vectorial (texto nítido y seleccionable) salvo las de miles de formas o muchos degradados (superficies moleculares), que van en PNG porque ocuparían más (regla `vectorial` de `pdf.py`). Escribe en `material.md`, bajo el título, `<!-- portada: N -->` con la lámina de la portada y `<!-- fecha: AAAA-MM-DD -->` con la fecha del documento: así el PDF sale igual cada vez que se regenera (`--portada` y `--fecha` las cambian de forma puntual). Revisa las páginas convertidas a PNG (pymupdf) con Read antes de entregar. Entrega el PDF (con SendUserFile si está disponible), los PNG y el material, y en el mensaje final resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
 
 ## Licencias
 - Usa preferentemente CC0, dominio público y CC BY. Evita CC BY-SA salvo que no haya alternativa (obliga a compartir la lámina con la misma licencia) y avísalo.

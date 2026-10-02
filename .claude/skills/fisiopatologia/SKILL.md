@@ -34,16 +34,17 @@ Prueba la red con `python3 scripts/fuentes.py mesh "Diabetes Mellitus, Type 2"`.
 Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imprimir). Por defecto se cubren fisiopatología, clínica y diagnóstico, y tratamiento farmacológico. La epidemiología solo se incluye si se pide; en una infección, la transmisión y la prevención (vacunas, profilaxis) sí se incluyen por defecto.
 
 ### 2. Investigar y verificar
-Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía).
+Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía). Cada cifra que vaya a una lámina (punto de corte, dosis, duración, porcentaje) se registra en `ejemplos/<enfermedad>/evidencias.json` con la frase literal de la fuente, en su idioma, y cómo volver a encontrarla; el formato está en `scripts/verificar_evidencias.py` y hay un registro completo en `ejemplos/neumonia-nosocomial/`.
 
-1. **Definición:** `fuentes.py mesh "<término MeSH>"` y `fuentes.py mondo "<nombre en inglés>"`.
+1. **Definición:** `fuentes.py mesh "<término MeSH>"` (cita el identificador D… del campo `mesh`) y `fuentes.py mondo "<nombre en inglés>"`.
 2. **Fisiopatología:**
    - Busca una revisión de referencia con `fuentes.py pubmed "<consulta>" "<regex>"`.
    - Si tiene texto completo en PMC, extrae las frases que respaldan cada afirmación con `fuentes.py pmc <PMCID> "<regex>" …`.
-   - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`.
+   - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`; las de un microorganismo, por su nombre, con `fuentes.py uniprot-proteina "<proteína>" [taxón NCBI]`.
 3. **Clínica y diagnóstico:** páginas de la sociedad científica y del instituto del NIH correspondiente (p. ej., diabetes.org y NIDDK; en infecciones, IDSA y NIAID), notas descriptivas de la OMS y `fuentes.py medlineplus`. Léelas con `fuentes.py pagina <URL> "<regex>"`, que quita el HTML y devuelve la frase exacta.
 4. **Tratamiento:**
-   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; lee la de texto completo con `fuentes.py pmc`.
+   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; `fuentes.py guias-titulo` exige las palabras en el título y da menos ruido. Lee la de texto completo con `fuentes.py pmc` (si NCBI no la da, prueba Europe PMC).
+   - Las guías publicadas en PDF (sociedades, ministerios, AWMF) se leen con `fuentes.py pdf <URL> "<regex>"`, que devuelve cada frase con su página para citarla.
    - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`). En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), el mecanismo y la resistencia están en la 12.4 *Microbiology* (campo `microbiology`).
    - **Antibacterianos y antifúngicos:** farmacocinética de la ficha (FDA 12.3, CIMA 5.2) e índice FC/FD de cada familia con su fuente, para explicar la dosis (ver «Farmacocinética y farmacodinamia de los antimicrobianos» en `references/plantillas.md`).
    - **Infecciones:** fuentes propias (IDSA, ESCMID, guías del NIH/HHS para VIH, OMS, EUCAST, AWaRe, resistencia local de la OPS e INCIENSA) en la sección «Infecciones» de `references/fuentes.md`.
@@ -66,22 +67,23 @@ Según el tipo de enfermedad, ver `references/plantillas.md` (metabólica, cardi
 Numera «LÁMINA N DE TOTAL» con el total real.
 
 ### 4. Reunir las piezas visuales
-Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células inmunitarias y microorganismos: virus, bacterias, parásitos) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → TogoTV (`fuentes.py togopic`, mejor con términos en japonés) y Wikimedia Commons (`fuentes.py commons`, en cualquier idioma) → dibujo propio. Ver «Bibliotecas de imágenes en otros idiomas» en `references/idiomas.md`. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json`.
+Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células inmunitarias y microorganismos: virus, bacterias, parásitos; búscala en español con `python3 scripts/catalogo.py <término> [--hoja hoja.png]`) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → TogoTV (`fuentes.py togopic`, mejor con términos en japonés) y Wikimedia Commons (`fuentes.py commons`, en cualquier idioma) → dibujo propio. Ver «Bibliotecas de imágenes en otros idiomas» en `references/idiomas.md`. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json` y añade sus términos en español a `TERMINOS` de `scripts/catalogo.py`.
 
 ### 5. Componer
 Crea `ejemplos/<enfermedad>/laminas.py` a partir del de diabetes tipo 2. Bibliotecas disponibles:
 - `scripts/piezas.py`:
    - `Lamina(enfermedad, fuentes)` dibuja el marco común: cabecera, título, pie y aviso.
-   - `tarjeta`, `ficha`, `caja`, `leyenda_paso`, `membrana` y `organo_ilustrado`.
+   - `tarjeta`, `ficha`, `caja`, `leyenda_paso`, `membrana`, `organo_ilustrado`, `idea_clave` (franja de conclusión) y `decision` (rombo de un algoritmo). Si a `tarjeta` le pasas un párrafo (cadena) en lugar de una lista, parte las líneas sola al ancho de la tarjeta.
    - `curva_fcfd`: curva cualitativa concentración-tiempo con la CMI y el índice FC/FD resaltado (T > CMI, Cmáx/CMI, ABC/CMI).
-- `scripts/componentes.py`: capa de estilo con textos, flechas, pasos, bloqueos, vesículas, mitocondria, `etiqueta_farmaco` y la paleta `COLOR`.
+- `scripts/microbios.py`: microorganismos y dianas para infecciones (`bacilo_gramnegativo`, `coco_grampositivo`, `porina`, `bomba` de expulsión, `pbp`, `enzima_bl`, `bacteria_pequena`).
+- `scripts/componentes.py`: capa de estilo con textos, flechas, pasos, bloqueos, vesículas, mitocondria, `etiqueta_farmaco` y la paleta `COLOR`. `texto(..., ancho=px)` parte las líneas que no caben, medidas con la métrica de Arial.
 - `scripts/recursos.py`: `ilustracion(nombre, x, y, w, h)` inserta un SVG de `assets/ilustraciones/`; `atribucion(*archivos)` da el crédito del pie.
 - `scripts/fuentes.py`: consultas a las fuentes y descargas de ilustraciones.
 
 Reglas de estilo en `references/estilo.md`. El pie común lleva las fuentes generales en una línea; si una lámina necesita citar más, hazlo dentro de la lámina (recuadro) o en el material, nunca alargando el pie.
 
 ### 6. Renderizar y verificar
-`python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
+`python3 scripts/revisar_lamina.py ejemplos/<enfermedad>` mide cada lámina en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro (errores) y letra pequeña o tarjetas medio vacías (avisos); corrige los errores antes de mirar. `python3 scripts/verificar_evidencias.py ejemplos/<enfermedad> --en-linea` comprueba que cada cifra de las láminas está registrada y que su frase sigue en la fuente. Después, `python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni ilustraciones tapadas. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
 
 ### 7. Material de apoyo
 Escribe `material.md` con la estructura del de diabetes tipo 2:
@@ -105,7 +107,7 @@ Cita cada afirmación con `*[Fuente]*`.
 - Una lámina por página, en horizontal.
 - La ficha de la enfermedad con diseño editorial.
 
-Usa `--portada N` para elegir otra lámina de portada. Revisa las páginas convertidas a PNG con Read antes de entregar. Entrega solo el PDF (con SendUserFile si está disponible) y, en el mensaje final, resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
+Las láminas entran en el PDF como SVG vectorial (texto nítido y seleccionable) salvo las de miles de formas o muchos degradados, que van en PNG porque ocuparían más (regla `vectorial` de `pdf.py`). Escribe en `material.md`, bajo el título, `<!-- portada: N -->` con la lámina de la portada y `<!-- fecha: AAAA-MM-DD -->` con la fecha del documento: así el PDF sale igual cada vez que se regenera (`--portada` y `--fecha` las cambian de forma puntual). Revisa las páginas convertidas a PNG con Read antes de entregar. Entrega solo el PDF (con SendUserFile si está disponible) y, en el mensaje final, resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
 
 ## Licencias
 - Usa preferentemente CC0, dominio público y CC BY. Evita CC BY-SA salvo que no haya alternativa, y avísalo.

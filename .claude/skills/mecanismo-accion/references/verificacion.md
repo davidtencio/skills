@@ -1,6 +1,6 @@
 # Lista de verificación antes de entregar
 
-Revisa cada PNG con Read y corrige hasta que todo se cumpla.
+Ejecuta primero `python3 scripts/revisar_lamina.py <carpeta>`: debe terminar sin errores (textos que se pisan o que se salen de la lámina o de su recuadro). Revisa sus avisos y después cada PNG con Read, y corrige hasta que todo se cumpla.
 
 ## Visual
 - [ ] Ningún texto se pisa con otro texto, con flechas o con bordes de ilustraciones.

@@ -47,12 +47,14 @@ def leyenda_paso(x, y, n, titulo, detalle=(), fondo=True):
 
 
 def tarjeta(x, y, w, h, color, titulo, lineas, icono="", tam=17):
-    """Tarjeta con barra de color, título y líneas de texto."""
+    """Tarjeta con barra de color, título y líneas de texto. Si `lineas` es una cadena, se parte sola al ancho
+    de la tarjeta; si es una lista, cada elemento es una línea tal cual."""
     s = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16" fill="#FFFFFF" stroke="{COLOR["borde_panel"]}" '
          f'stroke-width="1.4"/><rect x="{x}" y="{y}" width="8" height="{h}" rx="4" fill="{color}"/>')
     s += icono
     s += texto(x + 32, y + 46, titulo, tam=22, peso="bold", color=color)
-    s += texto(x + 32, y + 84, lineas, tam=tam, interlineado=1.45)
+    s += texto(x + 32, y + 84, lineas, tam=tam, interlineado=1.45,
+               ancho=w - 56 if isinstance(lineas, str) else None)
     return s
 
 
@@ -171,3 +173,18 @@ def curva_fcfd(x, y, w, h, indice=None, dosis=3, cmi=0.32, titulo=None):
     if titulo:
         s = texto(x, y - 10, titulo, tam=17, peso="bold") + s
     return s
+
+
+def idea_clave(y, lineas, color=AZUL, fondo="#E3F0F8", titulo="Idea clave", alto=None):
+    """Franja a todo el ancho con un título y una o dos líneas (idea clave, error frecuente…)."""
+    alto = alto or 46 + 26 * len(lineas)
+    return (f'<rect x="40" y="{y}" width="1520" height="{alto}" rx="14" fill="{fondo}" stroke="{color}" stroke-width="1.5"/>'
+            + texto(66, y + 34, titulo, tam=18, peso="bold", color=color)
+            + texto(66, y + 62, lineas, tam=17, interlineado=1.5))
+
+
+def decision(cx, cy, w, h, lineas):
+    """Caja de pregunta de un diagrama de flujo, centrada en (cx, cy)."""
+    return (f'<rect x="{cx - w / 2}" y="{cy - h / 2}" width="{w}" height="{h}" rx="12" fill="#FFFFFF" '
+            f'stroke="{COLOR["texto"]}" stroke-width="1.6"/>'
+            + texto(cx, cy - (len(lineas) - 1) * 11 + 6, lineas, tam=17, peso="bold", anclaje="middle", interlineado=1.3))

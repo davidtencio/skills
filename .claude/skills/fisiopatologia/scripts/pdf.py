@@ -4,7 +4,11 @@ Uso:
     python3 scripts/pdf.py ejemplos/<enfermedad>            # crea ejemplos/<enfermedad>/<enfermedad>.pdf
     python3 scripts/pdf.py ejemplos/<enfermedad> --portada 3  # lámina que ilustra la portada
 
-Lee `material.md` y todas las `lamina-N.png` de la carpeta (sin límite de número). El diseño es
+Lee `material.md` y todas las láminas de la carpeta (sin límite de número). Cada lámina entra como SVG vectorial
+(nítido a cualquier zoom y con el texto seleccionable) si tiene pocas formas y degradados (`vectorial`); si no (p. ej.,
+superficies moleculares con miles de formas), como PNG, para que el PDF no se dispare. La portada usa el PNG.
+Para que el PDF sea reproducible, `material.md` puede fijar la lámina de la portada y la fecha con comentarios:
+`<!-- portada: 3 -->` y `<!-- fecha: 2026-10-01 -->` (`--portada` y `--fecha` tienen prioridad). El diseño es
 A4: portada, índice con números de página, glosario de siglas, una lámina por página en horizontal y la ficha en
 vertical con tipografía editorial (Source Serif 4 para títulos, Inter para el texto).
 """
@@ -47,6 +51,24 @@ SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Fichas de la FDA"), 
           ("pro.medicin.dk", "pro.medicin.dk (Dinamarca)"), ("FASS", "FASS (Suecia)"), ("Janusinfo", "Janusinfo (Suecia)"),
           ("Farmacotherapeutisch Kompas", "Farmacotherapeutisch Kompas (Países Bajos)"), ("HAS", "HAS (Francia)"),
           ("AIFA", "AIFA (Italia)")]
+# Lo único que cambia entre las skills; el resto de pdf.py es común (lo comprueba tests/test_paridad.py).
+TEXTOS = {
+    "tema": "Fisiopatología y tratamiento",
+    "marca": "Fisiopatología · Material profesional",
+    "pie": "Material profesional · Prototipo pendiente de revisión clínica",
+    "ficha": "Ficha de la enfermedad",
+    "publico": "Profesionales de salud",
+    "aviso": "Prototipo pendiente de revisión clínica. No sustituye las guías de práctica clínica vigentes.",
+    "cierre": "Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Prototipo pendiente de revisión clínica; "
+              "no sustituye las guías de práctica clínica vigentes ni el juicio clínico.",
+    "subtitulo": "De la fisiopatología al tratamiento",
+    # Portada por defecto: la primera lámina de fisiopatología (no la de resistencia a los fármacos).
+    "portada_incluye": r"fisiopatolog|resistencia|falla|dañ",
+    "portada_excluye": r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco|multirresist",
+    "autor": "Skill fisiopatologia",
+    "asunto": "Material educativo para profesionales de salud",
+    "claves": "fisiopatología, diagnóstico, tratamiento",
+}
 
 
 def _slug(texto):
@@ -56,9 +78,18 @@ def _slug(texto):
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
 
 
+def opciones_material(texto):
+    """Opciones del PDF escritas en material.md como comentarios: <!-- portada: N --> y <!-- fecha: AAAA-MM-DD -->."""
+    portada = re.search(r"<!--\s*portada:\s*(\d+)\s*-->", texto)
+    fecha = re.search(r"<!--\s*fecha:\s*(\d{4}-\d{2}-\d{2})\s*-->", texto)
+    return {"portada": int(portada.group(1)) if portada else None,
+            "fecha": date.fromisoformat(fecha.group(1)) if fecha else None}
+
+
 def leer_material(carpeta):
     """Separa el material en título, lista de láminas y cuerpo (sin la lista ni el aviso inicial)."""
     texto = (carpeta / "material.md").read_text(encoding="utf-8")
+    texto = re.sub(r"^<!--\s*(portada|fecha):.*?-->\s*\n", "", texto, flags=re.M)
     titulo = re.search(r"^# (.+)$", texto, re.M).group(1).strip()
     titulos = {int(n): t for t, n in re.findall(r"^\s*\d+\.\s*\[(.+?)\]\(lamina-(\d+)\.png\)", texto, re.M)}
     cuerpo = re.sub(r"^# .+\n", "", texto, count=1, flags=re.M)
@@ -70,9 +101,40 @@ def leer_material(carpeta):
 
 
 def laminas(carpeta, titulos):
-    numeradas = [(int(m.group(1)), p) for p in carpeta.glob("lamina-*.png")
-                 if (m := re.fullmatch(r"lamina-(\d+)", p.stem))]
-    return [(n, titulos.get(n, f"Lámina {n}"), p) for n, p in sorted(numeradas)]
+    """Láminas de la carpeta como (número, título, archivo): el SVG si existe, si no el PNG."""
+    numeradas = {int(m.group(1)) for p in carpeta.glob("lamina-*.*")
+                 if p.suffix in (".svg", ".png") and (m := re.fullmatch(r"lamina-(\d+)", p.stem))}
+    return [(n, titulos.get(n, f"Lámina {n}"), next(p for p in (carpeta / f"lamina-{n}.svg",
+                                                                 carpeta / f"lamina-{n}.png") if p.exists()))
+            for n in sorted(numeradas)]
+
+
+MAX_ELEMENTOS_SVG = 2000  # por encima (superficies moleculares), el vectorial ocupa más que el PNG en el PDF
+MAX_DEGRADADOS_SVG = 16   # la plantilla define 14; los modelos 3D con sombreado añaden decenas
+
+
+def _contenido_svg(texto):
+    """El SVG con las ilustraciones incrustadas (data:image/svg+xml;base64) ya decodificadas."""
+    import base64
+    partes = [texto]
+    for m in re.finditer(r"data:image/svg\+xml;base64,([A-Za-z0-9+/=]+)", texto):
+        partes.append(_contenido_svg(base64.b64decode(m.group(1)).decode("utf-8", "ignore")))
+    return "".join(partes)
+
+
+def vectorial(svg):
+    """True si la lámina conviene en SVG (vectorial, texto seleccionable): pocas formas y degradados. Si no, el PNG
+    ocupa menos. Es una regla sobre el contenido, no una medida, para que el PDF salga igual con cualquier Chromium."""
+    texto = _contenido_svg(Path(svg).read_text(encoding="utf-8"))
+    elementos = len(re.findall(r"<(?:path|polygon|circle|ellipse|rect|line|polyline)\b", texto))
+    degradados = len(re.findall(r"<(?:linear|radial)Gradient\b", texto))
+    return elementos < MAX_ELEMENTOS_SVG and degradados <= MAX_DEGRADADOS_SVG
+
+
+def elegir_formatos(lams):
+    """Deja cada lámina en SVG si `vectorial` lo aconseja y en PNG si no."""
+    return [(n, t, p.with_suffix(".png") if p.suffix == ".svg" and p.with_suffix(".png").exists() and not vectorial(p)
+             else p) for n, t, p in lams]
 
 
 def _normalizar_listas(md):
@@ -131,7 +193,7 @@ def separar_glosario(md):
     return md[:m.start()] + md[m.end():], lista
 
 
-def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None, glosario=""):
+def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None, glosario="", fecha=None):
     paginas = paginas or {}
     total = len(lams)
     num = lambda ident: paginas.get(ident, "")  # noqa: E731
@@ -150,29 +212,31 @@ def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, pagi
                        f'<span class="t">Glosario de siglas y abreviaturas</span><span class="pag">{num("glosario")}'
                        f'</span></a></li></ol>') if glosario else ""
     pagina_glosario = (f'<section class="glosario" id="glosario"><h1>Glosario</h1><p class="intro">Siglas y '
-                       f'abreviaturas que aparecen en las láminas y en la ficha de la enfermedad.</p>{glosario}'
+                       f'abreviaturas que aparecen en las láminas y en la {TEXTOS["ficha"].lower()}.</p>{glosario}'
                        f'</section>') if glosario else ""
     heroe = next((p for n, _, p in lams if n == portada), lams[0][2] if lams else None)
+    if heroe is not None and heroe.with_suffix(".png").exists():  # en la portada, el PNG: no duplica el vectorial
+        heroe = heroe.with_suffix(".png")
     sellos_html = "".join(f"<li>{html.escape(s)}</li>" for s in sellos)
-    hoy = fecha_es(date.today())
+    hoy = fecha_es(fecha or date.today())
     nombre_pie = html.escape(farmaco).replace('"', "")
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
-<title>{html.escape(farmaco)} · Fisiopatología y tratamiento</title>
+<title>{html.escape(farmaco)} · {TEXTOS["tema"]}</title>
 <link rel="stylesheet" href="{FUENTES_CSS.as_uri()}">
 <style>
 :root {{ --tinta:#1d2733; --suave:#5b6773; --linea:#d9e0e6; --azul:#0b5d99; --azul-osc:#0a2f4d;
         --verde:#007a5e; --naranja:#c4520a; --morado:#8a3f7a; --fondo:#f3f6f9; }}
 @page {{ size: A4; margin: 22mm 20mm 20mm 20mm;
-  @top-right {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 500 7.5pt Inter, sans-serif;
+  @top-right {{ content: "{nombre_pie} · {TEXTOS["tema"]}"; font: 500 7.5pt Inter, sans-serif;
                color: #7d8893; letter-spacing: .04em; }}
-  @bottom-left {{ content: "Material profesional · Prototipo pendiente de revisión clínica";
+  @bottom-left {{ content: "{TEXTOS["pie"]}";
                  font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 @page portada {{ margin: 0; @top-right {{ content: none; }} @bottom-left {{ content: none; }}
                  @bottom-right {{ content: none; }} }}
 @page apaisada {{ size: A4 landscape; margin: 14mm 14mm 14mm 14mm;
   @top-right {{ content: none; }}
-  @bottom-left {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
+  @bottom-left {{ content: "{nombre_pie} · {TEXTOS["tema"]}"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 * {{ box-sizing: border-box; }}
 html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
@@ -228,7 +292,8 @@ a {{ color: inherit; text-decoration: none; }}
 .lamina .etq {{ font: 600 7.5pt Inter; letter-spacing: .16em; text-transform: uppercase; color: #fff;
                background: var(--azul); padding: 1mm 2.6mm; border-radius: 1mm; }}
 .lamina .tit {{ font: 600 13pt 'Source Serif 4', serif; color: var(--azul-osc); }}
-/* Fondo y no <img>: Chromium 141 manda a la página siguiente las imágenes de páginas con nombre. */
+/* Fondo y no <img>: Chromium 141 manda a la página siguiente las imágenes de páginas con nombre. Con un SVG,
+   el fondo se imprime como gráfico vectorial. */
 .lamina .imagen {{ width: 269mm; height: 151.3mm; background: center / contain no-repeat; border-radius: 1.5mm; box-shadow: 0 0 0 .3mm var(--linea); }}
 
 /* Ficha */
@@ -285,7 +350,7 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 
 <section class="portada">
   <div class="banda">
-    <div class="marca">Fisiopatología · Material profesional</div>
+    <div class="marca">{TEXTOS["marca"]}</div>
     <h1>{html.escape(farmaco)}</h1>
     <div class="sub">{html.escape(subtitulo)}</div>
     <div class="regla"></div>
@@ -293,29 +358,28 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
   {f'<div class="heroe"><img src="{heroe.resolve().as_uri()}"></div>' if heroe else ''}
   <div class="verificado"><b>Datos verificados en</b><ul class="sellos">{sellos_html}</ul></div>
   <div class="datos">
-    <div><b>Dirigido a</b><span>Profesionales de salud</span></div>
-    <div><b>Contenido</b><span>{total} láminas · ficha de la enfermedad</span></div>
+    <div><b>Dirigido a</b><span>{TEXTOS["publico"]}</span></div>
+    <div><b>Contenido</b><span>{total} láminas · {TEXTOS["ficha"].lower()}</span></div>
     <div><b>Fecha</b><span>{hoy}</span></div>
   </div>
-  <div class="aviso">Prototipo pendiente de revisión clínica. No sustituye las guías de práctica clínica vigentes.</div>
+  <div class="aviso">{TEXTOS["aviso"]}</div>
 </section>
 
 <section class="indice">
   <h1>Contenido</h1>
-  <p class="intro">Láminas para proyectar o imprimir y ficha de la enfermedad con la fuente de cada dato.</p>
+  <p class="intro">Láminas para proyectar o imprimir y {TEXTOS["ficha"].lower()} con la fuente de cada dato.</p>
   {indice_glosario}
   <h3>Láminas</h3><ol>{indice_laminas}</ol>
-  <h3>Ficha de la enfermedad</h3><ol>{indice_ficha}</ol>
+  <h3>{TEXTOS["ficha"]}</h3><ol>{indice_ficha}</ol>
 </section>
 
 {pagina_glosario}
 
 {paginas_laminas}
 
-<header class="ficha-cabecera"><div class="marca">Ficha de la enfermedad</div><h1>{html.escape(farmaco)}</h1></header>
+<header class="ficha-cabecera"><div class="marca">{TEXTOS["ficha"]}</div><h1>{html.escape(farmaco)}</h1></header>
 {cuerpo}
-<p class="cierre">Generado el {hoy}. Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Prototipo pendiente de revisión clínica;
-no sustituye las guías de práctica clínica vigentes ni el juicio clínico.</p>
+<p class="cierre">Generado el {hoy}. {TEXTOS["cierre"]}</p>
 </body></html>"""
 
 
@@ -351,16 +415,20 @@ def _paginas(ruta_pdf, lams, secciones):
     return res
 
 
-def generar(carpeta, portada=None, salida=None):
+def generar(carpeta, portada=None, salida=None, fecha=None):
     from playwright.sync_api import sync_playwright
     carpeta = Path(carpeta).resolve()
+    opciones = opciones_material((carpeta / "material.md").read_text(encoding="utf-8"))
+    portada = portada or opciones["portada"]
+    fecha = fecha or opciones["fecha"]
     titulo, titulos, md = leer_material(carpeta)
     farmaco = titulo.split(":")[0].strip()
-    lams = laminas(carpeta, titulos)
-    if portada is None:  # por defecto, la primera lámina de fisiopatología (no la de resistencia a los fármacos)
-        portada = next((n for n, t, _ in lams if re.search(r"fisiopatolog|resistencia|falla|dañ", t, re.I)
-                        and not re.search(r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco|multirresist", t, re.I)), lams[0][0])
-    subtitulo = "De la fisiopatología al tratamiento"
+    lams = elegir_formatos(laminas(carpeta, titulos))
+    if portada is None:
+        portada = next((n for n, t, _ in lams if re.search(TEXTOS["portada_incluye"], t, re.I)
+                        and not (TEXTOS["portada_excluye"] and re.search(TEXTOS["portada_excluye"], t, re.I))),
+                       lams[0][0])
+    subtitulo = TEXTOS["subtitulo"]
     md, glosario = separar_glosario(md)
     cuerpo, secciones = cuerpo_html(md)
     seccion = re.search(r"^## Fuentes\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)  # solo lo citado como fuente
@@ -372,18 +440,17 @@ def generar(carpeta, portada=None, salida=None):
         navegador = p.chromium.launch(executable_path=ejecutable())
         pagina = navegador.new_page()
         ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada,
-                                       glosario=glosario), encoding="utf-8")
+                                       glosario=glosario, fecha=fecha), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)  # primera pasada: medir páginas
         paginas = _paginas(salida, lams, secciones)
         ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas,
-                                       glosario), encoding="utf-8")
+                                       glosario, fecha), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)
         navegador.close()
     import pymupdf
     doc = pymupdf.open(salida)
-    doc.set_metadata({"title": f"{farmaco} · Fisiopatología y tratamiento", "author": "Skill fisiopatologia",
-                      "subject": "Material educativo para profesionales de salud",
-                      "keywords": f"{farmaco}, fisiopatología, diagnóstico, tratamiento"})
+    doc.set_metadata({"title": f"{farmaco} · {TEXTOS['tema']}", "author": TEXTOS["autor"],
+                      "subject": TEXTOS["asunto"], "keywords": f"{farmaco}, {TEXTOS['claves']}"})
     doc.saveIncr()
     return salida
 
@@ -392,6 +459,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("carpeta")
     ap.add_argument("--portada", type=int, help="número de la lámina de la portada")
+    ap.add_argument("--fecha", type=date.fromisoformat, help="fecha de la portada (AAAA-MM-DD); por defecto, hoy")
     ap.add_argument("--salida")
     a = ap.parse_args()
-    print(generar(a.carpeta, a.portada, a.salida))
+    print(generar(a.carpeta, a.portada, a.salida, a.fecha))

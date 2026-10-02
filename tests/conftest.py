@@ -1,7 +1,8 @@
 """Utilidades comunes de los tests de las skills.
 
 Las dos skills tienen módulos con el mismo nombre (componentes, recursos, pdf…), así que todo lo que importa
-código de una skill se ejecuta en un proceso aparte (`ejecutar`), salvo los tests de piezas de fisiopatologia.
+código de una skill se ejecuta en un proceso aparte (`ejecutar`), salvo los tests de piezas y de fuentes de
+fisiopatologia, que importan solo módulos de esa skill.
 """
 import subprocess
 import sys

@@ -17,6 +17,8 @@ Uso rápido desde la terminal:
   python3 fuentes.py uniprot SREBF2
   python3 fuentes.py reactome "SREBP cholesterol"
   python3 fuentes.py europepmc "SREBP-2 AND LDL receptor AND statin" "SREBP-?2.*(LDLR|LDL receptor)"
+  python3 fuentes.py pdf <URL del PDF> "<regex>"   # frases de un PDF público con su página
+  python3 fuentes.py uniprot-proteina "beta-lactamase" 1280   # proteína de S. aureus (taxón 1280)
 
 Si una fuente no responde (red bloqueada), las funciones lanzan RuntimeError con el
 nombre del dominio para avisar a la persona usuaria; no inventan datos.
@@ -36,6 +38,7 @@ ILUSTRACIONES = RAIZ / "assets" / "ilustraciones"
 REGISTRO = ILUSTRACIONES / "registro.json"
 CACHE = Path("/tmp/fisiopatologia-cache")
 CACHE.mkdir(exist_ok=True)
+AGENTE = "fisiopatologia/1.0"  # User-Agent de las consultas
 
 LICENCIAS = {
     "servier": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
@@ -56,7 +59,7 @@ def _get(url, timeout=60, datos=None, cabeceras=None, intentos=4):
     o se corta la conexión; ante un 429 respeta la cabecera Retry-After (hasta 30 s)."""
     import time
     import urllib.error
-    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": "fisiopatologia/1.0"})
+    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": AGENTE})
     for intento in range(intentos):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -363,19 +366,27 @@ def cima(nombre, secciones=("4.1", "4.2", "4.5", "4.8", "5.1", "5.2", "5.3"), la
     return {}
 
 
-def uniprot(gen, organismo=9606):
-    """Función de una proteína humana revisada en UniProt (con PMID de respaldo).
+def uniprot(gen=None, organismo=9606, proteina=None, maximo=10):
+    """Función de una proteína revisada en UniProt (con PMID de respaldo), por gen o por nombre de proteína.
 
-    Se queda con la entrada cuyo nombre de gen principal coincide exactamente: algunos símbolos
-    (p. ej., KLK3) también aparecen como sinónimos de otros genes.
+    Por gen, se queda con la entrada cuyo nombre de gen principal coincide exactamente: algunos símbolos
+    (p. ej., KLK3) también aparecen como sinónimos de otros genes. Por proteína (p. ej., «penicillin-binding
+    protein 2a»), sirve también para bacterias, hongos y virus: organismo=None busca en todos, o pasa el
+    identificador de taxonomía de NCBI (1280 = Staphylococcus aureus; 287 = Pseudomonas aeruginosa).
     """
-    q = urllib.parse.quote(f"gene:{gen} AND organism_id:{organismo} AND reviewed:true")
+    if not gen and not proteina:
+        raise ValueError("Indica gen o proteina")
+    partes = [f"gene:{gen}" if gen else f'protein_name:"{proteina}"', "reviewed:true"]
+    if organismo:
+        partes.append(f"taxonomy_id:{organismo}")  # incluye las cepas del taxón
+    q = urllib.parse.quote(" AND ".join(partes))
     tsv = _get(f"https://rest.uniprot.org/uniprotkb/search?query={q}&fields=accession,gene_primary,protein_name,"
-               f"cc_function,cc_subcellular_location&format=tsv").decode()
-    filas = [f.split("\t") for f in tsv.strip().split("\n")[1:]]
-    exactas = [f for f in filas if f[1].upper() == gen.upper()] or filas
-    return [{"uniprot": f[0], "gen": f[1], "proteina": f[2], "funcion": f[3], "localizacion": f[4] if len(f) > 4 else ""}
-            for f in exactas]
+               f"organism_name,cc_function,cc_subcellular_location&format=tsv&size={maximo}").decode()
+    filas = [f.split("\t") + [""] * 6 for f in tsv.strip().split("\n")[1:] if f]
+    if gen:
+        filas = [f for f in filas if f[1].upper() == gen.upper()] or filas
+    return [{"uniprot": f[0], "gen": f[1], "proteina": f[2], "organismo": f[3], "funcion": f[4],
+             "localizacion": f[5]} for f in filas]
 
 
 def reactome(texto, especie="Homo sapiens"):
@@ -558,20 +569,48 @@ def ema_epar(nombre, patron, documento="public-assessment-report", contexto=1):
     biológicos y oncológicos). nombre: marca comercial (p. ej., "enhertu"). El EPAR detalla
     farmacocinética, metabolitos, transportadores, exposición-respuesta y poblaciones especiales.
     """
-    import pymupdf
     slug = re.sub(r"[^a-z0-9]+", "-", nombre.lower()).strip("-")
     destino = CACHE / f"epar-{slug}-{documento}.pdf"
     if not destino.exists():
         CACHE.mkdir(parents=True, exist_ok=True)
         destino.write_bytes(_get(f"https://www.ema.europa.eu/en/documents/assessment-report/"
                                  f"{slug}-epar-{documento}_en.pdf", timeout=300))
+    return _frases_pdf(destino, patron, contexto)
+
+
+def _frases_pdf(ruta, patron, contexto=1, maximo=None):
+    """Frases de un PDF que cumplen el patrón (regex, sin distinguir mayúsculas), con su página y las
+    `contexto - 1` frases vecinas a cada lado."""
+    import pymupdf
     salida = []
-    for n, pagina in enumerate(pymupdf.open(destino), 1):
-        frases = re.split(r"(?<=[.;])\s+", re.sub(r"\s+", " ", pagina.get_text()))
+    for n, pagina_ in enumerate(pymupdf.open(ruta), 1):
+        frases = re.split(r"(?<=[.;])\s+", re.sub(r"\s+", " ", pagina_.get_text()))
         for i, f in enumerate(frases):
             if re.search(patron, f, re.I):
                 salida.append({"pagina": n, "texto": " ".join(frases[max(0, i - contexto + 1):i + contexto])})
+                if maximo and len(salida) >= maximo:
+                    return salida
     return salida
+
+
+def pdf_texto(url, patrones=(), contexto=1, maximo=8):
+    """Frases de un PDF público (guía nacional, documento de posición, informe técnico) que cumplen cada patrón,
+    con el número de página para citarlas. url: dirección del PDF o ruta local. El PDF se guarda en la caché.
+    Si el PDF es una imagen escaneada no tiene texto: lo indica en «aviso»."""
+    import hashlib
+    import pymupdf
+    if Path(url).exists():
+        ruta = Path(url)
+    else:
+        ruta = CACHE / f"pdf-{hashlib.sha1(url.encode()).hexdigest()[:16]}.pdf"
+        if not ruta.exists():
+            ruta.write_bytes(_get(url, timeout=300, cabeceras={"User-Agent": "Mozilla/5.0 (compatible; "
+                                                                             "skills-docencia/1.0)"}))
+    documento = pymupdf.open(ruta)
+    caracteres = sum(len(p.get_text()) for p in documento)
+    return {"url": url, "titulo": (documento.metadata or {}).get("title") or None, "paginas": len(documento),
+            "aviso": "sin texto extraíble: puede ser un escaneo" if caracteres < 20 * len(documento) else None,
+            "fragmentos": {p: _frases_pdf(ruta, p, contexto, maximo) for p in patrones}}
 
 
 def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "microbiology", "pharmacokinetics",
@@ -580,12 +619,21 @@ def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "
     En los antimicrobianos, 12.1 suele remitir a 12.4 («microbiology»): ahí están el mecanismo y la resistencia.
     Las fichas antiguas sin formato PLR no tienen ese campo; su «Microbiology» va dentro de clinical_pharmacology."""
     q = urllib.parse.quote(f'openfda.generic_name:"{nombre}"')
-    r = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=1", timeout=90))["results"][0]
+    fichas = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=25", timeout=90))["results"]
+    r = max(fichas, key=lambda f: _puntuar_ficha(f, nombre, secciones))
     salida = {"set_id": r.get("set_id"), "fecha": r.get("effective_time")}
     for s in secciones:
         if r.get(s):
             salida[s] = " ".join(r[s])[:largo]
     return salida
+
+
+def _puntuar_ficha(ficha, nombre, secciones):
+    """Orden de preferencia entre fichas de openFDA: primero la del principio activo solo (no una combinación),
+    después la que tiene más secciones de las pedidas y, a igualdad, la más reciente."""
+    genericos = [g.strip().upper() for g in ficha.get("openfda", {}).get("generic_name", [])]
+    solo = any(g == nombre.strip().upper() for g in genericos)
+    return solo, sum(bool(ficha.get(s)) for s in secciones), ficha.get("effective_time", "")
 
 
 def openfda_eventos(nombre, maximo=15):
@@ -677,14 +725,15 @@ def fda_indicaciones(nombre, ultimas=6, cartas=True):
 # --- Enfermedades: definiciones, ontologías y guías ------------------------------------
 
 def mesh(termino):
-    """Definición curada de MeSH (NLM) y su identificador. termino: en inglés."""
+    """Definición curada de MeSH (NLM) y su identificador. termino: en inglés.
+    «mesh» es el identificador que se cita (D…, p. ej., D003924); «uid» es el número interno de Entrez."""
     base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
     q = urllib.parse.quote(termino)
     ids = json.loads(_get(f"{base}/esearch.fcgi?db=mesh&term={q}&retmode=json"))["esearchresult"]["idlist"][:3]
     salida = []
     for uid in ids:
         r = json.loads(_get(f"{base}/esummary.fcgi?db=mesh&id={uid}&retmode=json"))["result"][uid]
-        salida.append({"uid": uid, "termino": (r.get("ds_meshterms") or [""])[0],
+        salida.append({"mesh": r.get("ds_meshui"), "uid": uid, "termino": (r.get("ds_meshterms") or [""])[0],
                        "definicion": r.get("ds_scopenote", "").strip()})
     return salida
 
@@ -697,9 +746,13 @@ def mondo(termino):
             for x in d["response"]["docs"]]
 
 
-def guias(enfermedad, maximo=10):
+def guias(enfermedad, maximo=10, titulo=False):
     """Guías de práctica clínica y consensos recientes en PubMed (filtro de tipo de publicación).
-    Cada resultado lleva su PMCID si el texto completo está en PMC (léelo con pmc_texto)."""
+    Cada resultado lleva su PMCID si el texto completo está en PMC (léelo con pmc_texto).
+    titulo=True exige que cada palabra de `enfermedad` esté en el título: menos ruido cuando el nombre
+    de la enfermedad aparece de pasada en guías de otros temas (p. ej., «hospital-acquired pneumonia»)."""
+    if titulo:
+        enfermedad = " AND ".join(f"{palabra}[ti]" for palabra in re.findall(r"[\w-]+", enfermedad))
     consulta = (f"({enfermedad}) AND (practice guideline[pt] OR guideline[pt] OR consensus[ti] OR "
                 f'"standards of care"[ti]) AND ("last 5 years"[dp])')
     resultados = pubmed(consulta, maximo=maximo)
@@ -719,18 +772,30 @@ def pmcid(pmid):
 def pmc_texto(pmcid, patrones=(), contexto=350):
     """Texto completo de un artículo de PMC cuando la editorial lo permite (p. ej., acceso abierto).
 
-    Devuelve los fragmentos que contienen cada patrón (regex). Si la editorial no permite descargar el texto
-    completo, lo indica: en ese caso, usa el resumen de PubMed o busca una versión en acceso abierto.
+    Devuelve los fragmentos que contienen cada patrón (regex). Lo pide a NCBI y, si NCBI no lo da (la editorial
+    no permite descargarlo, o el servicio falla), a Europe PMC; «fuente» dice cuál respondió. Si ninguno lo
+    tiene, lo indica: en ese caso, usa el resumen de PubMed o busca una versión en acceso abierto.
     """
     numero = str(pmcid).upper().replace("PMC", "")
-    xml = _get(f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id={numero}&retmode=xml",
-               timeout=180).decode("utf-8", "ignore")
-    if "does not allow downloading of the full text" in xml:
-        return {"pmcid": f"PMC{numero}", "texto_completo": False}
-    texto = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", xml)))
-    fragmentos = {p: [texto[max(0, m.start() - contexto):m.end() + contexto] for m in re.finditer(p, texto)][:3]
-                  for p in patrones}
-    return {"pmcid": f"PMC{numero}", "texto_completo": True, "caracteres": len(texto), "fragmentos": fragmentos}
+    intentos = (("NCBI PMC", f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id={numero}"
+                              "&retmode=xml"),
+                ("Europe PMC", f"https://www.ebi.ac.uk/europepmc/webservices/rest/PMC{numero}/fullTextXML"))
+    errores = []
+    for fuente, url in intentos:
+        try:
+            xml = _get(url, timeout=180, intentos=2).decode("utf-8", "ignore")
+        except RuntimeError as e:
+            errores.append(str(e))
+            continue
+        texto = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", xml)))
+        if "does not allow downloading of the full text" in xml or "<body" not in xml:
+            errores.append(f"{fuente}: sin texto completo")
+            continue
+        fragmentos = {p: [texto[max(0, m.start() - contexto):m.end() + contexto]
+                          for m in re.finditer(p, texto)][:3] for p in patrones}
+        return {"pmcid": f"PMC{numero}", "texto_completo": True, "fuente": fuente, "caracteres": len(texto),
+                "fragmentos": fragmentos}
+    return {"pmcid": f"PMC{numero}", "texto_completo": False, "detalle": "; ".join(errores)}
 
 
 def pagina(url, patrones=(), contexto=300):
@@ -755,12 +820,15 @@ if __name__ == "__main__":
     accion, *args = sys.argv[1:]
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
                   "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones", "mesh", "mondo",
-                  "guias", "togopic", "commons"):
+                  "guias", "guias-titulo", "togopic", "commons"):
         args = [" ".join(args)]
     funciones = {"pubchem": pubchem, "chembl": chembl, "pdb-buscar": pdb_buscar, "pdb-ligandos": pdb_ligandos,
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
                  "servier-extraer": lambda k, d, g, n: servier_extraer(k, int(d), g, n),
                  "dailymed": dailymed, "cima": cima, "uniprot": uniprot, "reactome": reactome,
+                 "uniprot-proteina": lambda nombre, organismo=None: uniprot(
+                     proteina=nombre, organismo=int(organismo) if organismo else None),
+                 "pdf": lambda url, *patrones: pdf_texto(url, patrones),
                  "europepmc": lambda consulta, patron=None: europepmc(consulta, patron),
                  "pubmed": lambda consulta, patron=None: pubmed(consulta, patron),
                  "gen": ncbi_gene, "nci": nci_tesauro, "livertox": livertox, "medlineplus": medlineplus,
@@ -768,6 +836,7 @@ if __name__ == "__main__":
                  "actividad": lambda nombre, diana=None: chembl_actividad(nombre, diana),
                  "bindingdb": bindingdb, "epar": ema_epar, "fda-indicaciones": fda_indicaciones,
                  "mesh": mesh, "mondo": mondo, "guias": guias,
+                 "guias-titulo": lambda enfermedad: guias(enfermedad, titulo=True),
                  "togopic": togopic, "togopic-descargar": togopic_descargar, "commons": commons,
                  "commons-descargar": commons_descargar,
                  "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones),

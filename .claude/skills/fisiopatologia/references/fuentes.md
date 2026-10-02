@@ -21,7 +21,7 @@
 | Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `fuentes.py pagina`, `medlineplus` |
 | Algoritmo de tratamiento | Guía o consenso de acceso abierto (texto completo en PMC) | Resumen de la guía en PubMed | `fuentes.py guias`, `pmc` |
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
-| Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pubmed` |
+| Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pdf`, `pubmed` |
 | Afirmaciones sueltas | PubMed (por relevancia) y Europe PMC (por citas) | — | `fuentes.py pubmed`, `europepmc` |
 | Órganos, tejidos y células | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier), kits de Servier; TogoTV y Wikimedia Commons (ver «Bibliotecas de imágenes en otros idiomas» en `idiomas.md`) | `recursos.py`, `fuentes.py bioicons`, `servier-*`, `togopic`, `commons` |
 | Flechas, pasos, rótulos, tarjetas | Biblioteca propia | — | `componentes.py`, `piezas.py` |
@@ -42,20 +42,22 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 | Mecanismo y resistencia de un antimicrobiano | Ficha de la FDA, sección 12.4 *Microbiology* (campo `microbiology` en openFDA) | CIMA 5.1; DailyMed «12.4 Microbiology» | `fuentes.py openfda`, `cima`, `dailymed` |
 | Puntos de corte de sensibilidad | EUCAST (eucast.org, tablas de puntos de corte) | CLSI (resúmenes públicos) | `fuentes.py pagina` |
 | Uso racional de antimicrobianos | Clasificación AWaRe y manual de antibióticos de la OMS | — | `fuentes.py pagina` |
-| Resistencia local | OPS (red ReLAVRA+), INCIENSA en Costa Rica, informes nacionales | GLASS de la OMS | `fuentes.py pagina` |
+| Resistencia local | Costa Rica: Laboratorio de Antimicrobianos del INCIENSA (vigilancia EVILABRA; ver abajo) | OPS (red ReLAVRA+), GLASS de la OMS, informes de cada hospital | `fuentes.py pagina` |
 | Vacunas | Ficha técnica de la vacuna (CIMA, FDA) | Documentos de posición de la OMS; guías nacionales | `fuentes.py cima`, `pagina` |
 
 - **Mecanismo de los antimicrobianos:** en su ficha de la FDA, la sección 12.1 suele decir solo «es un antibacteriano [ver Microbiología (12.4)]». El mecanismo, la resistencia y la actividad están en la 12.4. Las fichas antiguas, sin el formato actual, no tienen el campo `microbiology`: la sección «Microbiology» va dentro de `clinical_pharmacology`. Si `openfda` la corta, búscala con `dailymed` o usa CIMA 5.1.
-- **Combinaciones a dosis fija:** `openfda` devuelve la primera ficha que contiene el genérico, que puede ser la de una combinación (p. ej., dolutegravir dentro de abacavir/dolutegravir/lamivudina). Comprueba que la frase citada habla del fármaco que te interesa.
+- **Combinaciones a dosis fija:** `openfda` prefiere la ficha del principio activo solo y, entre varias, la que tiene las secciones pedidas. Si el fármaco solo existe en combinación (p. ej., piperacilina/tazobactam), devuelve una ficha de la combinación: comprueba que la frase citada habla del fármaco que te interesa.
 - **Resistencia y elección del tratamiento empírico:** dependen del país. Si la guía usada es extranjera, dilo y busca datos de resistencia de Costa Rica o de Latinoamérica; si no los encuentras, anótalo en «No verificado».
+- **Resistencia en Costa Rica:** el Centro Nacional de Referencia de Bacteriología del INCIENSA coordina la vigilancia de laboratorio EVILABRA (perfiles de resistencia por microorganismo, tipo de muestra y tipo de infección, con datos de los laboratorios participantes) y es el punto focal de ReLAVRA+ y centro colaborador de la OMS en resistencia. La descripción está en https://www.inciensa.sa.cr/laboratorio-de-antimicrobianos/ (léela con `fuentes.py pagina`). Los datos se publican en un informe interactivo acumulado (enlazado desde https://www.inciensa.sa.cr/informes-interactivos/; el primero cubre 2018–2022, según la OPS) que se genera con JavaScript: `pagina` no lee sus cifras. Para citar un porcentaje de resistencia, pide a la persona usuaria la cifra del informe (o una captura) con su fecha y anota «INCIENSA, EVILABRA, informe interactivo, consultado el …»; si no está disponible, anótalo en «No verificado». La página de datos de resistencia de la OPS (www3.paho.org/data) respondió con error 502 en octubre de 2026.
 - **Objetivos FC/FD:** cópialos con el índice, la familia y la fuente («%fT > CMI», «ABC₀₋₂₄/CMI ≥ …»). Los objetivos cambian según la gravedad y el microorganismo: no los generalices de un fármaco a toda la familia sin que la fuente lo diga.
 - **Puntos de corte:** cópialos literalmente con su versión (p. ej., «EUCAST, tabla v. 15.0») y no los conviertas entre EUCAST y CLSI.
 - Responden desde este entorno: who.int, paho.org, niaid.nih.gov, idsociety.org, escmid.org, clinicalinfo.hiv.gov, eacsociety.org, eucast.org e inciensa.sa.cr. Algunas son índices de guías: sigue el enlace a la guía o búscala en PMC.
 
 ## Cómo leer una guía
 
-- Busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. Prefiere la que tenga texto completo en PMC (`pmcid` en el resultado).
-- Extrae las frases exactas con `python3 scripts/fuentes.py pmc <PMCID> "<regex>" "<regex>"`. Si devuelve `texto_completo: false`, el editor no permite descargarlo: usa el resumen y anótalo en «No verificado».
+- Busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. Si salen muchas guías de otros temas, usa `guias-titulo`, que exige las palabras en el título. Prefiere la que tenga texto completo en PMC (`pmcid` en el resultado).
+- Extrae las frases exactas con `python3 scripts/fuentes.py pmc <PMCID> "<regex>" "<regex>"`. Lo pide a NCBI y, si no lo da, a Europe PMC (el campo `fuente` dice cuál). Si devuelve `texto_completo: false`, ninguno lo tiene: usa el resumen y anótalo en «No verificado».
+- Si la guía es un PDF (sociedades, ministerios, AWMF, OMS), extrae las frases con `python3 scripts/fuentes.py pdf <URL> "<regex>"`: cada fragmento lleva su página, que se cita en el material («guía S3, p. 11»). Si el resultado trae `aviso`, el PDF es un escaneo sin texto.
 - Cita cada recomendación con la guía y el año. No mezcles recomendaciones de guías distintas en un mismo algoritmo sin decirlo.
 
 ## No disponibles en este entorno
