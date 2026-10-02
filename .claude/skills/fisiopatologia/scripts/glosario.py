@@ -59,7 +59,7 @@ def textos(carpeta):
             yield svg.name, t
     material = (carpeta / "material.md").read_text(encoding="utf-8")
     material = re.sub(r"^## (?:Glosario|Fuentes)\s*$.*?(?=^## |\Z)", "", material, flags=re.M | re.S)
-    material = re.sub(r"\]\([^)]*\)|https?://\S+", "", material)
+    material = re.sub(r"\]\([^)]*\)|https?://\S+|`[^`\n]*`", "", material)  # enlaces, direcciones y código
     for linea in material.splitlines():
         yield "material.md", linea
 

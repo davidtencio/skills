@@ -25,6 +25,7 @@ Python 3 con `rdkit playwright python-pptx pymupdf markdown` (`fisiopatologia` n
   - cada `SKILL.md` es válido y lo que cita existe;
   - el código común de las dos skills es idéntico (`test_paridad.py`): si cambias un módulo compartido, copia el cambio a la otra skill;
   - los analizadores de `fuentes.py` interpretan bien respuestas reales grabadas (`tests/datos/fuentes/`).
+  - la bibliografía estructurada (`bibliografia.py`) numera, formatea y comprueba las citas `[@clave]`, y el PDF las enlaza con su referencia (`test_bibliografia.py`).
 
   Los de PDF (marcador `pdf`) regeneran cada PDF y lo comparan con la huella del ejemplo (`huella-pdf.json`: páginas, índice y texto de cada página). Solo se versiona un PDF de ejemplo por skill, para verlo: `neumonia-nosocomial.pdf` y `durvalumab.pdf`. Se ejecutan en GitHub Actions en cada PR y en cada push a `main`.
 

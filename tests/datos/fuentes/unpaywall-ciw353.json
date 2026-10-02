@@ -1,0 +1,47 @@
+{
+ "doi": "10.1093/cid/ciw353",
+ "is_oa": true,
+ "title": "Management of Adults With Hospital-acquired and Ventilator-associated Pneumonia: 2016 Clinical Practice Guidelines by the Infectious Diseases Society of America and the American Thoracic Society",
+ "oa_locations": [
+  {
+   "host_type": "publisher",
+   "url": "https://academic.oup.com/cid/article-pdf/63/5/e61/28679213/ciw353.pdf",
+   "url_for_pdf": "https://academic.oup.com/cid/article-pdf/63/5/e61/28679213/ciw353.pdf",
+   "url_for_landing_page": "https://doi.org/10.1093/cid/ciw353",
+   "version": "publishedVersion",
+   "license": null
+  },
+  {
+   "host_type": "repository",
+   "url": "https://hdl.handle.net/2445/118988",
+   "url_for_pdf": null,
+   "url_for_landing_page": "https://hdl.handle.net/2445/118988",
+   "version": "publishedVersion",
+   "license": "cc-by"
+  },
+  {
+   "host_type": "repository",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/4981759",
+   "url_for_pdf": null,
+   "url_for_landing_page": "https://www.ncbi.nlm.nih.gov/pmc/articles/4981759",
+   "version": "submittedVersion",
+   "license": null
+  },
+  {
+   "host_type": "repository",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/4981763",
+   "url_for_pdf": null,
+   "url_for_landing_page": "https://www.ncbi.nlm.nih.gov/pmc/articles/4981763",
+   "version": "submittedVersion",
+   "license": null
+  },
+  {
+   "host_type": "repository",
+   "url": "http://hdl.handle.net/2445/118988",
+   "url_for_pdf": null,
+   "url_for_landing_page": "http://hdl.handle.net/2445/118988",
+   "version": "submittedVersion",
+   "license": "cc-by"
+  }
+ ]
+}

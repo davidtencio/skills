@@ -23,7 +23,7 @@ from piezas import (AZUL, LILA, NARANJA, ROJO, SUAVE, VERDE, Lamina, caja, leyen
                     tarjeta)
 
 INSULINA = "#CC79A7"
-L = Lamina("DIABETES TIPO 2", "Fuentes: consenso ADA/EASD 2022 (PMID 36151309); DeFronzo 2009 (PMID 19336687); "
+L = Lamina("DIABETES TIPO 2", "Fuentes: Normas de Atención de la ADA 2026 (Diabetes Care, supl. 1); DeFronzo 2009 (PMID 19336687); "
            f"Reactome R-HSA-422356, R-HSA-74752; UniProt; ADA y NIDDK (diagnóstico); OMS; FDA. {ATRIBUCION}.")
 
 
@@ -321,15 +321,16 @@ def lamina_7():
             c += texto(xs[j] + 20, y + 46, celda, tam=20 if i else 18, peso="bold" if (i == 0 or j == 3) else "normal",
                        color=color)
     c += tarjeta(40, 560, 740, 230, AZUL, "Confirmación", [
-        "Cada prueba suele repetirse otro día para confirmar.",
-        "Basta un resultado si la glucosa es muy alta o si",
-        "hay síntomas clásicos con una prueba positiva."], tam=20)
+        "Salvo hiperglucemia inequívoca, hacen falta dos",
+        "resultados alterados: dos pruebas distintas a la vez",
+        "(p. ej., HbA1c y glucosa en ayunas) o la misma",
+        "prueba en dos momentos."], tam=20)
     c += tarjeta(820, 560, 740, 230, AZUL, "Qué mide cada prueba", [
         "HbA1c: glucemia media de 2 a 3 meses, sin ayuno.",
         "Ayunas: tras al menos 8 horas sin comer.",
         "PTOG: glucosa 2 h después de una bebida azucarada."], tam=20)
     return lamina(7, "Diagnóstico", "Criterios diagnósticos y confirmación",
-                  "Cuatro pruebas con puntos de corte de la ADA; salvo hiperglucemia evidente, el diagnóstico se confirma.", c)
+                  "Cuatro pruebas con los puntos de corte de las Normas de la ADA 2026; salvo hiperglucemia inequívoca, se confirma.", c)
 
 
 # --- Lámina 8 ------------------------------------------------------------------------
@@ -379,34 +380,34 @@ def lamina_8():
 # --- Lámina 9 ------------------------------------------------------------------------
 
 def lamina_9():
-    c = caja(40, 150, 1520, 42, "Base para todos: educación (DSMES), nutrición, actividad física, sueño y control del peso", "",
+    c = caja(40, 150, 1520, 42, "Base para todos: hábitos saludables, educación (DSMES) y determinantes sociales de la salud", "",
              VERDE, fondo="#EAF6F1")
     c += flecha([(800, 194), (800, 250)])
     c += (f'<rect x="560" y="252" width="480" height="76" rx="12" fill="#FFFFFF" stroke="{COLOR["texto"]}" '
           f'stroke-width="1.5"/>')
-    c += texto(800, 283, ["¿Enfermedad CV, insuficiencia cardiaca,", "ERC o varios factores de riesgo CV?"], tam=17,
+    c += texto(800, 283, ["¿Enfermedad CV o alto riesgo CV,", "insuficiencia cardiaca o ERC?"], tam=17,
                peso="bold", anclaje="middle", interlineado=1.3)
     c += flecha([(560, 290), (420, 290), (420, 350)]) + texto(470, 280, "Sí", tam=16, peso="bold", color=VERDE)
     c += flecha([(1040, 290), (1180, 290), (1180, 350)]) + texto(1110, 280, "No", tam=16, peso="bold", color=SUAVE)
     c += tarjeta(40, 354, 760, 330, VERDE, "Protección cardiorrenal", [
-        "Independiente de la HbA1c y de la metformina:",
-        "• Enfermedad CV: AR GLP-1 o iSGLT2 con beneficio.",
-        "• Insuficiencia cardiaca: iSGLT2.",
-        "• ERC (TFGe ≥ 20 y albuminuria > 30 mg/g): iSGLT2;",
-        "  si no se tolera, AR GLP-1 con beneficio CV.",
-        "• Varios factores de riesgo: AR GLP-1 o iSGLT2."], tam=19)
+        "Con beneficio demostrado, sea cual sea la HbA1c:",
+        "• Enfermedad CV o alto riesgo CV: AR GLP-1 y/o iSGLT2.",
+        "• Insuficiencia cardiaca: iSGLT2; con obesidad e",
+        "  ICFEp sintomática, también tirzepatida o AR GLP-1.",
+        "• ERC (TFGe 20–60 y/o albuminuria): iSGLT2",
+        "  o AR GLP-1. Si la TFGe es < 30: mejor AR GLP-1."], tam=18)
     c += tarjeta(820, 354, 740, 330, AZUL, "Control glucémico y peso", [
-        "• Objetivo habitual: HbA1c ≈ 7 % o menos, si se",
-        "  logra sin hipoglucemia; individualizar.",
-        "• Metformina: eficaz, barata, poca hipoglucemia;",
-        "  no usar con TFGe < 30.",
-        "• Elegir otros según eficacia, peso, hipoglucemia",
-        "  y costo; combinar pronto si hace falta."], tam=19)
-    c += tarjeta(40, 700, 1520, 120, NARANJA, "Si hace falta insulina", [
-        "Considerar antes un AR GLP-1. Empezar con insulina basal y titular; mantener metformina y los fármacos protectores."],
-        tam=19)
+        "• Objetivo para muchos adultos: HbA1c < 7 %, sin",
+        "  hipoglucemia grave; individualizar.",
+        "• Metformina: eficacia alta, sin hipoglucemia;",
+        "  reducir la dosis con TFGe < 45 y suspender con < 30.",
+        "• Elegir según peso, comorbilidades y riesgo de",
+        "  hipoglucemia; combinar pronto si hace falta."], tam=18)
+    c += tarjeta(40, 700, 1520, 120, NARANJA, "Si hace falta insulina",
+                 "Antes, un tratamiento basado en GLP-1. Insulina si hay síntomas, HbA1c > 10 % o glucosa ≥ 300 mg/dl: basal de "
+                 "0,1–0,2 U/kg/día, combinada con un AR GLP-1 o tirzepatida, sin retirar los demás fármacos.", tam=18)
     return lamina(9, "Tratamiento", "Estrategia: primero el riesgo cardiorrenal, luego la glucosa",
-                  "Resumen del consenso ADA/EASD 2022; las Normas de la ADA 2026 no se pudieron leer completas.", c)
+                  "Resumen de las Normas de Atención de la ADA 2026 (secciones 6 y 9).", c)
 
 
 LAMINAS = {1: lamina_1, 2: lamina_2, 3: lamina_3, 4: lamina_4, 5: lamina_5, 6: lamina_6, 7: lamina_7, 8: lamina_8,

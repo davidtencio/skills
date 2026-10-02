@@ -1,0 +1,85 @@
+{
+ "_embedded": {
+  "searchResult": {
+   "_embedded": {
+    "objects": [
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "e3a52660-f2d4-4e3c-a311-e48418ad21e0",
+        "handle": "10665/365237",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "The WHO AWaRe (access, watch, reserve) antibiotic book",
+           "language": "en_US",
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dc.date.issued": [
+          {
+           "value": "2022-12-09",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dc.language.iso": [
+          {
+           "value": "en",
+           "language": "en_US",
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dc.identifier.uri": [
+          {
+           "value": "https://iris.who.int/handle/10665/365237",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dc.identifier.isbn": [
+          {
+           "value": "9789240062382 (electronic version)",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dc.contributor.author": [
+          {
+           "value": "World Health Organization",
+           "language": "en_US",
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        },
+        "_links": {
+         "bundles": {
+          "href": "https://iris.who.int/server/api/core/items/e3a52660-f2d4-4e3c-a311-e48418ad21e0/bundles"
+         }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "page": {
+    "number": 0,
+    "size": 1,
+    "totalPages": 1832,
+    "totalElements": 1832
+   }
+  }
+ }
+}

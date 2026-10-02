@@ -1,0 +1,38 @@
+{
+ "_embedded": {
+  "bundles": [
+   {
+    "name": "ORIGINAL",
+    "_links": {
+     "bitstreams": {
+      "href": "https://iris.who.int/server/api/core/bundles/61bba873-1594-41cd-a5d8-84cef55fdefd/bitstreams"
+     }
+    }
+   },
+   {
+    "name": "LICENSE",
+    "_links": {
+     "bitstreams": {
+      "href": "https://iris.who.int/server/api/core/bundles/3836c6e1-7b07-42ef-8e0c-f488ab2466d0/bitstreams"
+     }
+    }
+   },
+   {
+    "name": "TEXT",
+    "_links": {
+     "bitstreams": {
+      "href": "https://iris.who.int/server/api/core/bundles/f9f1d563-b9a7-4d10-b97f-c6c385228854/bitstreams"
+     }
+    }
+   },
+   {
+    "name": "THUMBNAIL",
+    "_links": {
+     "bitstreams": {
+      "href": "https://iris.who.int/server/api/core/bundles/07e960a5-53be-45bb-b5dc-c9be9551229c/bitstreams"
+     }
+    }
+   }
+  ]
+ }
+}

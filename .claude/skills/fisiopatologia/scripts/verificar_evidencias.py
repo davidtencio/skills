@@ -12,15 +12,21 @@ Una «cifra» es un número con unidad (48 h, 7–8 días, 38,3 °C, 6 mg/kg, 95
 
     {"evidencias": [
        {"cifras": ["48 h"], "laminas": [1], "afirmacion": "La NAH aparece más de 48 h después del ingreso.",
-        "fuente": "ERS/ESICM/ESCMID/ALAT 2017 (PMC6018155)", "idioma": "en",
-        "frase": "HAP is defined as pneumonia not incubating at the time of hospital admission and occurring 48 h...",
+        "fuente": "ERS/ESICM/ESCMID/ALAT 2017 (PMC6018155)", "ref": "ers-2017-resumen", "idioma": "en",
+        "frase": "HAP, which develops in hospitalised patients after 48 h of admission",
+        "fuerza": "recomendación fuerte, consenso de expertos",
         "verificar": {"tipo": "pmc", "id": "PMC6018155", "patron": "48 h"}}],
      "ignorar": ["cifras que no son datos, p. ej. 30 días si forma parte de un nombre propio"]}
 
+«laminas» dice en qué láminas está la cifra (sin el campo, en todas; con [], solo en el material).
+«ref» es la clave de la fuente en bibliografia.json (obligatoria si el ejemplo tiene bibliografía estructurada);
+«fuerza», la fuerza de la recomendación cuando la guía la da (fuerte o débil, grado, consenso de expertos).
+
 Sin red se comprueba: que cada cifra de las láminas está en alguna evidencia de esa lámina; que cada evidencia
-tiene fuente y frase; y que el número de cada cifra aparece en su frase (38,3 → 38.3; las cifras traducidas
-conservan el número). Con --en-linea, cada evidencia con «verificar» se vuelve a leer en la fuente
-(tipos: pmc, pdf, pagina, pubmed) y la frase registrada tiene que estar en lo que devuelve.
+tiene fuente y frase (y «ref», con bibliografía); y que el número de cada cifra aparece en su frase (38,3 → 38.3;
+las cifras traducidas conservan el número). Con --en-linea, cada evidencia con «verificar» se vuelve a leer en la
+fuente (tipos: pmc, texto —PMC y, si no, acceso abierto—, pdf, pagina, pubmed) y la frase registrada tiene que
+estar en lo que devuelve.
 """
 import json
 import re
@@ -97,18 +103,21 @@ def revisar(carpeta):
     registro = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {"evidencias": []}
     evidencias, ignorar = registro.get("evidencias", []), {_norm(c) for c in registro.get("ignorar", [])}
     errores, pendientes = [], {}
+    con_bibliografia = (carpeta / "bibliografia.json").exists()
     for k, e in enumerate(evidencias, 1):
         nombre = f"evidencia {k} ({', '.join(e.get('cifras', [])) or 'sin cifras'})"
-        for campo in ("cifras", "fuente", "frase"):
+        for campo in ("cifras", "fuente", "frase") + (("ref",) if con_bibliografia else ()):
             if not e.get(campo):
                 errores.append(f"{nombre}: falta «{campo}»")
+        if "fuerza" in e and not (isinstance(e["fuerza"], str) and e["fuerza"].strip()):
+            errores.append(f"{nombre}: «fuerza» vacía (quítala si la guía no la da)")
         frase = _frase_normalizada(e.get("frase", ""))
         for cifra in e.get("cifras", []):
             faltan = [n for n in _numeros(cifra) if n not in frase]
             if e.get("frase") and faltan:
                 errores.append(f"{nombre}: {', '.join(faltan)} no aparece en la frase de la fuente")
     for n, svg in _laminas(carpeta):
-        registradas = {_norm(c) for e in evidencias if not e.get("laminas") or n in e["laminas"]
+        registradas = {_norm(c) for e in evidencias if "laminas" not in e or n in e["laminas"]
                        for c in e.get("cifras", [])}
         faltan = [c for c in cifras_lamina(svg) if c not in registradas and c not in ignorar]
         if faltan:
@@ -127,9 +136,11 @@ def verificar_en_linea(carpeta):
         if not v:
             continue
         try:
-            if v["tipo"] == "pmc":
-                r = fuentes.pmc_texto(v["id"], (v["patron"],), contexto=600)
-                textos = r.get("fragmentos", {}).get(v["patron"], [])
+            if v["tipo"] in ("pmc", "texto"):
+                r = (fuentes.pmc_texto(v["id"], (v["patron"],), contexto=600) if v["tipo"] == "pmc" else
+                     fuentes.texto_completo(v["id"], (v["patron"],)))
+                textos = [x["texto"] if isinstance(x, dict) else x
+                          for x in r.get("fragmentos", {}).get(v["patron"], [])]
             elif v["tipo"] == "pdf":
                 textos = [f["texto"] for f in fuentes.pdf_texto(v["url"], (v["patron"],), contexto=3, maximo=40)
                           ["fragmentos"][v["patron"]]]

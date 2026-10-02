@@ -1,0 +1,17 @@
+{
+ "status": "ok",
+ "records": [
+  {
+   "doi": "10.1093/cid/ciw353",
+   "pmcid": "PMC4981759",
+   "pmid": 27418577,
+   "requested-id": "27418577"
+  },
+  {
+   "pmid": 28890434,
+   "requested-id": "28890434",
+   "status": "error",
+   "errmsg": "Identifier not found in PMC"
+  }
+ ]
+}

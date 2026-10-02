@@ -15,7 +15,8 @@ import pytest
 from conftest import SKILLS, SKILLS_DIR
 
 IDENTICOS = ["renderizar.py", "hoja_comparacion.py", "estructuras.py", "superficie.py", "revisar_lamina.py",
-             "glosario.py", "verificar_evidencias.py", "catalogo.py"]
+             "glosario.py", "verificar_evidencias.py", "catalogo.py",
+             "bibliografia.py"]
 
 
 def _modulos_comunes():

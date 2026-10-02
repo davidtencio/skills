@@ -15,6 +15,9 @@ Ejecuta primero `python3 scripts/revisar_lamina.py <carpeta>`: debe terminar sin
 - [ ] Las cifras (puntos de corte, porcentajes, umbrales de TFGe…) coinciden literalmente con la fuente citada.
 - [ ] `scripts/verificar_evidencias.py <carpeta> --en-linea` termina sin errores: cada cifra de las láminas está en `evidencias.json` con la frase de su fuente.
 - [ ] Las recomendaciones de tratamiento dicen de qué guía o consenso salen y de qué año; si la guía vigente no se pudo leer, consta en «No verificado».
+- [ ] `scripts/fuentes.py vigencia <PMID>` no encuentra una versión posterior de cada guía usada (o la versión posterior consta en «No verificado»).
+- [ ] La fuerza de cada recomendación aparece tal como la da la guía (GRADE, nivel de evidencia, «soll»/«sollte»).
+- [ ] `scripts/bibliografia.py comprobar <carpeta> --en-linea` termina sin errores: cada cita tiene su referencia en `bibliografia.json`, ninguna está retractada, y las listas de Fuentes y «Cómo se buscó» están generadas.
 - [ ] Las gráficas sin datos llevan el rótulo «Esquema cualitativo».
 - [ ] Los rótulos de honestidad están presentes (esquema, sin escala).
 - [ ] El error frecuente es correcto y útil en la práctica clínica.

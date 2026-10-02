@@ -19,7 +19,9 @@
 | Vías moleculares | Reactome | UniProt (función con PMID), NCBI Gene | `fuentes.py reactome`, `uniprot`, `gen` |
 | Criterios diagnósticos | Página de la sociedad científica (p. ej., diabetes.org) o del instituto del NIH (p. ej., NIDDK) | Guía de práctica clínica en PMC | `fuentes.py pagina`, `pmc` |
 | Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `fuentes.py pagina`, `medlineplus` |
-| Algoritmo de tratamiento | Guía o consenso de acceso abierto (texto completo en PMC) | Resumen de la guía en PubMed | `fuentes.py guias`, `pmc` |
+| Algoritmo de tratamiento | Guía o consenso vigente con texto completo (PMC o copia en acceso abierto) | Resumen de la guía en PubMed | `fuentes.py guias`, `vigencia`, `texto` |
+| Documentos de la OMS y de la OPS | IRIS de la OMS (iris.who.int) y de la OPS (iris.paho.org), con su PDF | Notas descriptivas de la OMS | `fuentes.py iris`, `pdf` |
+| Costa Rica | Protocolos y normas de la CCSS en BINASSS | Ministerio de Salud; INCIENSA (resistencia) | `fuentes.py binasss`, `pdf`, `pagina` |
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
 | Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pdf`, `pubmed` |
 | Afirmaciones sueltas | PubMed (por relevancia) y Europe PMC (por citas) | — | `fuentes.py pubmed`, `europepmc` |
@@ -55,14 +57,36 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 
 ## Cómo leer una guía
 
-- Busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. Si salen muchas guías de otros temas, usa `guias-titulo`, que exige las palabras en el título. Prefiere la que tenga texto completo en PMC (`pmcid` en el resultado).
-- Extrae las frases exactas con `python3 scripts/fuentes.py pmc <PMCID> "<regex>" "<regex>"`. Lo pide a NCBI y, si no lo da, a Europe PMC (el campo `fuente` dice cuál). Si devuelve `texto_completo: false`, ninguno lo tiene: usa el resumen y anótalo en «No verificado».
+- **Buscar:** busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. La búsqueda tiene tres pasadas:
+  - las indexadas como guía;
+  - las de los últimos meses, que PubMed tarda en clasificar (así apareció la Surviving Sepsis Campaign 2026 de adultos);
+  - las normas anuales por capítulos (Standards of Care de la ADA), agrupadas en `secciones` y con las ediciones previas en `anteriores`.
+- **Reducir el ruido:** si salen muchas guías de otros temas, usa `guias-titulo`, que exige las palabras en el título.
+- **Ordenar:** el orden premia las guías de alcance general (manejo, diagnóstico, tratamiento) y deja detrás los estudios, las revisiones y los casos clínicos que solo mencionan guías.
+- **Latinoamérica:** con `--latam` se limita a guías de Costa Rica o Latinoamérica.
+- **Vigencia:** antes de usar una guía, `python3 scripts/fuentes.py vigencia <PMID>` busca versiones posteriores aunque el título cambie algo (el consenso ADA/EASD de 2022 pasó a llamarse «Management of Type 2 Diabetes, 2026») y muestra la fe de erratas y las retractaciones. Confirma cada candidata leyendo su título.
+- **Texto completo:** extrae las frases exactas con `python3 scripts/fuentes.py texto <PMID|PMCID|DOI> "<regex>"`.
+  - Prueba PMC (NCBI y Europe PMC) y, si no lo dan, las copias legales en acceso abierto que localiza Unpaywall (repositorios institucionales, con su PDF). Así se leyó la guía IDSA/ATS 2016 en el repositorio de la Universitat de Barcelona.
+  - Cita siempre la versión publicada y anota en `--nota` de la referencia dónde se leyó.
+  - Con `pmc <PMCID>` lees solo PMC: los fragmentos llevan su sección («Background», «Table 2 …»).
+  - Si nada da el texto completo, usa el resumen y anótalo en «No verificado».
 - Si la guía es un PDF (sociedades, ministerios, AWMF, OMS), extrae las frases con `python3 scripts/fuentes.py pdf <URL> "<regex>"`: cada fragmento lleva su página, que se cita en el material («guía S3, p. 11»). Si el resultado trae `aviso`, el PDF es un escaneo sin texto.
-- Cita cada recomendación con la guía y el año. No mezcles recomendaciones de guías distintas en un mismo algoritmo sin decirlo.
+- Cita cada recomendación con la guía y el año, y con su fuerza tal como la da la guía (en `evidencias.json`, campo `fuerza`). No mezcles recomendaciones de guías distintas en un mismo algoritmo sin decirlo.
+- **Otras fuentes de guías:**
+  - Algunas guías no están en PubMed. GOLD (EPOC) y GINA (asma) se leen en sus páginas con `pagina` o `pdf`.
+  - NICE se lee en nice.org.uk (guías NG con su número).
+  - Para la OMS y la OPS, `iris` devuelve el PDF de cada documento.
+
+## Costa Rica
+
+- **BINASSS** (Biblioteca Nacional de Salud y Seguridad Social, binasss.sa.cr) aloja los protocolos, normas y guías de la CCSS y copias de guías internacionales. Por ejemplo, las Normas de Atención de la ADA 2026 completas (standards-of-care-2026.pdf) y la guía de la CCSS para la diabetes tipo 2 (2007). Búscalos con `fuentes.py binasss "<término>"` y léelos con `pdf`. Cita la guía original y anota que se leyó en BINASSS.
+- Comprueba el año de la guía nacional: si es anterior a los tratamientos actuales, dilo en «No verificado» y no la uses para el algoritmo.
+- La resistencia local está en el INCIENSA (ver «Infecciones»).
+- No responden a consultas automáticas desde este entorno: ccss.sa.cr (corta la conexión), LILACS y SciELO (403).
 
 ## No disponibles en este entorno
 
-- **diabetesjournals.org** (Normas de Atención de la ADA): devuelve 403 a consultas automáticas. Usa el consenso ADA/EASD de acceso abierto en PMC y las páginas de diabetes.org.
+- **diabetesjournals.org** (Normas de Atención de la ADA): devuelve 403 a consultas automáticas, y PMC no deja descargar el texto. Lee la copia completa de BINASSS (`fuentes.py binasss "standards"`).
 - **NCBI Bookshelf** (StatPearls): pide captcha.
 - **cdc.gov:** devuelve 403 a consultas automáticas. Usa la OMS, el NIAID o MedlinePlus.
 - **UpToDate, DynaMed, BMJ Best Practice:** requieren suscripción; no se usan.

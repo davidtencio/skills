@@ -9,6 +9,7 @@
       ],
       "afirmacion": "La NAH aparece más de 48 h después del ingreso.",
       "fuente": "ERS/ESICM/ESCMID/ALAT 2017 (PMC6018155)",
+      "ref": "ers-2017-resumen",
       "idioma": "en",
       "frase": "HAP, which develops in hospitalised patients after 48 h of admission",
       "verificar": {
@@ -26,6 +27,7 @@
       ],
       "afirmacion": "La NAV aparece tras al menos 48 h de ventilación mecánica.",
       "fuente": "ERS/ESICM/ESCMID/ALAT 2017 (PMC6018155)",
+      "ref": "ers-2017-resumen",
       "idioma": "en",
       "frase": "VAP, which occurs in intensive care unit (ICU) patients who have received mechanical ventilation for at least 48 h",
       "verificar": {
@@ -44,6 +46,7 @@
       ],
       "afirmacion": "NAH/NAV precoz hasta el día 4; tardía desde el día 5.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 21",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "Eine frühestens 49 Stunden bis maximal Tag 4 nach Aufnahme in ein Krankenhaus/nach Beginn einer invasiven Beatmung auftretende HAP/VAP Late onset HAP (bzw. VAP) Eine ab Tag 5 nach Aufnahme",
       "verificar": {
@@ -61,6 +64,8 @@
       ],
       "afirmacion": "Revisar el espectro de agentes y la resistencia de cada servicio cada 6–12 meses.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, recomendación 1, p. 6",
+      "ref": "s3-2024",
+      "fuerza": "Recomendación fuerte, consenso de expertos (consenso fuerte)",
       "idioma": "de",
       "frase": "Das Erregerspektrum und die Resistenzsituation der jeweiligen Station/Einrichtung soll in Abständen von 6-12 Monaten erhoben und dargestellt",
       "verificar": {
@@ -78,6 +83,7 @@
       ],
       "afirmacion": "Biopelícula en la superficie del tubo en el 95 % de los pacientes ventilados.",
       "fuente": "Nat Commun 2024 (PMC11291905)",
+      "ref": "nat-commun-2024",
       "idioma": "en",
       "frase": "bacterial biofilm formation, found on the ETT surface of 95% of mechanically ventilated patients",
       "verificar": {
@@ -97,6 +103,7 @@
       ],
       "afirmacion": "Factores de riesgo de MMR: antimicrobianos > 24 h en los últimos 30 días; hospitalización ≥ 5 días.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, tabla 3, p. 6",
+      "ref": "s3-2024",
       "idioma": "de",
       "frase": "Therapierelevante Risikofaktoren für multiresistente Infektionserreger bei der HAP Antimikrobielle Therapie (>24h) in den letzten 30 Tagen Hospitalisierung ≥ 5 Tage vor Krankheitsbeginn",
       "verificar": {
@@ -114,6 +121,7 @@
       ],
       "afirmacion": "Atención en los últimos 12 meses en un país con alta prevalencia de MMR.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, tabla 3, p. 6",
+      "ref": "s3-2024",
       "idioma": "de",
       "frase": "Medizinische Versorgung in einem Hochprävalenzland für gramnegative MRE und MRSA innerhalb der letzten 12 Monate",
       "verificar": {
@@ -135,6 +143,8 @@
       ],
       "afirmacion": "Sospecha de NAH: infiltrado más 2 de 3 criterios (leucocitos, fiebre, secreción purulenta).",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, recomendación 2, p. 7",
+      "ref": "s3-2024",
+      "fuerza": "Recomendación fuerte, consenso de expertos (consenso fuerte)",
       "idioma": "de",
       "frase": "in Kombination mit 2 von 3 weiteren Kriterien: - Leukozyten > 10 000 oder < 4000 /μl, - Fieber > 38,3 °C, - purulentes Sekret.",
       "verificar": {
@@ -152,6 +162,7 @@
       ],
       "afirmacion": "La bacteriemia por S. aureus se trata en general 4 semanas o más.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 66",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "aureus Bakteriämie eingestuft und in der Regel vier Wochen oder länger therapiert",
       "verificar": {
@@ -169,6 +180,8 @@
       ],
       "afirmacion": "Galactomanano en LBA con punto de corte ≥ 1,0.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, recomendación 7, p. 9",
+      "ref": "s3-2024",
+      "fuerza": "Recomendación fuerte, grado A (basada en la evidencia)",
       "idioma": "de",
       "frase": "Für den Aspergillus Nachweis soll mindestens ein Antigentest auf Galaktomannan (GM) (Grenzwert>=1.0) aus bronchoalveolärer Lavage",
       "verificar": {
@@ -186,6 +199,8 @@
       ],
       "afirmacion": "Reevaluar a las 48–72 h del inicio del tratamiento.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, recomendación 18, p. 19",
+      "ref": "s3-2024",
+      "fuerza": "Recomendación fuerte, consenso de expertos (consenso fuerte)",
       "idioma": "de",
       "frase": "Eine Reevaluation des Patienten soll 48-72 Stunden nach Beginn der Therapie erfolgen",
       "verificar": {
@@ -203,6 +218,8 @@
       ],
       "afirmacion": "Duración de 7–8 días si la respuesta es buena.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, recomendación 21, p. 20",
+      "ref": "s3-2024",
+      "fuerza": "Recomendación débil, grado B (basada en la evidencia)",
       "idioma": "de",
       "frase": "Die Therapiedauer sollte bei gutem Ansprechen des Patienten 7-8 Tage betragen.",
       "verificar": {
@@ -220,6 +237,7 @@
       ],
       "afirmacion": "Infusión prolongada de β-lactámicos durante 3–4 h.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 54",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "die Verlängerung der Infusionsdauer auf 3-4 Stunden oder die kontinuierliche Infusion über 24 Stunden",
       "verificar": {
@@ -237,6 +255,7 @@
       ],
       "afirmacion": "Tobramicina 1 × 6 mg/kg.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, tabla 4, p. 13",
+      "ref": "s3-2024",
       "idioma": "de",
       "frase": "Tobramycin 1x 6 mg/kg i.v.",
       "verificar": {
@@ -256,6 +275,7 @@
       ],
       "afirmacion": "Objetivos de fT > CMI: penicilinas ≥ 50 %, cefalosporinas 60–70 %, carbapenémicos ≥ 40 % del intervalo.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 54",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "Für Penicilline, Cephalosporine und Carbapeneme wurden fT > MHK-Werte von mindestens 50 %, 60-70 % bzw. mindestens 40% des Dosisintervalls ermittelt.",
       "verificar": {
@@ -273,6 +293,7 @@
       ],
       "afirmacion": "Aclaramiento aumentado: FG ≥ 130 ml/min/m².",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 54",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "Bei Patienten mit supranormaler Nierenfunktion („augmented renal clearance“ = GFR ≥ 130 ml/min/m2) hingegen besteht auch trotz einer verlängerten",
       "verificar": {
@@ -290,6 +311,7 @@
       ],
       "afirmacion": "Infusión continua solo con MDT y resultado en ≤ 24 h.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión larga, p. 54",
+      "ref": "s3-2024-larga",
       "idioma": "de",
       "frase": "Ergebnismitteilung ≤ 24 h)",
       "verificar": {
@@ -308,6 +330,7 @@
       ],
       "afirmacion": "Tobramicina: control del valle (< 1 mg/l) si se usa más de 3 días.",
       "fuente": "Guía S3 2024 (AWMF 020-013), versión corta, tabla 4, p. 13",
+      "ref": "s3-2024",
       "idioma": "de",
       "frase": "Talspiegelkontrolle <1mg/L, wenn länger als 3 Tage im Einsatz",
       "verificar": {
@@ -325,12 +348,31 @@
       ],
       "afirmacion": "Elevar la cabecera a 30–45°.",
       "fuente": "SHEA/IDSA/APIC 2022 (PMC10903147)",
+      "ref": "shea-2022",
+      "fuerza": "Práctica esencial; calidad de la evidencia baja",
       "idioma": "en",
       "frase": "Elevate the head of the bed to 30–45°",
       "verificar": {
         "tipo": "pmc",
         "id": "PMC10903147",
         "patron": "head of the bed"
+      }
+    },
+    {
+      "cifras": [
+        "10–20 %"
+      ],
+      "laminas": [],
+      "afirmacion": "En la NAV, la guía IDSA/ATS 2016 sugiere cubrir el SARM en las unidades donde más del 10–20 % de los S. aureus son resistentes.",
+      "fuente": "IDSA/ATS 2016, resumen ejecutivo, p. e63",
+      "ref": "idsa-2016",
+      "idioma": "en",
+      "fuerza": "Recomendación débil, evidencia de muy baja calidad",
+      "frase": "We suggest including an agent active against MRSA for the empiric treatment of suspected VAP only in patients with any of the following: a risk factor for antimicrobial resistance (Table 2), patients being treated in units where >10%–20% of S. aureus isolates are methicillin resistant, and patients in units where the prevalence of MRSA is not known (weak recommendation, very low-quality evidence).",
+      "verificar": {
+        "tipo": "texto",
+        "id": "27418577",
+        "patron": "units where >10%–20%"
       }
     }
   ],

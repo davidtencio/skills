@@ -22,21 +22,15 @@ import urllib.parse
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from fuentes import CACHE, _get, _texto_plano, pubmed  # noqa: E402
+from fuentes import _GEO, CACHE, _get, _region, _texto_plano, pubmed  # noqa: E402,F401
 
 LATAM = ["Costa Rica", "Panama", "Nicaragua", "Honduras", "El Salvador", "Guatemala", "Mexico", "Colombia",
          "Brazil", "Argentina", "Chile", "Peru", "Ecuador", "Uruguay", "Paraguay", "Bolivia", "Venezuela",
          "Dominican Republic", "Cuba"]
-_GEO = '("Latin America"[MeSH] OR "Central America"[MeSH] OR "South America"[MeSH] OR "Mexico"[MeSH] OR ' \
-       '"Caribbean Region"[MeSH] OR "Costa Rica"[tiab] OR "Latin America"[tiab])'
 _ECON = '("Cost-Benefit Analysis"[MeSH] OR "Quality-Adjusted Life Years"[MeSH] OR "Costs and Cost Analysis"[MeSH] ' \
         'OR cost-effectiveness[tiab] OR "budget impact"[tiab] OR cost-utility[tiab])'
 _RWE = '("Observational Study"[pt] OR "real-world"[tiab] OR "real world"[tiab] OR registry[tiab] OR ' \
        'cohort[tiab] OR "routine clinical practice"[tiab])'
-
-
-def _region(consulta, region):
-    return f"{consulta} AND {_GEO}" if region == "latam" else consulta
 
 
 def economia(nombre, region="latam", patron=None, maximo=30):
