@@ -5,7 +5,7 @@ Uso:
     python3 scripts/pdf.py ejemplos/<enfermedad> --portada 3  # lámina que ilustra la portada
 
 Lee `material.md` y todas las láminas de la carpeta (sin límite de número). Cada lámina entra como SVG vectorial
-(nítido a cualquier zoom y con el texto seleccionable) si así ocupa menos en el PDF que como PNG; si no (p. ej.,
+(nítido a cualquier zoom y con el texto seleccionable) si así ocupa claramente menos en el PDF que como PNG; si no (p. ej.,
 superficies moleculares con miles de degradados), como PNG, para que el PDF no se dispare. La portada usa el PNG.
 Para que el PDF sea reproducible, `material.md` puede fijar la lámina de la portada y la fecha con comentarios:
 `<!-- portada: 3 -->` y `<!-- fecha: 2026-10-01 -->` (`--portada` y `--fecha` tienen prioridad). El diseño es
@@ -119,12 +119,17 @@ def _peso_en_pdf(pagina, archivo, tmp):
     return len(pagina.pdf(width="297mm", height="210mm", print_background=True))
 
 
+AHORRO_SVG = 0.88  # el SVG se usa si ocupa como mucho el 88 % del PNG: con un margen, la elección no cambia
+#                    entre versiones de Chromium (en los ejemplos, los cocientes están por debajo de 0,8 o por encima de 0,95)
+
+
 def elegir_formatos(pagina, lams, tmp):
-    """Deja cada lámina en SVG solo si ocupa menos en el PDF que su PNG."""
+    """Deja cada lámina en SVG solo si ocupa claramente menos en el PDF que su PNG (AHORRO_SVG)."""
     elegidas = []
     for n, t, p in lams:
         png = p.with_suffix(".png")
-        if p.suffix == ".svg" and png.exists() and _peso_en_pdf(pagina, p, tmp) > _peso_en_pdf(pagina, png, tmp):
+        if p.suffix == ".svg" and png.exists() and \
+                _peso_en_pdf(pagina, p, tmp) > AHORRO_SVG * _peso_en_pdf(pagina, png, tmp):
             p = png
         elegidas.append((n, t, p))
     return elegidas
