@@ -91,7 +91,7 @@ Crea `ejemplos/<farmaco>/laminas.py` a partir del de darolutamida. Bibliotecas d
 Reglas de estilo en `references/estilo.md`.
 
 ### 7. Renderizar y verificar
-`python3 scripts/renderizar.py lamina-N.svg` y **mira cada PNG con Read**. Corrige hasta que pase la lista de `references/verificacion.md` (textos que se pisan, elementos sobre la membrana, tamaño mínimo de letra, atribuciones, rótulos de esquema). Es normal necesitar 2–4 rondas por lámina.
+`python3 scripts/revisar_lamina.py <carpeta>` mide las láminas en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro; corrige esos errores. Después, `python3 scripts/renderizar.py lamina-N.svg` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni elementos tapados. Corrige hasta que pase la lista de `references/verificacion.md` (textos que se pisan, elementos sobre la membrana, tamaño mínimo de letra, atribuciones, rótulos de esquema). Es normal necesitar 2–4 rondas por lámina.
 
 ### 8. Material de apoyo
 Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título `# <Fármaco>: ¿cómo actúa?`, lista numerada de láminas con enlace (`1. [Título](lamina-1.png)`), puntos clave, recorrido de cada lámina, farmacocinética, clase farmacológica, error frecuente, pregunta de autoevaluación con respuesta, simplificaciones, **glosario** y fuentes, con la cita de cada afirmación. Termina con **«No verificado»**: solo los datos que no se pudieron confirmar (idealmente, ninguno). Usa listas con línea en blanco antes y sangría de 3–4 espacios para las sublistas, y cita con `*[Fuente]*`.

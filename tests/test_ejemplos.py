@@ -44,6 +44,14 @@ def test_glosario_completo(skill, carpeta):
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
 
 
+@pytest.mark.chromium
+@pytest.mark.parametrize("skill, carpeta", EJEMPLOS, ids=IDS)
+def test_maquetacion_sin_errores(skill, carpeta):
+    """Ningún texto se pisa con otro ni se sale de la lámina o de su recuadro (revisar_lamina.py)."""
+    r = ejecutar(carpeta.parents[1] / "scripts" / "revisar_lamina.py", carpeta)
+    assert r.returncode == 0, r.stdout[-3000:] + r.stderr[-2000:]
+
+
 @pytest.mark.pdf
 @pytest.mark.parametrize("skill, carpeta", EJEMPLOS, ids=IDS)
 def test_pdf_misma_estructura(skill, carpeta, tmp_path):

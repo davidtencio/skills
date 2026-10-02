@@ -72,16 +72,17 @@ Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células
 Crea `ejemplos/<enfermedad>/laminas.py` a partir del de diabetes tipo 2. Bibliotecas disponibles:
 - `scripts/piezas.py`:
    - `Lamina(enfermedad, fuentes)` dibuja el marco común: cabecera, título, pie y aviso.
-   - `tarjeta`, `ficha`, `caja`, `leyenda_paso`, `membrana` y `organo_ilustrado`.
+   - `tarjeta`, `ficha`, `caja`, `leyenda_paso`, `membrana`, `organo_ilustrado`, `idea_clave` (franja de conclusión) y `decision` (rombo de un algoritmo). Si a `tarjeta` le pasas un párrafo (cadena) en lugar de una lista, parte las líneas sola al ancho de la tarjeta.
    - `curva_fcfd`: curva cualitativa concentración-tiempo con la CMI y el índice FC/FD resaltado (T > CMI, Cmáx/CMI, ABC/CMI).
-- `scripts/componentes.py`: capa de estilo con textos, flechas, pasos, bloqueos, vesículas, mitocondria, `etiqueta_farmaco` y la paleta `COLOR`.
+- `scripts/microbios.py`: microorganismos y dianas para infecciones (`bacilo_gramnegativo`, `coco_grampositivo`, `porina`, `bomba` de expulsión, `pbp`, `enzima_bl`, `bacteria_pequena`).
+- `scripts/componentes.py`: capa de estilo con textos, flechas, pasos, bloqueos, vesículas, mitocondria, `etiqueta_farmaco` y la paleta `COLOR`. `texto(..., ancho=px)` parte las líneas que no caben, medidas con la métrica de Arial.
 - `scripts/recursos.py`: `ilustracion(nombre, x, y, w, h)` inserta un SVG de `assets/ilustraciones/`; `atribucion(*archivos)` da el crédito del pie.
 - `scripts/fuentes.py`: consultas a las fuentes y descargas de ilustraciones.
 
 Reglas de estilo en `references/estilo.md`. El pie común lleva las fuentes generales en una línea; si una lámina necesita citar más, hazlo dentro de la lámina (recuadro) o en el material, nunca alargando el pie.
 
 ### 6. Renderizar y verificar
-`python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
+`python3 scripts/revisar_lamina.py ejemplos/<enfermedad>` mide cada lámina en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro (errores) y letra pequeña o tarjetas medio vacías (avisos); corrige los errores antes de mirar. Después, `python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni ilustraciones tapadas. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
 
 ### 7. Material de apoyo
 Escribe `material.md` con la estructura del de diabetes tipo 2:

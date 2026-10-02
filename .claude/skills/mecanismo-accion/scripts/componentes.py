@@ -78,10 +78,53 @@ def _f(v):
     return f"{v:.1f}"
 
 
+_LETRAS = {}
+
+
+def ancho_texto(cadena, tam, peso="normal"):
+    """Ancho en px de una línea de texto. Mide con Liberation Sans (la métrica de Arial) si Pillow y la fuente
+    están instalados; si no, estima 0,55 × tamaño por carácter (algo por exceso, para no desbordar)."""
+    clave = (peso == "bold", tam)
+    if clave not in _LETRAS:
+        _LETRAS[clave] = None
+        try:
+            from PIL import ImageFont
+            archivo = "LiberationSans-Bold.ttf" if peso == "bold" else "LiberationSans-Regular.ttf"
+            for ruta in (archivo, f"/usr/share/fonts/truetype/liberation/{archivo}"):
+                try:
+                    _LETRAS[clave] = ImageFont.truetype(ruta, tam)
+                    break
+                except OSError:
+                    continue
+        except ImportError:
+            pass
+    letra = _LETRAS[clave]
+    return letra.getlength(cadena) if letra else len(cadena) * tam * 0.55
+
+
+def partir(contenido, ancho, tam=13, peso="normal"):
+    """Parte el texto en líneas que caben en `ancho` px. Respeta los saltos de línea y los elementos de la lista
+    (cada uno es un párrafo); una palabra más larga que el ancho queda sola en su línea."""
+    parrafos = contenido if isinstance(contenido, list) else str(contenido).split("\n")
+    lineas = []
+    for parrafo in parrafos:
+        actual = ""
+        for palabra in parrafo.split(" "):
+            prueba = f"{actual} {palabra}" if actual else palabra
+            if actual and ancho_texto(prueba, tam, peso) > ancho:
+                lineas.append(actual)
+                actual = palabra
+            else:
+                actual = prueba
+        lineas.append(actual)
+    return lineas
+
+
 def texto(x, y, contenido, tam=13, peso="normal", color=None, anclaje="start",
-          cursiva=False, interlineado=1.3):
-    """Texto con soporte para varias líneas (lista o '\\n')."""
-    lineas = contenido if isinstance(contenido, list) else str(contenido).split("\n")
+          cursiva=False, interlineado=1.3, ancho=None):
+    """Texto con soporte para varias líneas (lista o '\\n'). Con `ancho` (px), parte las líneas que no caben."""
+    lineas = partir(contenido, ancho, tam, peso) if ancho else (
+        contenido if isinstance(contenido, list) else str(contenido).split("\n"))
     estilo = ' font-style="italic"' if cursiva else ""
     partes = [
         f'<text x="{_f(x)}" y="{_f(y)}" font-family="{FUENTE}" font-size="{tam}" '
