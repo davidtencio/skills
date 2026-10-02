@@ -83,6 +83,10 @@ COMPROBACIONES = {
         ("IRIS de la OPS", "iris.paho.org", "f.iris('neumonía', repositorio='ops', maximo=2, pdf=False)", _no_vacio),
         ("BINASSS (CCSS, Costa Rica)", "www.binasss.sa.cr", "f.binasss('diabetes')",
          lambda r: any(x["url"].endswith(".pdf") for x in r)),
+        ("NICE (guías)", "www.nice.org.uk", "f.nice_guias('type 2 diabetes')",
+         lambda r: any(g["codigo"] == "NG28" for g in r)),
+        ("NICE (recomendaciones)", "www.nice.org.uk", "f.nice_guia('NG28', ('SGLT',), capitulos='medicines')",
+         lambda r: r.get("actualizada") and any(x.get("anio") for x in r["recomendaciones"])),
     ],
     "mecanismo-accion": [
         ("PubChem", "pubchem.ncbi.nlm.nih.gov", "f.pubchem('metformin')", lambda r: r.get("cid") == 4091),

@@ -231,11 +231,12 @@ Durvalumab funciona porque reactiva linfocitos T. Si antes de empezar se suprime
 
 Búsqueda realizada el 2 de octubre de 2026 con las herramientas de la skill (`fuentes.py`), 30 consultas en total.
 
-- **Fuentes consultadas:** openFDA (7); páginas web (5); PubMed (5); UniProt (3); ema_medicamento (2); nci_tesauro (2); CIMA (AEMPS) (1); Drugs@FDA (1); Reactome (1); ensayos (1); ensayo (1); livertox (1).
+- **Fuentes consultadas:** openFDA (7); páginas web (5); PubMed (5); UniProt (3); EMA (2); NCI Thesaurus (2); CIMA (AEMPS) (1); Drugs@FDA (1); Reactome (1); PubMed (ensayos) (1); ClinicalTrials.gov (1); LiverTox (1).
 - **Búsquedas de literatura:**
   - PubMed: `39813498[uid]` (1 resultado)
   - PubMed: `41643268[uid]` (1 resultado)
   - PubMed: `25943534[uid] OR 28717238[uid] OR 26602187[uid]` (3 resultados)
+  - PubMed (ensayos): `durvalumab` (5 resultados)
   - PubMed: `("durvalumab"[tiab] AND ("Cost-Benefit Analysis"[MeSH] OR "Quality-Adjusted Life Years"[MeSH] OR "Costs and Cost Analysis"[MeSH] OR cost-effectiveness[tiab] OR "budget impact"[tiab] OR cost-utility[tiab])) AND ("Latin America"[MeSH] OR "Central America"[MeSH] OR "South America"[MeSH] OR "Mexico"[MeSH] OR "Caribbean Region"[MeSH] OR "Costa Rica"[tiab] OR "Latin America"[tiab])` (2 resultados)
   - PubMed: `("durvalumab"[tiab] AND ("Observational Study"[pt] OR "real-world"[tiab] OR "real world"[tiab] OR registry[tiab] OR cohort[tiab] OR "routine clinical practice"[tiab])) AND ("Latin America"[MeSH] OR "Central America"[MeSH] OR "South America"[MeSH] OR "Mexico"[MeSH] OR "Caribbean Region"[MeSH] OR "Costa Rica"[tiab] OR "Latin America"[tiab])` (2 resultados)
 - **Criterios:** guías y consensos de los últimos 5 años, con prioridad para el texto completo; cada cifra se comprobó en la frase original de la fuente (registro de evidencias).

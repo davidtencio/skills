@@ -466,3 +466,33 @@ def test_ema_medicamento_lee_los_datos_publicos(red, tmp_path, monkeypatch):
          "medicine_url": "https://www.ema.europa.eu/en/medicines/human/EPAR/jardiance"}]}).encode()})
     r = fuentes.ema_medicamento("empagliflozin")
     assert r[0]["nombre"] == "Jardiance" and r[0]["revision"] == "33" and r[1]["generico"]
+
+
+# --- NICE ----------------------------------------------------------------------------------------------------------
+
+def test_nice_guias_solo_guias_con_su_fecha(red):
+    respuestas, pedidas = red
+    respuestas.update({r"nice\.org\.uk/search": "nice-busqueda.html"})
+    r = fuentes.nice_guias("type 2 diabetes")
+    assert r[0] == {"codigo": "NG28", "titulo": "Type 2 diabetes in adults: management (NG28)", "tipo": "NICE guideline",
+                    "actualizada": "18 February 2026", "publicada": None,
+                    "url": "https://www.nice.org.uk/guidance/ng28"}
+    assert all(g["tipo"] != "Technology appraisal guidance" for g in r), "sin evaluaciones de tecnologías"
+    assert any(g["codigo"].startswith("TA") for g in fuentes.nice_guias("type 2 diabetes", evaluaciones=True))
+
+
+def test_nice_guia_recomendaciones_con_anio_y_fuerza(red):
+    respuestas, pedidas = red
+    respuestas.update({r"guidance/ng28/chapter/Initial-medicines": "nice-ng28-medicines.html",
+                       r"guidance/ng28/chapter/Context": b"<html><body>Sin recomendaciones.</body></html>",
+                       r"guidance/ng28$": "nice-ng28.html"})
+    r = fuentes.nice_guia("NG28", (r"SGLT|DPP-4",))
+    assert r["titulo"] == "Type 2 diabetes in adults: management"
+    assert (r["publicada"], r["actualizada"]) == ("2015-12-02", "2026-02-18")
+    primera, _, debil = r["recomendaciones"]
+    assert primera["numero"] == "1.13.1" and primera["anio"] == "2026" and primera["fuerza"] == "fuerte"
+    assert "offer: modified-release metformin, and an SGLT-2 inhibitor. [2026]" in primera["texto"]
+    assert primera["url"].endswith("/guidance/ng28/chapter/Initial-medicines")
+    assert debil["anio"] == "2015, amended 2026" and debil["fuerza"] == "más débil («consider»)"
+    fuentes.nice_guia("NG28", capitulos="medicines")
+    assert not any(u.endswith("/Context") for u in pedidas[-2:]), "capitulos limita las páginas leídas"

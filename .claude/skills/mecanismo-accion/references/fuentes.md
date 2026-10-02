@@ -19,6 +19,7 @@ Cada pieza de una lámina tiene una fuente preferida. Mezclarlas permite aprovec
 | Farmacogenética | CPIC (nivel A/B: hay recomendación) | Sección de farmacogenómica de la FDA | CC0 | `fuentes.py cpic` |
 | Lactancia | LactMed (NICHD, NIH) | Ficha técnica 4.6 | Dominio público | `fuentes.py lactmed` |
 | Hepatotoxicidad | LiverTox (NIDDK, NIH; si el fármaco no tiene monografía propia, la de su clase) | Ficha técnica 4.4 y 4.8 | Dominio público | `fuentes.py livertox` |
+| Lugar del fármaco en el tratamiento (Reino Unido) | Guías del NICE: recomendaciones con número, año y fuerza | Evaluaciones de tecnologías (TA) con `valor.py nice` | Uso con cita | `fuentes.py nice-guias`, `nice-guia` |
 | Farmacoeconomía (prioridad Latinoamérica) | PubMed con filtros MeSH de evaluación económica y de Latinoamérica | NICE, OMS (eEML), OPS (Fondo Estratégico), NADAC; CONITEC, IETS, CONETEC, CENETEC, IETSI, HAS, G-BA, ICER, PBAC (`valor.py agencias`) | Cita con país, año y moneda | `valor.py economia`, `nice`, `eml`, `ops`, `nadac` |
 | Estudios de vida real | PubMed (estudios observacionales, prioridad Latinoamérica) | ClinicalTrials.gov (observacionales), catálogo de vida real de la EMA | Cita con diseño y tamaño | `valor.py vida-real`, `observacionales`, `ema-rwd` |
 | Orientación sobre efectos adversos notificados | FAERS (openFDA) | — | Dominio público; no da frecuencias | `fuentes.py openfda-eventos` |

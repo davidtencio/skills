@@ -19,7 +19,7 @@
 | Vías moleculares | Reactome | UniProt (función con PMID), NCBI Gene | `fuentes.py reactome`, `uniprot`, `gen` |
 | Criterios diagnósticos | Página de la sociedad científica (p. ej., diabetes.org) o del instituto del NIH (p. ej., NIDDK) | Guía de práctica clínica en PMC | `fuentes.py pagina`, `pmc` |
 | Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `fuentes.py pagina`, `medlineplus` |
-| Algoritmo de tratamiento | Guía o consenso vigente con texto completo (PMC o copia en acceso abierto) | Resumen de la guía en PubMed | `fuentes.py guias`, `vigencia`, `texto` |
+| Algoritmo de tratamiento | Guía o consenso vigente con texto completo (PMC o copia en acceso abierto) | Resumen de la guía en PubMed; guías del NICE (no están en PubMed) | `fuentes.py guias`, `vigencia`, `texto`, `nice-guias`, `nice-guia` |
 | Documentos de la OMS y de la OPS | IRIS de la OMS (iris.who.int) y de la OPS (iris.paho.org), con su PDF | Notas descriptivas de la OMS | `fuentes.py iris`, `pdf` |
 | Costa Rica | Protocolos y normas de la CCSS en BINASSS | Ministerio de Salud; INCIENSA (resistencia) | `fuentes.py binasss`, `pdf`, `pagina` |
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
@@ -74,7 +74,13 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 - Cita cada recomendación con la guía y el año, y con su fuerza tal como la da la guía (en `evidencias.json`, campo `fuerza`). No mezcles recomendaciones de guías distintas en un mismo algoritmo sin decirlo.
 - **Otras fuentes de guías:**
   - Algunas guías no están en PubMed. GOLD (EPOC) y GINA (asma) se leen en sus páginas con `pagina` o `pdf`.
-  - NICE se lee en nice.org.uk (guías NG con su número).
+  - **NICE** (Reino Unido): `fuentes.py nice-guias "<enfermedad>"` lista sus guías (NG, CG) con la fecha de la última actualización. `fuentes.py nice-guia <código> "<regex>" [capítulos]` devuelve cada recomendación con:
+    - su número (cítalo: «NG28, rec. 1.13.1»);
+    - el año de su última revisión («[2026]», «[2015, amended 2026]»);
+    - su fuerza según el verbo: «offer» y «do not offer» son fuertes; «consider», más débil (el beneficio es probable, pero otras opciones pueden valer igual);
+    - la dirección del capítulo, para verificar la frase con `pagina`.
+
+    Responde al contexto del NHS (costes, disponibilidad de fármacos): dilo si la usas para el algoritmo. Cita y traduce frases breves; no reproduzcas tablas ni algoritmos completos sin revisar las condiciones de reutilización del NICE. NICE CKS (cks.nice.org.uk) responde 403.
   - Para la OMS y la OPS, `iris` devuelve el PDF de cada documento.
 
 ## Costa Rica

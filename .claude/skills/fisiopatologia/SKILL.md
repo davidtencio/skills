@@ -51,6 +51,7 @@ Sigue el orden de `references/fuentes.md`. Tres registros acompañan cada tema (
      - Incluye las de los últimos meses, que PubMed aún no ha indexado como guía.
      - Agrupa los capítulos de unas normas anuales («Standards of Care in Diabetes-2026», en `secciones`) y deja en `anteriores` las ediciones previas.
      - En enfermedades frecuentes (diabetes, hipertensión, EPOC), `fuentes.py guias-titulo` exige la enfermedad en el título y da menos ruido.
+   - Las guías del NICE (Reino Unido) no están en PubMed: búscalas con `fuentes.py nice-guias "<enfermedad en inglés>"` y lee sus recomendaciones con `fuentes.py nice-guia <código> "<regex>"`. Cada recomendación trae su número, el año de su última revisión («[2026]») y su fuerza según el verbo («offer», fuerte; «consider», más débil). Cítala con `bibliografia.py nueva … --nice <código>`.
    - Antes de usar una guía, comprueba con `fuentes.py vigencia <PMID>` que no haya una versión posterior (y si tiene fe de erratas).
    - Lee el texto completo con `fuentes.py texto <PMID|PMCID|DOI> "<regex>"`: prueba PMC y, si no, las copias legales en acceso abierto que localiza Unpaywall (repositorios institucionales).
    - Las guías publicadas en PDF (sociedades, ministerios, AWMF, OMS) se leen con `fuentes.py pdf <URL> "<regex>"`, que devuelve cada frase con su página para citarla.
