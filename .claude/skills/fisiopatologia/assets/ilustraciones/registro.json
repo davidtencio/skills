@@ -131,5 +131,166 @@
     "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/pancreas-2.svg",
     "fecha": "2026-10-01",
     "notas": ""
+  },
+  "servier-bacterium.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Microbiology/Servier/bacterium.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-bacterium-interior.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Microbiology/Servier/bacterium-interior.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hiv-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hiv-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hiv-virus-interior.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hiv-virus-interior.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hepatitis-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hepatits-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": "renombrado: el original se llama hepatits-virus.svg"
+  },
+  "servier-influenza-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/influenza-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-herpes-simplex-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/herpes-simplex-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-sporozoites.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Parasites/Servier/sporozoites.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-trypanosoma.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Parasites/Servier/trypanosoma.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-macrophage.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/macrophage.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-neutrophil-granulocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/neutrophil-granulocyte.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-b-lymphocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/b-lymphocyte.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-dendritic-cell-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/dendritic-cell-1.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-lung.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/lung.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-healthy-lung.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/healthy-lung.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-pared-gramnegativa.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202209_Gram_Negative_Bacteria.svg https://doi.org/10.7875/togopic.2022.444",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-pared-grampositiva.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202209_Gram_Positive_Bacteria.svg https://doi.org/10.7875/togopic.2022.443",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-sars-cov-2.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202204_SARS-CoV-2.svg https://doi.org/10.7875/togopic.2022.072",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-mycobacterium-tuberculosis.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 201708_Mycobacterium_tuberculosis.svg https://doi.org/10.7875/togopic.2017.37",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-pseudomonas-aeruginosa.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 201708_Pseudomonas_aeruginosa.svg https://doi.org/10.7875/togopic.2017.38",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier4-vias-intrapulmonares-1.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 10, Group 459",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier4-edema-pulmonar.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 18, Group 3",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier4-traquea-bronquios.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 6, Group 242",
+    "fecha": "2026-10-02",
+    "notas": ""
   }
 }

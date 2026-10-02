@@ -1,4 +1,4 @@
-"""Ilustraciones externas (Servier Medical Art, CC BY 3.0) insertadas como imágenes SVG.
+"""Ilustraciones externas (Servier Medical Art, TogoTV, Wikimedia Commons) insertadas como imágenes SVG.
 
 Cada archivo se incrusta como data URI para que la lámina final sea un único SVG
 autocontenido y sin conflictos de identificadores entre ilustraciones.
@@ -9,6 +9,18 @@ from pathlib import Path
 
 CARPETA = Path(__file__).resolve().parent.parent / "assets" / "ilustraciones"
 ATRIBUCION = "Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0)"
+CREDITOS = {  # prefijo del archivo -> crédito que pide cada biblioteca
+    "servier": "Servier Medical Art (CC BY 3.0 y 4.0)",
+    "togotv": "TogoTV (© 2016 DBCLS TogoTV, CC BY 4.0)",
+    "commons": "Wikimedia Commons (autoría y licencia en el material)",
+}
+
+
+def atribucion(*archivos):
+    """Crédito del pie según las ilustraciones usadas en la lámina, p. ej. atribucion("servier-lung", "togotv-sars-cov-2.svg").
+    Sin argumentos devuelve el crédito de Servier (ATRIBUCION)."""
+    familias = {next((f for f in ("togotv", "commons") if Path(a).name.startswith(f)), "servier") for a in archivos}
+    return "Ilustraciones: " + "; ".join(c for f, c in CREDITOS.items() if f in familias) if archivos else ATRIBUCION
 
 
 @lru_cache(maxsize=None)

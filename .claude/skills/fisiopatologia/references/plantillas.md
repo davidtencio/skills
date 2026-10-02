@@ -35,12 +35,43 @@ Todas las series siguen el mismo arco; cambia qué se dibuja en cada tramo. El n
 - **Diagnóstico:** criterios de clasificación y pruebas (anticuerpos, espirometría).
 - **Tratamiento:** escalones; los biológicos sobre la citocina o la célula que bloquean.
 
-## Infecciosa (ej.: VIH, tuberculosis, hepatitis C)
+## Infecciosa
 
-- **Fisiología:** el ciclo del microorganismo en la célula huésped.
-- **Fisiopatología:** cómo daña al huésped y cómo responde el sistema inmunitario.
-- **Diagnóstico:** pruebas de cribado y de confirmación, y su ventana.
-- **Tratamiento:** cada familia de fármacos sobre el paso del ciclo que bloquea; resistencia.
+En una infección hay dos protagonistas, el microorganismo y el huésped, y el arco se adapta:
+
+- **Contexto:** agente, vía de transmisión y órgano diana. La transmisión y la prevención (vacunas, profilaxis) se incluyen por defecto, porque explican quién enferma y cómo se evita; las cifras de incidencia y prevalencia, solo si se piden.
+- **Fisiología normal:** la defensa del huésped que el microorganismo supera (barreras, inmunidad innata y adaptativa) o el tejido sano que va a dañar.
+- **Fisiopatología:** cómo entra, se multiplica y daña (ciclo del microorganismo, toxinas, respuesta inflamatoria del huésped), y qué parte del daño se debe al propio huésped.
+- **Clínica:** síntomas explicados por el mecanismo; fases (aguda, latente, crónica) y complicaciones.
+- **Diagnóstico:** tabla de pruebas con qué detectan (microorganismo, antígeno, ácido nucleico, anticuerpo), cuándo se positivizan, la muestra y cómo se interpreta el resultado; si hay cribado y confirmación, el algoritmo de la guía.
+- **Tratamiento:** cada familia de fármacos sobre el paso o la estructura del microorganismo que bloquea; mecanismos de resistencia; y la estrategia de la guía (empírico o dirigido, duración, control del foco, cuándo cambiar a la vía oral). Si la guía condiciona el tratamiento a la resistencia local, dilo y cita los datos locales disponibles (ver «Infecciones» en `fuentes.md`).
+
+Cada tipo de agente cambia lo que se dibuja:
+
+| Tipo | Ejemplos | Fisiopatología | Tratamiento |
+|---|---|---|---|
+| **Virus** | VIH, hepatitis B y C, herpes, gripe | Ciclo en la célula huésped (unión, entrada, replicación, ensamblaje, salida) y efecto en el tejido; latencia o cronicidad | Cada familia sobre el paso del ciclo que bloquea (entrada, polimerasa, integrasa, proteasa, salida); barrera genética y resistencia |
+| **Bacteria** | Tuberculosis, neumonía neumocócica, infección por *S. aureus* | Adhesión, invasión, factores de virulencia (cápsula, toxinas) y respuesta inflamatoria; intracelular o extracelular | Cada familia sobre su diana bacteriana (pared, ribosoma, ADN girasa, folato, membrana); mecanismos de resistencia (β-lactamasas, bombas de expulsión, cambio de diana) |
+| **Hongo** | Candidiasis invasora, criptococosis, aspergilosis | Factor del huésped que permite la infección (inmunosupresión, catéter) e invasión del tejido | Cada familia sobre la membrana (ergosterol) o la pared (β-glucano) |
+| **Parásito** | Malaria, enfermedad de Chagas, toxoplasmosis | Ciclo con sus huéspedes y vectores; qué fase causa la enfermedad y cuál se transmite | Fármacos por fase del ciclo (esquizonticida, gametocida, hipnozoiticida); resistencia regional |
+| **Toxina** | Tétanos, botulismo, cólera | La toxina y su diana en el huésped; el microorganismo puede no invadir | Antitoxina, soporte y antimicrobiano si procede; vacunación |
+| **Síndrome** (varios agentes posibles) | Sepsis, neumonía adquirida en la comunidad, infección urinaria, meningitis | Respuesta del huésped común a todos los agentes; tabla de agentes según la edad, el lugar de adquisición y los factores de riesgo | Tratamiento empírico de la guía según la gravedad y los factores de riesgo, desescalada con el cultivo y duración |
+
+### Farmacocinética y farmacodinamia de los antimicrobianos
+
+En las infecciones tratadas con antibacterianos o antifúngicos, añade al menos una lámina de FC/FD tras el mapa de fármacos: explica por qué cada familia se dosifica como se dosifica.
+
+- **Índice FC/FD de cada familia** (tabla): dependiente del tiempo (%fT > CMI), de la concentración (Cmáx/CMI) o de la exposición (ABC₀₋₂₄/CMI). Dibújalo con `curva_fcfd` de `piezas.py`, que resalta el índice pedido y lleva el rótulo «Esquema cualitativo».
+- **Consecuencia para la dosis:** infusión prolongada o continua si importa el tiempo; dosis única diaria si importa el pico; dosis ajustada al ABC si importa la exposición total. Cada estrategia, con la guía que la recomienda.
+- **El huésped cambia la exposición:** volumen de distribución aumentado en la sepsis (dosis de carga), aclaramiento renal aumentado o disminuido, terapia de reemplazo renal, obesidad y penetración en el sitio de la infección (líquido cefalorraquídeo, hueso, pulmón).
+- **Monitorización de concentraciones** cuando la guía la recomienda (p. ej., vancomicina guiada por ABC, aminoglucósidos).
+- **Ejemplo verificado:** en la tabla 1 del documento de posición sobre monitorización de antimicrobianos en pacientes críticos (*Intensive Care Med* 2020, PMID 32383061, PMC7223855), los betalactámicos se asocian a %fT > CMI; los aminoglucósidos, a ABC₀₋₂₄/CMI y Cmáx/CMI; y las fluoroquinolonas y la vancomicina, a ABC₀₋₂₄/CMI. Copia los objetivos numéricos de la fuente con su frase exacta, no de esta lista.
+- La farmacocinética detallada de un fármaco concreto (absorción, metabolismo, interacciones) corresponde a la skill `mecanismo-accion`; aquí se explica a nivel de familia y solo lo que guía la dosis.
+
+**Recordatorios:**
+
+- El microorganismo se dibuja con la ilustración de Servier de la biblioteca (`servier-hiv-virus`, `servier-bacterium`, `servier-sporozoites`…) o con el color `patogeno` de `componentes.py` si es un esquema propio (ver `estilo.md`).
+- Para el mecanismo de un antimicrobiano concreto, con su estructura y su diana a escala molecular, remite a la skill `mecanismo-accion`.
 
 ## Oncológica (ej.: cáncer de mama, leucemia mieloide crónica)
 
