@@ -96,5 +96,124 @@
     "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/syringe.svg",
     "fecha": "2026-10-01",
     "notas": ""
+  },
+  "cc0-pill_blue.svg": {
+    "fuente": "bioicons",
+    "licencia": "CC0 1.0 (Marcel Tisch vía Bioicons)",
+    "origen": "Bioicons cc-0/Human_physiology/Marcel_Tisch/pill_blue.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-brain-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/brain-2.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-cancerous-cell-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Oncology/Servier/cancerous-cell-1.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-emptycell-3d-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Cell_membrane/Servier/emptycell-3d-1.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-endoplasmatic-reticulum-rough-3d.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/endoplasmatic-reticulum-rough-3d.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-enzyme-green-3d.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/enzyme-green-3d.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-enzyme-pink-3d.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/enzyme-pink-3d.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-erythrocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/erythrocyte.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-golgi-3d-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/golgi-3d-1.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-kidney-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/kidney-2.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-mitochondrium-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/mitochondrium-1.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-normal-cell-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Oncology/Servier/normal-cell-1.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-nucleus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/nucleus.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-protein-12.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/protein-12.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-protein-2.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/protein-2.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-protein-20.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Intracellular_components/Servier/protein-20.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
+  },
+  "servier-rna.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Nucleic_acids/Servier/rna.svg",
+    "fecha": "2026-10-01",
+    "notas": "registrado a posteriori; contenido idéntico al archivo de Bioicons"
   }
 }
