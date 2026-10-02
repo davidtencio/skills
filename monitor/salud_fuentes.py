@@ -66,6 +66,9 @@ COMPROBACIONES = {
          "f.pdf_texto('https://register.awmf.org/assets/guidelines/020-013k_S3_Epidemiologie-Diagnostik-Therapie-"
          "erwachsener-Patienten-nosokomiale-Pneumonie__2024-03.pdf', ('Prolongierte Infusion',))",
          lambda r: r["fragmentos"]["Prolongierte Infusion"]),
+        ("INCIENSA (resistencia, Costa Rica)", "www.inciensa.sa.cr",
+         "f.pagina('https://www.inciensa.sa.cr/laboratorio-de-antimicrobianos/', ('EVILABRA',))",
+         lambda r: r["fragmentos"]["EVILABRA"]),
         ("Käypä hoito (finés)", "www.kaypahoito.fi",
          "f.pagina('https://www.kaypahoito.fi/hoi50056', ('diabe',))", lambda r: r["fragmentos"]["diabe"]),
     ],

@@ -18,7 +18,15 @@ Python 3 con `rdkit playwright python-pptx pymupdf markdown` (`fisiopatologia` n
 
 ## Tests y monitor de fuentes
 
-- **Tests** (`tests/`, sin red): comprueban que las láminas de cada ejemplo se regeneran idénticas, que el glosario no tiene siglas pendientes, que cada ilustración está en `registro.json` con una licencia reutilizable, que cada `SKILL.md` es válido y que lo que cita existe. Los de PDF (marcador `pdf`) regeneran cada PDF y comparan páginas e índice. Se ejecutan en GitHub Actions en cada PR y en cada push a `main`.
+- **Tests** (`tests/`, sin red). Comprueban que:
+  - las láminas de cada ejemplo se regeneran idénticas y ningún texto se pisa ni se sale de su recuadro (`revisar_lamina.py`, marcador `chromium`);
+  - el glosario no tiene siglas pendientes y, en los ejemplos con `evidencias.json`, cada cifra de las láminas está registrada con la frase de su fuente;
+  - cada ilustración está en `registro.json` con una licencia reutilizable y tiene términos en `catalogo.py`;
+  - cada `SKILL.md` es válido y lo que cita existe;
+  - el código común de las dos skills es idéntico (`test_paridad.py`): si cambias un módulo compartido, copia el cambio a la otra skill;
+  - los analizadores de `fuentes.py` interpretan bien respuestas reales grabadas (`tests/datos/fuentes/`).
+
+  Los de PDF (marcador `pdf`) regeneran cada PDF y comparan páginas, índice y el texto de cada página. Se ejecutan en GitHub Actions en cada PR y en cada push a `main`.
 
   ```bash
   pip install -r requirements-test.txt && python -m playwright install chromium
