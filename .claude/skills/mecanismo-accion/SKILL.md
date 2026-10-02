@@ -83,7 +83,7 @@ Sigue el orden de `references/fuentes.md`: biblioteca local → kits de Servier 
 
 ### 6. Componer
 Crea `ejemplos/<farmaco>/laminas.py` a partir del de darolutamida. Bibliotecas disponibles:
-- `scripts/recursos.py` → `ilustracion(nombre, x, y, w, h, ...)` para insertar SVG de `assets/ilustraciones/`.
+- `scripts/recursos.py` → `ilustracion(nombre, x, y, w, h, ...)` para insertar SVG de `assets/ilustraciones/`. Busca qué hay con `python3 scripts/catalogo.py <término>` (en español); al añadir una pieza, regístrala en `registro.json` y en `TERMINOS` de `catalogo.py`.
 - `scripts/estructuras.py` → `molecula(smiles, formula)` y `estructura(mol, x, y, w, h)` (RDKit).
 - `scripts/superficie.py` → `superficie_corte(pdb, cadena, ligando)` y `como_imagen(...)`: superficie real de la diana cortada para ver el bolsillo.
 - `scripts/fuentes.py` → descargas (PubChem, ChEMBL, PDB, AlphaFold, Bioicons, kits de Servier).
