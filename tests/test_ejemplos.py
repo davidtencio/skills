@@ -68,3 +68,13 @@ def test_pdf_misma_estructura(skill, carpeta, tmp_path):
     assert nuevo.get_toc() == viejo.get_toc()
     distintas = [k + 1 for k in range(len(nuevo)) if nuevo[k].get_text() != viejo[k].get_text()]
     assert not distintas, f"Las páginas {distintas} ya no tienen el mismo texto: regenera el PDF del ejemplo"
+
+
+CON_EVIDENCIAS = [(s, c) for s, c in EJEMPLOS if (c / "evidencias.json").exists()]
+
+
+@pytest.mark.parametrize("skill, carpeta", CON_EVIDENCIAS, ids=[f"{s}/{c.name}" for s, c in CON_EVIDENCIAS])
+def test_evidencias_completas(skill, carpeta):
+    """Cada cifra de las láminas está en evidencias.json, con una frase de la fuente que contiene su número."""
+    r = ejecutar(carpeta.parents[1] / "scripts" / "verificar_evidencias.py", carpeta)
+    assert r.returncode == 0, r.stdout[-3000:] + r.stderr[-2000:]

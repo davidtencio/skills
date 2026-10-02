@@ -13,6 +13,7 @@ Ejecuta primero `python3 scripts/revisar_lamina.py <carpeta>`: debe terminar sin
 ## Contenido
 - [ ] Cada afirmación tiene fuente; lo no confirmado está en la lista del revisor del material.
 - [ ] Las cifras (puntos de corte, porcentajes, umbrales de TFGe…) coinciden literalmente con la fuente citada.
+- [ ] `scripts/verificar_evidencias.py <carpeta> --en-linea` termina sin errores: cada cifra de las láminas está en `evidencias.json` con la frase de su fuente.
 - [ ] Las recomendaciones de tratamiento dicen de qué guía o consenso salen y de qué año; si la guía vigente no se pudo leer, consta en «No verificado».
 - [ ] Las gráficas sin datos llevan el rótulo «Esquema cualitativo».
 - [ ] Los rótulos de honestidad están presentes (esquema, sin escala).

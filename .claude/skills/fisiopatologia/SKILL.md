@@ -34,7 +34,7 @@ Prueba la red con `python3 scripts/fuentes.py mesh "Diabetes Mellitus, Type 2"`.
 Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imprimir). Por defecto se cubren fisiopatología, clínica y diagnóstico, y tratamiento farmacológico. La epidemiología solo se incluye si se pide; en una infección, la transmisión y la prevención (vacunas, profilaxis) sí se incluyen por defecto.
 
 ### 2. Investigar y verificar
-Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía).
+Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía). Cada cifra que vaya a una lámina (punto de corte, dosis, duración, porcentaje) se registra en `ejemplos/<enfermedad>/evidencias.json` con la frase literal de la fuente, en su idioma, y cómo volver a encontrarla; el formato está en `scripts/verificar_evidencias.py` y hay un registro completo en `ejemplos/neumonia-nosocomial/`.
 
 1. **Definición:** `fuentes.py mesh "<término MeSH>"` (cita el identificador D… del campo `mesh`) y `fuentes.py mondo "<nombre en inglés>"`.
 2. **Fisiopatología:**
@@ -83,7 +83,7 @@ Crea `ejemplos/<enfermedad>/laminas.py` a partir del de diabetes tipo 2. Bibliot
 Reglas de estilo en `references/estilo.md`. El pie común lleva las fuentes generales en una línea; si una lámina necesita citar más, hazlo dentro de la lámina (recuadro) o en el material, nunca alargando el pie.
 
 ### 6. Renderizar y verificar
-`python3 scripts/revisar_lamina.py ejemplos/<enfermedad>` mide cada lámina en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro (errores) y letra pequeña o tarjetas medio vacías (avisos); corrige los errores antes de mirar. Después, `python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni ilustraciones tapadas. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
+`python3 scripts/revisar_lamina.py ejemplos/<enfermedad>` mide cada lámina en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro (errores) y letra pequeña o tarjetas medio vacías (avisos); corrige los errores antes de mirar. `python3 scripts/verificar_evidencias.py ejemplos/<enfermedad> --en-linea` comprueba que cada cifra de las láminas está registrada y que su frase sigue en la fuente. Después, `python3 scripts/renderizar.py ejemplos/<enfermedad>/lamina-N.svg ejemplos/<enfermedad>/lamina-N.png` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni ilustraciones tapadas. Corrige hasta que pase la lista de `references/verificacion.md`: textos que se pisan, pies que se desbordan, recuadros con espacio vacío, tamaño mínimo de letra y rótulos de esquema. Es normal necesitar 2–4 rondas por lámina.
 
 ### 7. Material de apoyo
 Escribe `material.md` con la estructura del de diabetes tipo 2:
