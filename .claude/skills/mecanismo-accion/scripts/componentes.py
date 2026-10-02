@@ -33,6 +33,8 @@ COLOR = {
     "enzima": "#EBC6DA",
     "enzima_borde": "#9C4F7A",
     "bloqueo": "#D55E00",        # paso bloqueado: círculo con X
+    "patogeno": "#F0E442",       # microorganismo dibujado (virus, bacteria, hongo, parásito) o su toxina
+    "patogeno_borde": "#7A7000", # borde y texto del microorganismo (contraste 5:1 sobre blanco)
     "acento": "#FFF1C1",         # región destacada (p. ej., elemento de respuesta)
     "adn_1": "#5F6F86",
     "adn_2": "#A3B0C2",

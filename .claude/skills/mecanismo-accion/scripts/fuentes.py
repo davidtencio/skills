@@ -38,6 +38,7 @@ ILUSTRACIONES = RAIZ / "assets" / "ilustraciones"
 REGISTRO = ILUSTRACIONES / "registro.json"
 CACHE = Path("/tmp/mecanismo-accion-cache")
 CACHE.mkdir(exist_ok=True)
+AGENTE = "mecanismo-accion/1.0"  # User-Agent de las consultas
 
 LICENCIAS = {
     "servier": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
@@ -56,7 +57,7 @@ def _get(url, timeout=60, datos=None, cabeceras=None, intentos=4):
     o se corta la conexión; ante un 429 respeta la cabecera Retry-After (hasta 30 s)."""
     import time
     import urllib.error
-    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": "mecanismo-accion/1.0"})
+    req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": AGENTE})
     for intento in range(intentos):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:

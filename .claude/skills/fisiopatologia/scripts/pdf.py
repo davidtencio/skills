@@ -47,6 +47,24 @@ SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Fichas de la FDA"), 
           ("pro.medicin.dk", "pro.medicin.dk (Dinamarca)"), ("FASS", "FASS (Suecia)"), ("Janusinfo", "Janusinfo (Suecia)"),
           ("Farmacotherapeutisch Kompas", "Farmacotherapeutisch Kompas (Países Bajos)"), ("HAS", "HAS (Francia)"),
           ("AIFA", "AIFA (Italia)")]
+# Lo único que cambia entre las skills; el resto de pdf.py es común (lo comprueba tests/test_paridad.py).
+TEXTOS = {
+    "tema": "Fisiopatología y tratamiento",
+    "marca": "Fisiopatología · Material profesional",
+    "pie": "Material profesional · Prototipo pendiente de revisión clínica",
+    "ficha": "Ficha de la enfermedad",
+    "publico": "Profesionales de salud",
+    "aviso": "Prototipo pendiente de revisión clínica. No sustituye las guías de práctica clínica vigentes.",
+    "cierre": "Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Prototipo pendiente de revisión clínica; "
+              "no sustituye las guías de práctica clínica vigentes ni el juicio clínico.",
+    "subtitulo": "De la fisiopatología al tratamiento",
+    # Portada por defecto: la primera lámina de fisiopatología (no la de resistencia a los fármacos).
+    "portada_incluye": r"fisiopatolog|resistencia|falla|dañ",
+    "portada_excluye": r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco|multirresist",
+    "autor": "Skill fisiopatologia",
+    "asunto": "Material educativo para profesionales de salud",
+    "claves": "fisiopatología, diagnóstico, tratamiento",
+}
 
 
 def _slug(texto):
@@ -150,29 +168,29 @@ def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, pagi
                        f'<span class="t">Glosario de siglas y abreviaturas</span><span class="pag">{num("glosario")}'
                        f'</span></a></li></ol>') if glosario else ""
     pagina_glosario = (f'<section class="glosario" id="glosario"><h1>Glosario</h1><p class="intro">Siglas y '
-                       f'abreviaturas que aparecen en las láminas y en la ficha de la enfermedad.</p>{glosario}'
+                       f'abreviaturas que aparecen en las láminas y en la {TEXTOS["ficha"].lower()}.</p>{glosario}'
                        f'</section>') if glosario else ""
     heroe = next((p for n, _, p in lams if n == portada), lams[0][2] if lams else None)
     sellos_html = "".join(f"<li>{html.escape(s)}</li>" for s in sellos)
     hoy = fecha_es(date.today())
     nombre_pie = html.escape(farmaco).replace('"', "")
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
-<title>{html.escape(farmaco)} · Fisiopatología y tratamiento</title>
+<title>{html.escape(farmaco)} · {TEXTOS["tema"]}</title>
 <link rel="stylesheet" href="{FUENTES_CSS.as_uri()}">
 <style>
 :root {{ --tinta:#1d2733; --suave:#5b6773; --linea:#d9e0e6; --azul:#0b5d99; --azul-osc:#0a2f4d;
         --verde:#007a5e; --naranja:#c4520a; --morado:#8a3f7a; --fondo:#f3f6f9; }}
 @page {{ size: A4; margin: 22mm 20mm 20mm 20mm;
-  @top-right {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 500 7.5pt Inter, sans-serif;
+  @top-right {{ content: "{nombre_pie} · {TEXTOS["tema"]}"; font: 500 7.5pt Inter, sans-serif;
                color: #7d8893; letter-spacing: .04em; }}
-  @bottom-left {{ content: "Material profesional · Prototipo pendiente de revisión clínica";
+  @bottom-left {{ content: "{TEXTOS["pie"]}";
                  font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 @page portada {{ margin: 0; @top-right {{ content: none; }} @bottom-left {{ content: none; }}
                  @bottom-right {{ content: none; }} }}
 @page apaisada {{ size: A4 landscape; margin: 14mm 14mm 14mm 14mm;
   @top-right {{ content: none; }}
-  @bottom-left {{ content: "{nombre_pie} · Fisiopatología y tratamiento"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
+  @bottom-left {{ content: "{nombre_pie} · {TEXTOS["tema"]}"; font: 7.5pt Inter, sans-serif; color: #7d8893; }}
   @bottom-right {{ content: counter(page) " / " counter(pages); font: 600 8pt Inter, sans-serif; color: #5b6773; }} }}
 * {{ box-sizing: border-box; }}
 html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
@@ -285,7 +303,7 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
 
 <section class="portada">
   <div class="banda">
-    <div class="marca">Fisiopatología · Material profesional</div>
+    <div class="marca">{TEXTOS["marca"]}</div>
     <h1>{html.escape(farmaco)}</h1>
     <div class="sub">{html.escape(subtitulo)}</div>
     <div class="regla"></div>
@@ -293,29 +311,28 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
   {f'<div class="heroe"><img src="{heroe.resolve().as_uri()}"></div>' if heroe else ''}
   <div class="verificado"><b>Datos verificados en</b><ul class="sellos">{sellos_html}</ul></div>
   <div class="datos">
-    <div><b>Dirigido a</b><span>Profesionales de salud</span></div>
-    <div><b>Contenido</b><span>{total} láminas · ficha de la enfermedad</span></div>
+    <div><b>Dirigido a</b><span>{TEXTOS["publico"]}</span></div>
+    <div><b>Contenido</b><span>{total} láminas · {TEXTOS["ficha"].lower()}</span></div>
     <div><b>Fecha</b><span>{hoy}</span></div>
   </div>
-  <div class="aviso">Prototipo pendiente de revisión clínica. No sustituye las guías de práctica clínica vigentes.</div>
+  <div class="aviso">{TEXTOS["aviso"]}</div>
 </section>
 
 <section class="indice">
   <h1>Contenido</h1>
-  <p class="intro">Láminas para proyectar o imprimir y ficha de la enfermedad con la fuente de cada dato.</p>
+  <p class="intro">Láminas para proyectar o imprimir y {TEXTOS["ficha"].lower()} con la fuente de cada dato.</p>
   {indice_glosario}
   <h3>Láminas</h3><ol>{indice_laminas}</ol>
-  <h3>Ficha de la enfermedad</h3><ol>{indice_ficha}</ol>
+  <h3>{TEXTOS["ficha"]}</h3><ol>{indice_ficha}</ol>
 </section>
 
 {pagina_glosario}
 
 {paginas_laminas}
 
-<header class="ficha-cabecera"><div class="marca">Ficha de la enfermedad</div><h1>{html.escape(farmaco)}</h1></header>
+<header class="ficha-cabecera"><div class="marca">{TEXTOS["ficha"]}</div><h1>{html.escape(farmaco)}</h1></header>
 {cuerpo}
-<p class="cierre">Generado el {hoy}. Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0). Prototipo pendiente de revisión clínica;
-no sustituye las guías de práctica clínica vigentes ni el juicio clínico.</p>
+<p class="cierre">Generado el {hoy}. {TEXTOS["cierre"]}</p>
 </body></html>"""
 
 
@@ -357,10 +374,11 @@ def generar(carpeta, portada=None, salida=None):
     titulo, titulos, md = leer_material(carpeta)
     farmaco = titulo.split(":")[0].strip()
     lams = laminas(carpeta, titulos)
-    if portada is None:  # por defecto, la primera lámina de fisiopatología (no la de resistencia a los fármacos)
-        portada = next((n for n, t, _ in lams if re.search(r"fisiopatolog|resistencia|falla|dañ", t, re.I)
-                        and not re.search(r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco|multirresist", t, re.I)), lams[0][0])
-    subtitulo = "De la fisiopatología al tratamiento"
+    if portada is None:
+        portada = next((n for n, t, _ in lams if re.search(TEXTOS["portada_incluye"], t, re.I)
+                        and not (TEXTOS["portada_excluye"] and re.search(TEXTOS["portada_excluye"], t, re.I))),
+                       lams[0][0])
+    subtitulo = TEXTOS["subtitulo"]
     md, glosario = separar_glosario(md)
     cuerpo, secciones = cuerpo_html(md)
     seccion = re.search(r"^## Fuentes\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)  # solo lo citado como fuente
@@ -381,9 +399,8 @@ def generar(carpeta, portada=None, salida=None):
         navegador.close()
     import pymupdf
     doc = pymupdf.open(salida)
-    doc.set_metadata({"title": f"{farmaco} · Fisiopatología y tratamiento", "author": "Skill fisiopatologia",
-                      "subject": "Material educativo para profesionales de salud",
-                      "keywords": f"{farmaco}, fisiopatología, diagnóstico, tratamiento"})
+    doc.set_metadata({"title": f"{farmaco} · {TEXTOS['tema']}", "author": TEXTOS["autor"],
+                      "subject": TEXTOS["asunto"], "keywords": f"{farmaco}, {TEXTOS['claves']}"})
     doc.saveIncr()
     return salida
 
