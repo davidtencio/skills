@@ -415,6 +415,24 @@ def _paginas(ruta_pdf, lams, secciones):
     return res
 
 
+HUELLA = "huella-pdf.json"
+
+
+def huella(ruta_pdf):
+    """Lo que el test compara de un PDF: número de páginas, índice de marcadores y texto de cada página. Los ejemplos
+    guardan su huella en lugar del PDF (pocos KB frente a varios MB en cada regeneración)."""
+    import pymupdf
+    doc = pymupdf.open(ruta_pdf)
+    return {"paginas": len(doc), "indice": doc.get_toc(), "texto": [p.get_text() for p in doc]}
+
+
+def guardar_huella(ruta_pdf, carpeta):
+    import json
+    destino = Path(carpeta) / HUELLA
+    destino.write_text(json.dumps(huella(ruta_pdf), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return destino
+
+
 def generar(carpeta, portada=None, salida=None, fecha=None):
     from playwright.sync_api import sync_playwright
     carpeta = Path(carpeta).resolve()
@@ -461,5 +479,10 @@ if __name__ == "__main__":
     ap.add_argument("--portada", type=int, help="número de la lámina de la portada")
     ap.add_argument("--fecha", type=date.fromisoformat, help="fecha de la portada (AAAA-MM-DD); por defecto, hoy")
     ap.add_argument("--salida")
+    ap.add_argument("--huella", action="store_true",
+                    help=f"guarda también {HUELLA} en la carpeta (ejemplos de la skill: lo compara el test de PDF)")
     a = ap.parse_args()
-    print(generar(a.carpeta, a.portada, a.salida, a.fecha))
+    pdf = generar(a.carpeta, a.portada, a.salida, a.fecha)
+    print(pdf)
+    if a.huella:
+        print(guardar_huella(pdf, a.carpeta))

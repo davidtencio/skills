@@ -7,7 +7,7 @@ description: Crea láminas ilustradas del mecanismo de acción de un medicamento
 
 Produce una serie de **láminas 16:9** (SVG + PNG; tantas como necesite el fármaco), un **material de apoyo** en Markdown y un **PDF final** con diseño profesional que explican cómo actúa un medicamento a estudiantes de farmacia. El objetivo es que el estudiante entienda la causa (fisiología → acción del fármaco → consecuencias), no que memorice listas.
 
-Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/`, `ejemplos/trastuzumab-deruxtecan/`, `ejemplos/durvalumab/` y `ejemplos/vutrisiran/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
+Hay ejemplos completos en `ejemplos/darolutamida/`, `ejemplos/atorvastatina/`, `ejemplos/trastuzumab-deruxtecan/`, `ejemplos/durvalumab/` y `ejemplos/vutrisiran/` (`laminas.py`, `material.md` y `lamina-N.png`); `ejemplos/durvalumab/` guarda también el PDF final y los demás se generan con `scripts/pdf.py`. Úsalo como modelo de composición, densidad de texto y tono.
 
 ## Principios
 
