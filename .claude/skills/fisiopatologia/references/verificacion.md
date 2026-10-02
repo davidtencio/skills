@@ -17,6 +17,8 @@ Revisa cada PNG con Read y corrige hasta que todo se cumpla.
 - [ ] Las gráficas sin datos llevan el rótulo «Esquema cualitativo».
 - [ ] Los rótulos de honestidad están presentes (esquema, sin escala).
 - [ ] El error frecuente es correcto y útil en la práctica clínica.
+- [ ] En una infección: el tratamiento empírico dice de qué guía y país sale, y si depende de la resistencia local; los puntos de corte llevan su versión (EUCAST o CLSI); el mecanismo de los antimicrobianos sale de la sección 12.4 de la FDA o de la 5.1 de CIMA.
+- [ ] En una infección: la tabla de diagnóstico dice qué detecta cada prueba y cuándo se positiviza.
 - [ ] El glosario explica todas las siglas de las láminas y del material (`scripts/glosario.py` sin pendientes).
 
 ## Licencias

@@ -1,6 +1,6 @@
 ---
 name: fisiopatologia
-description: Crea láminas ilustradas y un PDF profesional sobre una enfermedad (fisiopatología, clínica y diagnóstico, y tratamiento farmacológico) para profesionales de salud. Combina ilustraciones profesionales (Servier Medical Art, Bioicons) con datos verificados en MeSH, MONDO, Reactome, UniProt, guías y consensos de acceso abierto (PubMed/PMC), páginas de sociedades científicas, el NIH (NIDDK), la OMS, guías nacionales en otros idiomas (traducidas al español) y las fichas técnicas de los fármacos. Úsala siempre que se pida explicar una enfermedad, su fisiopatología, cómo se produce, sus síntomas o complicaciones, cómo se diagnostica o cómo se trata, o hacer una lámina, infografía, esquema, diapositiva o material didáctico sobre una enfermedad o síndrome (diabetes, hipertensión, insuficiencia cardiaca, asma, artritis reumatoide…), aunque no se mencione la palabra «skill». No es para explicar cómo actúa un medicamento concreto: eso corresponde a la skill mecanismo-accion.
+description: Crea láminas ilustradas y un PDF profesional sobre una enfermedad (fisiopatología, clínica y diagnóstico, y tratamiento farmacológico) para profesionales de salud. Combina ilustraciones profesionales (Servier Medical Art) con datos verificados en MeSH, MONDO, Reactome, UniProt, guías y consensos de acceso abierto (PubMed/PMC), páginas de sociedades científicas, el NIH, la OMS, guías nacionales en otros idiomas (traducidas al español) y las fichas técnicas de los fármacos. Úsala siempre que se pida explicar una enfermedad, su fisiopatología, cómo se produce, sus síntomas o complicaciones, cómo se diagnostica o cómo se trata, o hacer una lámina, infografía, esquema, diapositiva o material didáctico sobre una enfermedad o síndrome (diabetes, hipertensión, insuficiencia cardiaca, asma, artritis reumatoide…) o una infección (VIH, tuberculosis, neumonía, sepsis…), aunque no se mencione la palabra «skill». No es para explicar cómo actúa un medicamento concreto: eso corresponde a la skill mecanismo-accion.
 ---
 
 # Láminas de fisiopatología de una enfermedad
@@ -31,7 +31,7 @@ Prueba la red con `python3 scripts/fuentes.py mesh "Diabetes Mellitus, Type 2"`.
 ## Flujo de trabajo
 
 ### 1. Confirmar el encargo
-Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imprimir). Por defecto se cubren fisiopatología, clínica y diagnóstico, y tratamiento farmacológico. La epidemiología solo se incluye si se pide.
+Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imprimir). Por defecto se cubren fisiopatología, clínica y diagnóstico, y tratamiento farmacológico. La epidemiología solo se incluye si se pide; en una infección, la transmisión y la prevención (vacunas, profilaxis) sí se incluyen por defecto.
 
 ### 2. Investigar y verificar
 Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía).
@@ -41,10 +41,11 @@ Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato 
    - Busca una revisión de referencia con `fuentes.py pubmed "<consulta>" "<regex>"`.
    - Si tiene texto completo en PMC, extrae las frases que respaldan cada afirmación con `fuentes.py pmc <PMCID> "<regex>" …`.
    - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`.
-3. **Clínica y diagnóstico:** páginas de la sociedad científica y del instituto del NIH correspondiente (p. ej., diabetes.org y NIDDK), notas descriptivas de la OMS y `fuentes.py medlineplus`. Léelas con `fuentes.py pagina <URL> "<regex>"`, que quita el HTML y devuelve la frase exacta.
+3. **Clínica y diagnóstico:** páginas de la sociedad científica y del instituto del NIH correspondiente (p. ej., diabetes.org y NIDDK; en infecciones, IDSA y NIAID), notas descriptivas de la OMS y `fuentes.py medlineplus`. Léelas con `fuentes.py pagina <URL> "<regex>"`, que quita el HTML y devuelve la frase exacta.
 4. **Tratamiento:**
    - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; lee la de texto completo con `fuentes.py pmc`.
-   - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`).
+   - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`). En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), el mecanismo y la resistencia están en la 12.4 *Microbiology* (campo `microbiology`).
+   - **Infecciones:** fuentes propias (IDSA, ESCMID, guías del NIH/HHS para VIH, OMS, EUCAST, AWaRe, resistencia local de la OPS e INCIENSA) en la sección «Infecciones» de `references/fuentes.md`.
 5. **Fuentes en otros idiomas:** guías nacionales de otros países (Käypä hoito en Finlandia, Nationale VersorgungsLeitlinien y AWMF en Alemania, Helsedirektoratet en Noruega, HAS en Francia, Farmacotherapeutisch Kompas en los Países Bajos…) y literatura con el filtro de idioma de PubMed (`ger[la]`, `fin[la]`, `nor[la]`…).
    - Úsalas para contrastar una recomendación, sustituir una guía bloqueada o añadir datos que solo publica un país.
    - Lee las páginas con `fuentes.py pagina <URL> "<regex en el idioma original>"`.
@@ -52,7 +53,7 @@ Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato 
 6. Si una fuente no responde, nombra el dominio a la persona usuaria y sigue con la siguiente; nunca rellenes el hueco con suposiciones.
 
 ### 3. Elegir la plantilla y el número de láminas
-Según el tipo de enfermedad, ver `references/plantillas.md` (metabólica, cardiovascular, inflamatoria o autoinmune, infecciosa, oncológica, neurológica). El arco es siempre el mismo y cada lámina explica una sola idea (ver «Densidad» en `references/estilo.md`):
+Según el tipo de enfermedad, ver `references/plantillas.md` (metabólica, cardiovascular, inflamatoria o autoinmune, infecciosa, oncológica, neurológica). La infecciosa se adapta al agente: virus, bacteria, hongo, parásito, toxina o síndrome con varios agentes posibles (sepsis, neumonía, infección urinaria). El arco es siempre el mismo y cada lámina explica una sola idea (ver «Densidad» en `references/estilo.md`):
 
 1. **Contexto:** qué falla y dónde.
 2. **Fisiología normal:** cómo funciona el sistema sano.
@@ -64,7 +65,7 @@ Según el tipo de enfermedad, ver `references/plantillas.md` (metabólica, cardi
 Numera «LÁMINA N DE TOTAL» con el total real.
 
 ### 4. Reunir las piezas visuales
-Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → dibujo propio. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json`.
+Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células inmunitarias y microorganismos: virus, bacterias, parásitos) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → dibujo propio. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json`.
 
 ### 5. Componer
 Crea `ejemplos/<enfermedad>/laminas.py` a partir del de diabetes tipo 2. Bibliotecas disponibles:

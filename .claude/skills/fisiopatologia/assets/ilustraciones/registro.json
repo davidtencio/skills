@@ -131,5 +131,110 @@
     "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/pancreas-2.svg",
     "fecha": "2026-10-01",
     "notas": ""
+  },
+  "servier-bacterium.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Microbiology/Servier/bacterium.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-bacterium-interior.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Microbiology/Servier/bacterium-interior.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hiv-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hiv-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hiv-virus-interior.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hiv-virus-interior.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-hepatitis-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/hepatits-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": "renombrado: el original se llama hepatits-virus.svg"
+  },
+  "servier-influenza-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/influenza-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-herpes-simplex-virus.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Viruses/Servier/herpes-simplex-virus.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-sporozoites.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Parasites/Servier/sporozoites.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-trypanosoma.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Parasites/Servier/trypanosoma.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-macrophage.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/macrophage.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-neutrophil-granulocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/neutrophil-granulocyte.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-b-lymphocyte.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/b-lymphocyte.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-dendritic-cell-1.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Blood_Immunology/Servier/dendritic-cell-1.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-lung.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/lung.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier-healthy-lung.svg": {
+    "fuente": "servier-bioicons",
+    "licencia": "CC BY 3.0 (Servier Medical Art vía Bioicons)",
+    "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/healthy-lung.svg",
+    "fecha": "2026-10-02",
+    "notas": ""
   }
 }
