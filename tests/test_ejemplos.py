@@ -1,13 +1,14 @@
 """Regresión de los ejemplos: las láminas, el glosario y el PDF siguen saliendo como los versionados.
 
-Si un cambio en los scripts altera un ejemplo a propósito, regenera sus láminas y su PDF en el mismo PR.
+Si un cambio en los scripts altera un ejemplo a propósito, regenera en el mismo PR sus láminas y la huella de su PDF
+(`pdf.py <carpeta> --huella`); el PDF solo se versiona en los ejemplos que ya lo guardan (uno por skill).
 """
 import json
 import xml.etree.ElementTree as ET
 
 import pytest
 
-from conftest import ejecutar, ejemplos
+from conftest import RAIZ, ejecutar, ejemplos, versionados
 
 EJEMPLOS = ejemplos()
 IDS = [f"{skill}/{carpeta.name}" for skill, carpeta in EJEMPLOS]
@@ -52,22 +53,49 @@ def test_maquetacion_sin_errores(skill, carpeta):
     assert r.returncode == 0, r.stdout[-3000:] + r.stderr[-2000:]
 
 
+HUELLA = """
+import json, sys
+sys.path.insert(0, sys.argv[1])
+from pdf import huella
+print(json.dumps(huella(sys.argv[2]), ensure_ascii=False))
+"""
+REGENERAR = ("regenera el PDF y su huella: python3 scripts/pdf.py ejemplos/<nombre> --huella "
+             "(y versiona el PDF solo si el ejemplo ya lo guardaba)")
+
+
+def _comparar_huellas(nueva, guardada):
+    assert nueva["paginas"] == guardada["paginas"], f"{nueva['paginas']} páginas en lugar de {guardada['paginas']}; {REGENERAR}"
+    assert nueva["indice"] == guardada["indice"], f"El índice de marcadores cambió; {REGENERAR}"
+    distintas = [k + 1 for k, (a, b) in enumerate(zip(nueva["texto"], guardada["texto"])) if a != b]
+    assert not distintas, f"Las páginas {distintas} ya no tienen el mismo texto; {REGENERAR}"
+
+
+def _huella(carpeta, pdf):
+    r = ejecutar("-c", HUELLA, carpeta.parents[1] / "scripts", pdf)
+    assert r.returncode == 0, r.stderr[-2000:]
+    return json.loads(r.stdout.strip().splitlines()[-1])
+
+
+@pytest.mark.parametrize("skill, carpeta", EJEMPLOS, ids=IDS)
+def test_huella_y_pdf_guardado_coinciden(skill, carpeta):
+    """Cada ejemplo guarda la huella de su PDF; si además guarda el PDF (uno por skill), es el de esa huella."""
+    ruta = carpeta / "huella-pdf.json"
+    assert ruta.exists(), f"Falta {ruta.name}; {REGENERAR}"
+    guardado = carpeta / f"{carpeta.name}.pdf"
+    if guardado in versionados(str(guardado.relative_to(RAIZ))):
+        _comparar_huellas(_huella(carpeta, guardado), json.loads(ruta.read_text(encoding="utf-8")))
+
+
 @pytest.mark.pdf
 @pytest.mark.parametrize("skill, carpeta", EJEMPLOS, ids=IDS)
 def test_pdf_misma_estructura(skill, carpeta, tmp_path):
-    """El PDF regenerado tiene las mismas páginas, el mismo índice de marcadores y el mismo texto en cada página que
-    el versionado (material.md fija la portada y la fecha). No se comparan bytes: Chromium añade la fecha de
-    creación a los metadatos."""
-    pymupdf = pytest.importorskip("pymupdf")
-    versionado = carpeta / f"{carpeta.name}.pdf"
-    salida = tmp_path / versionado.name
+    """El PDF regenerado tiene la huella guardada: mismas páginas, mismo índice de marcadores y mismo texto en cada
+    página (material.md fija la portada y la fecha). No se comparan bytes: Chromium añade la fecha de creación."""
+    salida = tmp_path / f"{carpeta.name}.pdf"
     r = ejecutar(carpeta.parents[1] / "scripts" / "pdf.py", carpeta, "--salida", salida, timeout=900)
     assert r.returncode == 0, r.stderr[-2000:]
-    nuevo, viejo = pymupdf.open(salida), pymupdf.open(versionado)
-    assert len(nuevo) == len(viejo), f"{len(nuevo)} páginas en lugar de {len(viejo)}"
-    assert nuevo.get_toc() == viejo.get_toc()
-    distintas = [k + 1 for k in range(len(nuevo)) if nuevo[k].get_text() != viejo[k].get_text()]
-    assert not distintas, f"Las páginas {distintas} ya no tienen el mismo texto: regenera el PDF del ejemplo"
+    _comparar_huellas(_huella(carpeta, salida),
+                      json.loads((carpeta / "huella-pdf.json").read_text(encoding="utf-8")))
 
 
 CON_EVIDENCIAS = [(s, c) for s, c in EJEMPLOS if (c / "evidencias.json").exists()]

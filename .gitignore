@@ -1,3 +1,8 @@
 dist/
 __pycache__/
 *.pyc
+
+# PDF de los ejemplos: el test usa su huella (huella-pdf.json). Solo se guarda un PDF por skill, para verlo.
+.claude/skills/*/ejemplos/*/*.pdf
+!.claude/skills/fisiopatologia/ejemplos/neumonia-nosocomial/neumonia-nosocomial.pdf
+!.claude/skills/mecanismo-accion/ejemplos/durvalumab/durvalumab.pdf

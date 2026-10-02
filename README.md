@@ -26,7 +26,7 @@ Python 3 con `rdkit playwright python-pptx pymupdf markdown` (`fisiopatologia` n
   - el código común de las dos skills es idéntico (`test_paridad.py`): si cambias un módulo compartido, copia el cambio a la otra skill;
   - los analizadores de `fuentes.py` interpretan bien respuestas reales grabadas (`tests/datos/fuentes/`).
 
-  Los de PDF (marcador `pdf`) regeneran cada PDF y comparan páginas, índice y el texto de cada página. Se ejecutan en GitHub Actions en cada PR y en cada push a `main`.
+  Los de PDF (marcador `pdf`) regeneran cada PDF y lo comparan con la huella del ejemplo (`huella-pdf.json`: páginas, índice y texto de cada página). Solo se versiona un PDF de ejemplo por skill, para verlo: `neumonia-nosocomial.pdf` y `durvalumab.pdf`. Se ejecutan en GitHub Actions en cada PR y en cada push a `main`.
 
   ```bash
   pip install -r requirements-test.txt && python -m playwright install chromium
