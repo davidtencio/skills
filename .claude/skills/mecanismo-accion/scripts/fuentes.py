@@ -543,7 +543,7 @@ def pdf_texto(url, patrones=(), contexto=1, maximo=8):
     documento = pymupdf.open(ruta)
     caracteres = sum(len(p.get_text()) for p in documento)
     return {"url": url, "titulo": (documento.metadata or {}).get("title") or None, "paginas": len(documento),
-            "aviso": "sin texto extraíble: puede ser un escaneo" if caracteres < 200 * len(documento) else None,
+            "aviso": "sin texto extraíble: puede ser un escaneo" if caracteres < 20 * len(documento) else None,
             "fragmentos": {p: _frases_pdf(ruta, p, contexto, maximo) for p in patrones}}
 
 
