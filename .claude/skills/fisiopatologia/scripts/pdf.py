@@ -359,7 +359,7 @@ def generar(carpeta, portada=None, salida=None):
     lams = laminas(carpeta, titulos)
     if portada is None:  # por defecto, la primera lámina de fisiopatología (no la de resistencia a los fármacos)
         portada = next((n for n, t, _ in lams if re.search(r"fisiopatolog|resistencia|falla|dañ", t, re.I)
-                        and not re.search(r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco", t, re.I)), lams[0][0])
+                        and not re.search(r"antimicrob|antibi[oó]t|antivir|f[aá]rmaco|multirresist", t, re.I)), lams[0][0])
     subtitulo = "De la fisiopatología al tratamiento"
     md, glosario = separar_glosario(md)
     cuerpo, secciones = cuerpo_html(md)

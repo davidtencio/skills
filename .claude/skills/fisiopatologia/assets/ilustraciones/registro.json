@@ -271,5 +271,26 @@
     "origen": "TogoTV 201708_Pseudomonas_aeruginosa.svg https://doi.org/10.7875/togopic.2017.38",
     "fecha": "2026-10-02",
     "notas": ""
+  },
+  "servier4-vias-intrapulmonares-1.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 10, Group 459",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier4-edema-pulmonar.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 18, Group 3",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "servier4-traquea-bronquios.svg": {
+    "fuente": "servier",
+    "licencia": "CC BY 4.0 (Servier Medical Art, smart.servier.com)",
+    "origen": "Kit SMART-Respiratory-system.pptx, diapositiva 6, Group 242",
+    "fecha": "2026-10-02",
+    "notas": ""
   }
 }

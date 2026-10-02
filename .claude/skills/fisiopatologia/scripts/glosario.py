@@ -35,7 +35,7 @@ IDENTIFICADOR = re.compile(
     r"^(?:\d\w{3}"                          # códigos PDB (4ZQK, 1ICT)
     r"|[OPQ]\d[A-Z\d]{3}\d|[A-NR-Z]\d[A-Z][A-Z\d]{2}\d"  # UniProt
     r"|[A-Z]\d{2}[A-Z]{2}\d{2}"             # ATC (L01FF03)
-    r"|R-HSA-\d+|C\d{5,}|TA\d+|NG\d+|S-\d+|CHEMBL\d+|NCT\d+"  # Reactome, NCI, NICE, FDA, ChEMBL, ClinicalTrials
+    r"|R-HSA-\d+|C\d{5,}|TA\d+|NG\d+|S-\d+|CHEMBL\d+|NCT\d+|PMC\d+"  # Reactome, NCI, NICE, FDA, ChEMBL, ClinicalTrials, PMC
     r"|C[\d₀-₉]+H[\d₀-₉]+\w*"               # fórmulas químicas (C26H24FN3O6, C₁₉H₃₀O₂)
     r"|(?:De|Mc|Mac|Van|Von|Di|Le)[A-Z][a-z]+"  # apellidos de autores (DeFronzo, McDonald)
     r")$")
@@ -71,6 +71,7 @@ def siglas(carpeta):
         for m in SIGLA.finditer(linea):
             s = re.sub(r"^[Aa]nti-|^[a-z]+-(?=[A-Z])", "", m.group(0).strip("-+"))  # anti-PD-1, orto-OH
             s = re.sub(r"(-[a-záéíóú]+)+$", "", s)  # HER2-bajo, HER2-positivo
+            s = re.sub(r"[₀-₉₋]+$", "", s)  # subíndices: ABC₀₋₂₄
             if s in IGNORAR or IDENTIFICADOR.match(s) or s.isdigit() or s.lower() in nombres:
                 continue
             encontradas.setdefault(s, (origen, linea.strip()[:90]))
