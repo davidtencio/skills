@@ -17,6 +17,8 @@ Uso rápido desde la terminal:
   python3 fuentes.py uniprot SREBF2
   python3 fuentes.py reactome "SREBP cholesterol"
   python3 fuentes.py europepmc "SREBP-2 AND LDL receptor AND statin" "SREBP-?2.*(LDLR|LDL receptor)"
+  python3 fuentes.py pdf <URL del PDF> "<regex>"   # frases de un PDF público con su página
+  python3 fuentes.py uniprot-proteina "beta-lactamase" 1280   # proteína de S. aureus (taxón 1280)
 
 Si una fuente no responde (red bloqueada), las funciones lanzan RuntimeError con el
 nombre del dominio para avisar a la persona usuaria; no inventan datos.
@@ -297,19 +299,27 @@ def cima(nombre, secciones=("4.1", "4.2", "4.5", "4.8", "5.1", "5.2", "5.3"), la
     return {}
 
 
-def uniprot(gen, organismo=9606):
-    """Función de una proteína humana revisada en UniProt (con PMID de respaldo).
+def uniprot(gen=None, organismo=9606, proteina=None, maximo=10):
+    """Función de una proteína revisada en UniProt (con PMID de respaldo), por gen o por nombre de proteína.
 
-    Se queda con la entrada cuyo nombre de gen principal coincide exactamente: algunos símbolos
-    (p. ej., KLK3) también aparecen como sinónimos de otros genes.
+    Por gen, se queda con la entrada cuyo nombre de gen principal coincide exactamente: algunos símbolos
+    (p. ej., KLK3) también aparecen como sinónimos de otros genes. Por proteína (p. ej., «penicillin-binding
+    protein 2a»), sirve también para bacterias, hongos y virus: organismo=None busca en todos, o pasa el
+    identificador de taxonomía de NCBI (1280 = Staphylococcus aureus; 287 = Pseudomonas aeruginosa).
     """
-    q = urllib.parse.quote(f"gene:{gen} AND organism_id:{organismo} AND reviewed:true")
+    if not gen and not proteina:
+        raise ValueError("Indica gen o proteina")
+    partes = [f"gene:{gen}" if gen else f'protein_name:"{proteina}"', "reviewed:true"]
+    if organismo:
+        partes.append(f"taxonomy_id:{organismo}")  # incluye las cepas del taxón
+    q = urllib.parse.quote(" AND ".join(partes))
     tsv = _get(f"https://rest.uniprot.org/uniprotkb/search?query={q}&fields=accession,gene_primary,protein_name,"
-               f"cc_function,cc_subcellular_location&format=tsv").decode()
-    filas = [f.split("\t") for f in tsv.strip().split("\n")[1:]]
-    exactas = [f for f in filas if f[1].upper() == gen.upper()] or filas
-    return [{"uniprot": f[0], "gen": f[1], "proteina": f[2], "funcion": f[3], "localizacion": f[4] if len(f) > 4 else ""}
-            for f in exactas]
+               f"organism_name,cc_function,cc_subcellular_location&format=tsv&size={maximo}").decode()
+    filas = [f.split("\t") + [""] * 6 for f in tsv.strip().split("\n")[1:] if f]
+    if gen:
+        filas = [f for f in filas if f[1].upper() == gen.upper()] or filas
+    return [{"uniprot": f[0], "gen": f[1], "proteina": f[2], "organismo": f[3], "funcion": f[4],
+             "localizacion": f[5]} for f in filas]
 
 
 def reactome(texto, especie="Homo sapiens"):
@@ -492,20 +502,48 @@ def ema_epar(nombre, patron, documento="public-assessment-report", contexto=1):
     biológicos y oncológicos). nombre: marca comercial (p. ej., "enhertu"). El EPAR detalla
     farmacocinética, metabolitos, transportadores, exposición-respuesta y poblaciones especiales.
     """
-    import pymupdf
     slug = re.sub(r"[^a-z0-9]+", "-", nombre.lower()).strip("-")
     destino = CACHE / f"epar-{slug}-{documento}.pdf"
     if not destino.exists():
         CACHE.mkdir(parents=True, exist_ok=True)
         destino.write_bytes(_get(f"https://www.ema.europa.eu/en/documents/assessment-report/"
                                  f"{slug}-epar-{documento}_en.pdf", timeout=300))
+    return _frases_pdf(destino, patron, contexto)
+
+
+def _frases_pdf(ruta, patron, contexto=1, maximo=None):
+    """Frases de un PDF que cumplen el patrón (regex, sin distinguir mayúsculas), con su página y las
+    `contexto - 1` frases vecinas a cada lado."""
+    import pymupdf
     salida = []
-    for n, pagina in enumerate(pymupdf.open(destino), 1):
-        frases = re.split(r"(?<=[.;])\s+", re.sub(r"\s+", " ", pagina.get_text()))
+    for n, pagina_ in enumerate(pymupdf.open(ruta), 1):
+        frases = re.split(r"(?<=[.;])\s+", re.sub(r"\s+", " ", pagina_.get_text()))
         for i, f in enumerate(frases):
             if re.search(patron, f, re.I):
                 salida.append({"pagina": n, "texto": " ".join(frases[max(0, i - contexto + 1):i + contexto])})
+                if maximo and len(salida) >= maximo:
+                    return salida
     return salida
+
+
+def pdf_texto(url, patrones=(), contexto=1, maximo=8):
+    """Frases de un PDF público (guía nacional, documento de posición, informe técnico) que cumplen cada patrón,
+    con el número de página para citarlas. url: dirección del PDF o ruta local. El PDF se guarda en la caché.
+    Si el PDF es una imagen escaneada no tiene texto: lo indica en «aviso»."""
+    import hashlib
+    import pymupdf
+    if Path(url).exists():
+        ruta = Path(url)
+    else:
+        ruta = CACHE / f"pdf-{hashlib.sha1(url.encode()).hexdigest()[:16]}.pdf"
+        if not ruta.exists():
+            ruta.write_bytes(_get(url, timeout=300, cabeceras={"User-Agent": "Mozilla/5.0 (compatible; "
+                                                                             "skills-docencia/1.0)"}))
+    documento = pymupdf.open(ruta)
+    caracteres = sum(len(p.get_text()) for p in documento)
+    return {"url": url, "titulo": (documento.metadata or {}).get("title") or None, "paginas": len(documento),
+            "aviso": "sin texto extraíble: puede ser un escaneo" if caracteres < 200 * len(documento) else None,
+            "fragmentos": {p: _frases_pdf(ruta, p, contexto, maximo) for p in patrones}}
 
 
 def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "microbiology", "pharmacokinetics",
@@ -514,12 +552,21 @@ def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "
     En los antimicrobianos, 12.1 suele remitir a 12.4 («microbiology»): ahí están el mecanismo y la resistencia.
     Las fichas antiguas sin formato PLR no tienen ese campo; su «Microbiology» va dentro de clinical_pharmacology."""
     q = urllib.parse.quote(f'openfda.generic_name:"{nombre}"')
-    r = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=1", timeout=90))["results"][0]
+    fichas = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=25", timeout=90))["results"]
+    r = max(fichas, key=lambda f: _puntuar_ficha(f, nombre, secciones))
     salida = {"set_id": r.get("set_id"), "fecha": r.get("effective_time")}
     for s in secciones:
         if r.get(s):
             salida[s] = " ".join(r[s])[:largo]
     return salida
+
+
+def _puntuar_ficha(ficha, nombre, secciones):
+    """Orden de preferencia entre fichas de openFDA: primero la del principio activo solo (no una combinación),
+    después la que tiene más secciones de las pedidas y, a igualdad, la más reciente."""
+    genericos = [g.strip().upper() for g in ficha.get("openfda", {}).get("generic_name", [])]
+    solo = any(g == nombre.strip().upper() for g in genericos)
+    return solo, sum(bool(ficha.get(s)) for s in secciones), ficha.get("effective_time", "")
 
 
 def openfda_eventos(nombre, maximo=15):
@@ -635,6 +682,9 @@ if __name__ == "__main__":
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
                  "servier-extraer": lambda k, d, g, n: servier_extraer(k, int(d), g, n),
                  "dailymed": dailymed, "cima": cima, "uniprot": uniprot, "reactome": reactome,
+                 "uniprot-proteina": lambda nombre, organismo=None: uniprot(
+                     proteina=nombre, organismo=int(organismo) if organismo else None),
+                 "pdf": lambda url, *patrones: pdf_texto(url, patrones),
                  "europepmc": lambda consulta, patron=None: europepmc(consulta, patron),
                  "pubmed": lambda consulta, patron=None: pubmed(consulta, patron),
                  "gen": ncbi_gene, "nci": nci_tesauro, "livertox": livertox, "medlineplus": medlineplus,

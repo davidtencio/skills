@@ -36,14 +36,15 @@ Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imp
 ### 2. Investigar y verificar
 Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía).
 
-1. **Definición:** `fuentes.py mesh "<término MeSH>"` y `fuentes.py mondo "<nombre en inglés>"`.
+1. **Definición:** `fuentes.py mesh "<término MeSH>"` (cita el identificador D… del campo `mesh`) y `fuentes.py mondo "<nombre en inglés>"`.
 2. **Fisiopatología:**
    - Busca una revisión de referencia con `fuentes.py pubmed "<consulta>" "<regex>"`.
    - Si tiene texto completo en PMC, extrae las frases que respaldan cada afirmación con `fuentes.py pmc <PMCID> "<regex>" …`.
-   - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`.
+   - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`; las de un microorganismo, por su nombre, con `fuentes.py uniprot-proteina "<proteína>" [taxón NCBI]`.
 3. **Clínica y diagnóstico:** páginas de la sociedad científica y del instituto del NIH correspondiente (p. ej., diabetes.org y NIDDK; en infecciones, IDSA y NIAID), notas descriptivas de la OMS y `fuentes.py medlineplus`. Léelas con `fuentes.py pagina <URL> "<regex>"`, que quita el HTML y devuelve la frase exacta.
 4. **Tratamiento:**
-   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; lee la de texto completo con `fuentes.py pmc`.
+   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; `fuentes.py guias-titulo` exige las palabras en el título y da menos ruido. Lee la de texto completo con `fuentes.py pmc` (si NCBI no la da, prueba Europe PMC).
+   - Las guías publicadas en PDF (sociedades, ministerios, AWMF) se leen con `fuentes.py pdf <URL> "<regex>"`, que devuelve cada frase con su página para citarla.
    - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`). En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), el mecanismo y la resistencia están en la 12.4 *Microbiology* (campo `microbiology`).
    - **Antibacterianos y antifúngicos:** farmacocinética de la ficha (FDA 12.3, CIMA 5.2) e índice FC/FD de cada familia con su fuente, para explicar la dosis (ver «Farmacocinética y farmacodinamia de los antimicrobianos» en `references/plantillas.md`).
    - **Infecciones:** fuentes propias (IDSA, ESCMID, guías del NIH/HHS para VIH, OMS, EUCAST, AWaRe, resistencia local de la OPS e INCIENSA) en la sección «Infecciones» de `references/fuentes.md`.

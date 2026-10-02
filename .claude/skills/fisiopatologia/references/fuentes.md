@@ -21,7 +21,7 @@
 | Síntomas y complicaciones | OMS (notas descriptivas), NIDDK | MedlinePlus (español), OPS | `fuentes.py pagina`, `medlineplus` |
 | Algoritmo de tratamiento | Guía o consenso de acceso abierto (texto completo en PMC) | Resumen de la guía en PubMed | `fuentes.py guias`, `pmc` |
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
-| Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pubmed` |
+| Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pdf`, `pubmed` |
 | Afirmaciones sueltas | PubMed (por relevancia) y Europe PMC (por citas) | — | `fuentes.py pubmed`, `europepmc` |
 | Órganos, tejidos y células | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier), kits de Servier; TogoTV y Wikimedia Commons (ver «Bibliotecas de imágenes en otros idiomas» en `idiomas.md`) | `recursos.py`, `fuentes.py bioicons`, `servier-*`, `togopic`, `commons` |
 | Flechas, pasos, rótulos, tarjetas | Biblioteca propia | — | `componentes.py`, `piezas.py` |
@@ -54,8 +54,9 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 
 ## Cómo leer una guía
 
-- Busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. Prefiere la que tenga texto completo en PMC (`pmcid` en el resultado).
-- Extrae las frases exactas con `python3 scripts/fuentes.py pmc <PMCID> "<regex>" "<regex>"`. Si devuelve `texto_completo: false`, el editor no permite descargarlo: usa el resumen y anótalo en «No verificado».
+- Busca primero las guías de los últimos 5 años con `python3 scripts/fuentes.py guias "<enfermedad en inglés>"`. Si salen muchas guías de otros temas, usa `guias-titulo`, que exige las palabras en el título. Prefiere la que tenga texto completo en PMC (`pmcid` en el resultado).
+- Extrae las frases exactas con `python3 scripts/fuentes.py pmc <PMCID> "<regex>" "<regex>"`. Lo pide a NCBI y, si no lo da, a Europe PMC (el campo `fuente` dice cuál). Si devuelve `texto_completo: false`, ninguno lo tiene: usa el resumen y anótalo en «No verificado».
+- Si la guía es un PDF (sociedades, ministerios, AWMF, OMS), extrae las frases con `python3 scripts/fuentes.py pdf <URL> "<regex>"`: cada fragmento lleva su página, que se cita en el material («guía S3, p. 11»). Si el resultado trae `aviso`, el PDF es un escaneo sin texto.
 - Cita cada recomendación con la guía y el año. No mezcles recomendaciones de guías distintas en un mismo algoritmo sin decirlo.
 
 ## No disponibles en este entorno
