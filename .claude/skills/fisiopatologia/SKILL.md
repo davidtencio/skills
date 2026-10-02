@@ -7,7 +7,7 @@ description: Crea láminas ilustradas y un PDF profesional sobre una enfermedad 
 
 Produce una serie de **láminas 16:9** (SVG + PNG; tantas como necesite la enfermedad), un **material de apoyo** en Markdown y un **PDF final** con diseño profesional. Explican una enfermedad a profesionales de salud: por qué se produce, cómo se manifiesta, cómo se diagnostica y cómo se trata. El objetivo es que el lector entienda la causa (fisiología normal → qué falla → consecuencias clínicas → por qué cada fármaco corrige un defecto), no que memorice listas.
 
-Hay un ejemplo completo en `ejemplos/diabetes-tipo-2/` (`laminas.py`, `material.md`, `lamina-N.png` y el PDF). Úsalo como modelo de composición, densidad de texto y tono.
+Hay dos ejemplos completos (`laminas.py`, `material.md`, `lamina-N.png` y el PDF): `ejemplos/diabetes-tipo-2/` (enfermedad metabólica) y `ejemplos/neumonia-nosocomial/` (infección: agentes, resistencia, mapa de antibióticos, estrategia empírica según una guía en alemán, FC/FD y prevención). Úsalos como modelo de composición, densidad de texto y tono.
 
 ## Principios
 

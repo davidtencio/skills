@@ -68,6 +68,8 @@ En las infecciones tratadas con antibacterianos o antifúngicos, añade al menos
 - **Ejemplo verificado:** en la tabla 1 del documento de posición sobre monitorización de antimicrobianos en pacientes críticos (*Intensive Care Med* 2020, PMID 32383061, PMC7223855), los betalactámicos se asocian a %fT > CMI; los aminoglucósidos, a ABC₀₋₂₄/CMI y Cmáx/CMI; y las fluoroquinolonas y la vancomicina, a ABC₀₋₂₄/CMI. Copia los objetivos numéricos de la fuente con su frase exacta, no de esta lista.
 - La farmacocinética detallada de un fármaco concreto (absorción, metabolismo, interacciones) corresponde a la skill `mecanismo-accion`; aquí se explica a nivel de familia y solo lo que guía la dosis.
 
+**Ejemplo:** `ejemplos/neumonia-nosocomial/` (síndrome con varios agentes posibles; once láminas, con resistencia, mapa de antibióticos, FC/FD y prevención).
+
 **Recordatorios:**
 
 - El microorganismo se dibuja con la ilustración de Servier de la biblioteca (`servier-hiv-virus`, `servier-bacterium`, `servier-sporozoites`…) o con el color `patogeno` de `componentes.py` si es un esquema propio (ver `estilo.md`).
