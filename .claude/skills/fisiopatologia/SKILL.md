@@ -107,7 +107,7 @@ Cita cada afirmación con `*[Fuente]*`.
 - Una lámina por página, en horizontal.
 - La ficha de la enfermedad con diseño editorial.
 
-Usa `--portada N` para elegir otra lámina de portada. Revisa las páginas convertidas a PNG con Read antes de entregar. Entrega solo el PDF (con SendUserFile si está disponible) y, en el mensaje final, resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
+Las láminas entran en el PDF como SVG vectorial (texto nítido y seleccionable) salvo las que ocuparían más así que en PNG: `pdf.py` lo mide y elige. Escribe en `material.md`, bajo el título, `<!-- portada: N -->` con la lámina de la portada y `<!-- fecha: AAAA-MM-DD -->` con la fecha del documento: así el PDF sale igual cada vez que se regenera (`--portada` y `--fecha` las cambian de forma puntual). Revisa las páginas convertidas a PNG con Read antes de entregar. Entrega solo el PDF (con SendUserFile si está disponible) y, en el mensaje final, resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
 
 ## Licencias
 - Usa preferentemente CC0, dominio público y CC BY. Evita CC BY-SA salvo que no haya alternativa, y avísalo.

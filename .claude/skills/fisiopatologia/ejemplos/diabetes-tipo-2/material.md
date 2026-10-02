@@ -1,5 +1,8 @@
 # Diabetes tipo 2: fisiopatología, diagnóstico y tratamiento
 
+<!-- portada: 4 -->
+<!-- fecha: 2026-10-01 -->
+
 > **Prototipo pendiente de revisión clínica.** Material educativo para profesionales de salud; no sustituye las guías de práctica clínica vigentes ni el juicio clínico.
 
 Serie de nueve láminas (16:9):

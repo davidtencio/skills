@@ -1,5 +1,8 @@
 # Darolutamida: ¿cómo actúa?
 
+<!-- portada: 3 -->
+<!-- fecha: 2026-10-01 -->
+
 > **Prototipo pendiente de revisión farmacológica.** Material educativo para estudiantes de farmacia; no sustituye la ficha técnica vigente.
 
 Serie de cuatro láminas (16:9, para proyectar o imprimir):

@@ -55,8 +55,9 @@ def test_maquetacion_sin_errores(skill, carpeta):
 @pytest.mark.pdf
 @pytest.mark.parametrize("skill, carpeta", EJEMPLOS, ids=IDS)
 def test_pdf_misma_estructura(skill, carpeta, tmp_path):
-    """El PDF regenerado tiene las mismas páginas y el mismo índice de marcadores que el versionado.
-    No se comparan píxeles: la portada lleva la fecha de generación."""
+    """El PDF regenerado tiene las mismas páginas, el mismo índice de marcadores y el mismo texto en cada página que
+    el versionado (material.md fija la portada y la fecha). No se comparan bytes: Chromium añade la fecha de
+    creación a los metadatos."""
     pymupdf = pytest.importorskip("pymupdf")
     versionado = carpeta / f"{carpeta.name}.pdf"
     salida = tmp_path / versionado.name
@@ -65,3 +66,5 @@ def test_pdf_misma_estructura(skill, carpeta, tmp_path):
     nuevo, viejo = pymupdf.open(salida), pymupdf.open(versionado)
     assert len(nuevo) == len(viejo), f"{len(nuevo)} páginas en lugar de {len(viejo)}"
     assert nuevo.get_toc() == viejo.get_toc()
+    distintas = [k + 1 for k in range(len(nuevo)) if nuevo[k].get_text() != viejo[k].get_text()]
+    assert not distintas, f"Las páginas {distintas} ya no tienen el mismo texto: regenera el PDF del ejemplo"

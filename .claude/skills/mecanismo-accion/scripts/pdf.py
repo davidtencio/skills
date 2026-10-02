@@ -4,7 +4,11 @@ Uso:
     python3 scripts/pdf.py ejemplos/<farmaco>            # crea ejemplos/<farmaco>/<farmaco>.pdf
     python3 scripts/pdf.py ejemplos/<farmaco> --portada 3  # lámina que ilustra la portada
 
-Lee `material.md` y todas las `lamina-N.png` de la carpeta (sin límite de número). El diseño es
+Lee `material.md` y todas las láminas de la carpeta (sin límite de número). Cada lámina entra como SVG vectorial
+(nítido a cualquier zoom y con el texto seleccionable) si así ocupa menos en el PDF que como PNG; si no (p. ej.,
+superficies moleculares con miles de degradados), como PNG, para que el PDF no se dispare. La portada usa el PNG.
+Para que el PDF sea reproducible, `material.md` puede fijar la lámina de la portada y la fecha con comentarios:
+`<!-- portada: 3 -->` y `<!-- fecha: 2026-10-01 -->` (`--portada` y `--fecha` tienen prioridad). El diseño es
 A4: portada, índice con números de página, glosario de siglas, una lámina por página en horizontal y la ficha en
 vertical con tipografía editorial (Source Serif 4 para títulos, Inter para el texto).
 """
@@ -72,9 +76,18 @@ def _slug(texto):
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
 
 
+def opciones_material(texto):
+    """Opciones del PDF escritas en material.md como comentarios: <!-- portada: N --> y <!-- fecha: AAAA-MM-DD -->."""
+    portada = re.search(r"<!--\s*portada:\s*(\d+)\s*-->", texto)
+    fecha = re.search(r"<!--\s*fecha:\s*(\d{4}-\d{2}-\d{2})\s*-->", texto)
+    return {"portada": int(portada.group(1)) if portada else None,
+            "fecha": date.fromisoformat(fecha.group(1)) if fecha else None}
+
+
 def leer_material(carpeta):
     """Separa el material en título, lista de láminas y cuerpo (sin la lista ni el aviso inicial)."""
     texto = (carpeta / "material.md").read_text(encoding="utf-8")
+    texto = re.sub(r"^<!--\s*(portada|fecha):.*?-->\s*\n", "", texto, flags=re.M)
     titulo = re.search(r"^# (.+)$", texto, re.M).group(1).strip()
     titulos = {int(n): t for t, n in re.findall(r"^\s*\d+\.\s*\[(.+?)\]\(lamina-(\d+)\.png\)", texto, re.M)}
     cuerpo = re.sub(r"^# .+\n", "", texto, count=1, flags=re.M)
@@ -86,9 +99,33 @@ def leer_material(carpeta):
 
 
 def laminas(carpeta, titulos):
-    numeradas = [(int(m.group(1)), p) for p in carpeta.glob("lamina-*.png")
-                 if (m := re.fullmatch(r"lamina-(\d+)", p.stem))]
-    return [(n, titulos.get(n, f"Lámina {n}"), p) for n, p in sorted(numeradas)]
+    """Láminas de la carpeta como (número, título, archivo): el SVG si existe, si no el PNG."""
+    numeradas = {int(m.group(1)) for p in carpeta.glob("lamina-*.*")
+                 if p.suffix in (".svg", ".png") and (m := re.fullmatch(r"lamina-(\d+)", p.stem))}
+    return [(n, titulos.get(n, f"Lámina {n}"), next(p for p in (carpeta / f"lamina-{n}.svg",
+                                                                 carpeta / f"lamina-{n}.png") if p.exists()))
+            for n in sorted(numeradas)]
+
+
+def _peso_en_pdf(pagina, archivo, tmp):
+    """Bytes que ocupa una lámina impresa sola en una página, como en el PDF final."""
+    html_ = Path(tmp) / "peso.html"
+    html_.write_text(f'<html><body style="margin:0"><div style="width:269mm;height:151.3mm;background:center / '
+                     f'contain no-repeat url({archivo.resolve().as_uri()})"></div></body></html>', encoding="utf-8")
+    pagina.goto(html_.as_uri())
+    pagina.wait_for_load_state("load")
+    return len(pagina.pdf(width="297mm", height="210mm", print_background=True))
+
+
+def elegir_formatos(pagina, lams, tmp):
+    """Deja cada lámina en SVG solo si ocupa menos en el PDF que su PNG."""
+    elegidas = []
+    for n, t, p in lams:
+        png = p.with_suffix(".png")
+        if p.suffix == ".svg" and png.exists() and _peso_en_pdf(pagina, p, tmp) > _peso_en_pdf(pagina, png, tmp):
+            p = png
+        elegidas.append((n, t, p))
+    return elegidas
 
 
 def _normalizar_listas(md):
@@ -147,7 +184,7 @@ def separar_glosario(md):
     return md[:m.start()] + md[m.end():], lista
 
 
-def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None, glosario=""):
+def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas=None, glosario="", fecha=None):
     paginas = paginas or {}
     total = len(lams)
     num = lambda ident: paginas.get(ident, "")  # noqa: E731
@@ -169,8 +206,10 @@ def documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, pagi
                        f'abreviaturas que aparecen en las láminas y en la {TEXTOS["ficha"].lower()}.</p>{glosario}'
                        f'</section>') if glosario else ""
     heroe = next((p for n, _, p in lams if n == portada), lams[0][2] if lams else None)
+    if heroe is not None and heroe.with_suffix(".png").exists():  # en la portada, el PNG: no duplica el vectorial
+        heroe = heroe.with_suffix(".png")
     sellos_html = "".join(f"<li>{html.escape(s)}</li>" for s in sellos)
-    hoy = fecha_es(date.today())
+    hoy = fecha_es(fecha or date.today())
     nombre_pie = html.escape(farmaco).replace('"', "")
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <title>{html.escape(farmaco)} · {TEXTOS["tema"]}</title>
@@ -244,7 +283,8 @@ a {{ color: inherit; text-decoration: none; }}
 .lamina .etq {{ font: 600 7.5pt Inter; letter-spacing: .16em; text-transform: uppercase; color: #fff;
                background: var(--azul); padding: 1mm 2.6mm; border-radius: 1mm; }}
 .lamina .tit {{ font: 600 13pt 'Source Serif 4', serif; color: var(--azul-osc); }}
-/* Fondo y no <img>: Chromium 141 manda a la página siguiente las imágenes de páginas con nombre. */
+/* Fondo y no <img>: Chromium 141 manda a la página siguiente las imágenes de páginas con nombre. Con un SVG,
+   el fondo se imprime como gráfico vectorial. */
 .lamina .imagen {{ width: 269mm; height: 151.3mm; background: center / contain no-repeat; border-radius: 1.5mm; box-shadow: 0 0 0 .3mm var(--linea); }}
 
 /* Ficha */
@@ -366,9 +406,12 @@ def _paginas(ruta_pdf, lams, secciones):
     return res
 
 
-def generar(carpeta, portada=None, salida=None):
+def generar(carpeta, portada=None, salida=None, fecha=None):
     from playwright.sync_api import sync_playwright
     carpeta = Path(carpeta).resolve()
+    opciones = opciones_material((carpeta / "material.md").read_text(encoding="utf-8"))
+    portada = portada or opciones["portada"]
+    fecha = fecha or opciones["fecha"]
     titulo, titulos, md = leer_material(carpeta)
     farmaco = titulo.split(":")[0].strip()
     lams = laminas(carpeta, titulos)
@@ -387,12 +430,13 @@ def generar(carpeta, portada=None, salida=None):
         ruta_html = Path(tmp) / "documento.html"
         navegador = p.chromium.launch(executable_path=ejecutable())
         pagina = navegador.new_page()
+        lams = elegir_formatos(pagina, lams, tmp)
         ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada,
-                                       glosario=glosario), encoding="utf-8")
+                                       glosario=glosario, fecha=fecha), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)  # primera pasada: medir páginas
         paginas = _paginas(salida, lams, secciones)
         ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada, paginas,
-                                       glosario), encoding="utf-8")
+                                       glosario, fecha), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)
         navegador.close()
     import pymupdf
@@ -407,6 +451,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("carpeta")
     ap.add_argument("--portada", type=int, help="número de la lámina de la portada")
+    ap.add_argument("--fecha", type=date.fromisoformat, help="fecha de la portada (AAAA-MM-DD); por defecto, hoy")
     ap.add_argument("--salida")
     a = ap.parse_args()
-    print(generar(a.carpeta, a.portada, a.salida))
+    print(generar(a.carpeta, a.portada, a.salida, a.fecha))

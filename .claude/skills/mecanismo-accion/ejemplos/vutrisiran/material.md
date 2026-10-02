@@ -1,5 +1,8 @@
 # Vutrisiran: ¿cómo actúa?
 
+<!-- portada: 1 -->
+<!-- fecha: 2026-10-01 -->
+
 > **Prototipo pendiente de revisión farmacológica.** Material educativo para estudiantes de farmacia; no sustituye la ficha técnica vigente.
 
 Serie de ocho láminas (16:9):

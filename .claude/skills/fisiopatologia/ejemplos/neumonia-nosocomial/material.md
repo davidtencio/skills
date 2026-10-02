@@ -1,5 +1,8 @@
 # Neumonía nosocomial: fisiopatología, diagnóstico y tratamiento
 
+<!-- portada: 3 -->
+<!-- fecha: 2026-10-02 -->
+
 > **Prototipo pendiente de revisión clínica.** Material educativo para profesionales de salud; no sustituye las guías de práctica clínica vigentes, el antibiograma local ni el juicio clínico.
 
 Serie de once láminas (16:9):
