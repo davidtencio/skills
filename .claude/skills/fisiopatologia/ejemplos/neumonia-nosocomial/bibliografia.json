@@ -1,0 +1,148 @@
+{
+ "referencias": [
+  {
+   "clave": "mesh",
+   "tipo": "base",
+   "cita": "National Library of Medicine. Medical Subject Headings (MeSH): Healthcare-Associated Pneumonia (D000077299) y Pneumonia, Ventilator-Associated (D053717)",
+   "url": "https://www.ncbi.nlm.nih.gov/mesh/?term=D000077299",
+   "consultado": "2026-10-02",
+   "sello": "MeSH"
+  },
+  {
+   "clave": "s3-2024",
+   "tipo": "guia",
+   "cita": "Rademacher J, Ewig S, Grabein B, et al. Epidemiologie, Diagnostik und Therapie erwachsener Patienten mit nosokomialer Pneumonie. S3-Leitlinie, Kurzversion. AWMF-Register 020-013k; 2024",
+   "url": "https://register.awmf.org/assets/guidelines/020-013k_S3_Epidemiologie-Diagnostik-Therapie-erwachsener-Patienten-nosokomiale-Pneumonie__2024-03.pdf",
+   "idioma": "de",
+   "version": "3.0, enero de 2024",
+   "consultado": "2026-10-02",
+   "sello": "AWMF (Alemania)",
+   "nota": "Resúmenes en PubMed: PMID 38985348 y PMID 41270759"
+  },
+  {
+   "clave": "s3-2024-larga",
+   "tipo": "guia",
+   "cita": "Rademacher J, Ewig S, Grabein B, et al. Epidemiologie, Diagnostik und Therapie erwachsener Patienten mit nosokomialer Pneumonie. S3-Leitlinie, Langversion. AWMF-Register 020-013l; 2024",
+   "url": "https://register.awmf.org/assets/guidelines/020-013l_S3_Epidemiologie-Diagnostik-Therapie-erwachsener-Patienten-nosokomiale-Pneumonie__2024-03.pdf",
+   "idioma": "de",
+   "version": "3.0, enero de 2024",
+   "consultado": "2026-10-02",
+   "sello": "AWMF (Alemania)"
+  },
+  {
+   "clave": "ers-2017",
+   "tipo": "guia",
+   "cita": "Torres A, Niederman MS, Chastre J, Ewig S, Fernandez-Vandellos P, Hanberger H, et al. International ERS/ESICM/ESCMID/ALAT guidelines for the management of hospital-acquired pneumonia and ventilator-associated pneumonia: Guidelines for the management of hospital-acquired pneumonia (HAP)/ventilator-associated pneumonia (VAP) of the European Respiratory Society (ERS), European Society of Intensive Care Medicine (ESICM), European Society of Clinical Microbiology and Infectious Diseases (ESCMID) and Asociación Latinoamericana del Tórax (ALAT). Eur Respir J. 2017;50(3):1700582.",
+   "pmid": "28890434",
+   "doi": "10.1183/13993003.00582-2017",
+   "consultado": "2026-10-02",
+   "sello": "ERS/ESICM/ESCMID/ALAT"
+  },
+  {
+   "clave": "ers-2017-resumen",
+   "tipo": "articulo",
+   "cita": "Torres A, Niederman MS, Chastre J, Ewig S, Fernandez-Vandellos P, Hanberger H, et al. Summary of the international clinical guidelines for the management of hospital-acquired and ventilator-acquired pneumonia. ERJ Open Res. 2018;4(2):00028-2018.",
+   "pmid": "29977898",
+   "pmcid": "PMC6018155",
+   "doi": "10.1183/23120541.00028-2018",
+   "consultado": "2026-10-02",
+   "sello": "ERS/ESICM/ESCMID/ALAT"
+  },
+  {
+   "clave": "idsa-2016",
+   "tipo": "guia",
+   "cita": "Kalil AC, Metersky ML, Klompas M, Muscedere J, Sweeney DA, Palmer LB, et al. Management of Adults With Hospital-acquired and Ventilator-associated Pneumonia: 2016 Clinical Practice Guidelines by the Infectious Diseases Society of America and the American Thoracic Society. Clin Infect Dis. 2016;63(5):e61-e111.",
+   "pmid": "27418577",
+   "pmcid": "PMC4981759",
+   "doi": "10.1093/cid/ciw353",
+   "consultado": "2026-10-02",
+   "sello": "IDSA/ATS",
+   "nota": "Texto completo leído en la copia del repositorio de la Universitat de Barcelona (hdl.handle.net/2445/118988), localizada con Unpaywall. Fe de erratas: PMID 28168287, PMID 29017256 y PMID 29126289"
+  },
+  {
+   "clave": "martin-loeches-2018",
+   "tipo": "revision",
+   "cita": "Martin-Loeches I, Rodriguez AH, Torres A. New guidelines for hospital-acquired pneumonia/ventilator-associated pneumonia: USA vs. Europe. Curr Opin Crit Care. 2018;24(5):347-352.",
+   "pmid": "30063491",
+   "doi": "10.1097/MCC.0000000000000535",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "nat-commun-2024",
+   "tipo": "revision",
+   "cita": "Howroyd F, Chacko C, MacDuff A, Gautam N, Pouchet B, Tunnicliffe B, et al. Ventilator-associated pneumonia: pathobiological heterogeneity and diagnostic challenges. Nat Commun. 2024;15(1):6447.",
+   "pmid": "39085269",
+   "pmcid": "PMC11291905",
+   "doi": "10.1038/s41467-024-50805-z",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "microorganisms-2024",
+   "tipo": "revision",
+   "cita": "Miron M, Blaj M, Ristescu AI, Iosep G, Avădanei AN, Iosep DG, et al. Hospital-Acquired Pneumonia and Ventilator-Associated Pneumonia: A Literature Review. Microorganisms. 2024;12(1):213.",
+   "pmid": "38276198",
+   "pmcid": "PMC10820465",
+   "doi": "10.3390/microorganisms12010213",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "shea-2022",
+   "tipo": "guia",
+   "cita": "Klompas M, Branson R, Cawcutt K, Crist M, Eichenwald EC, Greene LR, et al. Strategies to prevent ventilator-associated pneumonia, ventilator-associated events, and nonventilator hospital-acquired pneumonia in acute-care hospitals: 2022 Update. Infect Control Hosp Epidemiol. 2022;43(6):687-713.",
+   "pmid": "35589091",
+   "pmcid": "PMC10903147",
+   "doi": "10.1017/ice.2022.88",
+   "consultado": "2026-10-02",
+   "sello": "SHEA/IDSA/APIC"
+  },
+  {
+   "clave": "tdm-2020",
+   "tipo": "revision",
+   "cita": "Abdul-Aziz MH, Alffenaar JWC, Bassetti M, Bracht H, Dimopoulos G, Marriott D, et al. Antimicrobial therapeutic drug monitoring in critically ill adult patients: a Position Paper. Intensive Care Med. 2020;46(6):1127-1153.",
+   "pmid": "32383061",
+   "pmcid": "PMC7223855",
+   "doi": "10.1007/s00134-020-06050-1",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "rybak-2020",
+   "tipo": "guia",
+   "cita": "Rybak MJ, Le J, Lodise TP, Levine DP, Bradley JS, Liu C, et al. Therapeutic Monitoring of Vancomycin for Serious Methicillin-resistant Staphylococcus aureus Infections: A Revised Consensus Guideline and Review by the American Society of Health-system Pharmacists, the Infectious Diseases Society of America, the Pediatric Infectious Diseases Society, and the Society of Infectious Diseases Pharmacists. Clin Infect Dis. 2020;71(6):1361-1364.",
+   "pmid": "32658968",
+   "doi": "10.1093/cid/ciaa303",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "fda-12-4",
+   "tipo": "ficha",
+   "cita": "U.S. Food and Drug Administration. Fichas técnicas de los antibióticos (prescribing information), sección 12.4 Microbiology; consultadas en openFDA",
+   "url": "https://open.fda.gov/apis/drug/label/",
+   "consultado": "2026-10-02",
+   "sello": "Fichas de la FDA",
+   "nota": "Fichas (set id y fecha de la versión): piperacilina/tazobactam (8db6bd91-2106-4bfd-8cc8-38aaf1e18d17, 2026-05-15); cefepime (be5f8ca6-7232-423a-a2d5-cccb7abe7921, 2026-06-25); meropenem (e8848f4a-bca9-4978-b0a1-38483fd4d639, 2026-03-31); vancomicina (127d95d1-8070-41ac-8343-3168b0cf1312, 2026-08-05); linezolid (870c9600-04d5-4b44-a5b5-02252a310f22, 2026-07-31); amikacina (499ab990-2b21-474f-aaba-d86388965f40, 2026-08-04); tobramicina (1cd3d47b-025f-4705-9daf-cf07725ec223, 2023-02-24); levofloxacino (5261da15-1b6c-fbe2-e063-6394a90ad85e, 2026-05-22); colistimetato (6d6e13e2-dc33-4b7b-84d0-66146a57c552, 2026-06-08); ceftarolina (3ecde48b-75a2-4beb-9999-369f3f61bb8a, 2024-11-20)"
+  },
+  {
+   "clave": "inciensa-evilabra",
+   "tipo": "web",
+   "cita": "Instituto Costarricense de Investigación y Enseñanza en Nutrición y Salud (INCIENSA). Laboratorio de Antimicrobianos: Estrategia de vigilancia de laboratorio de la resistencia a los antimicrobianos (EVILABRA)",
+   "url": "https://www.inciensa.sa.cr/laboratorio-de-antimicrobianos/",
+   "consultado": "2026-10-02",
+   "sello": "INCIENSA (Costa Rica)"
+  },
+  {
+   "clave": "mrsa-2023",
+   "tipo": "revision",
+   "cita": "Lade H, Kim JS. Molecular Determinants of β-Lactam Resistance in Methicillin-Resistant *Staphylococcus aureus* (MRSA): An Updated Review. Antibiotics (Basel). 2023;12(9):1362.",
+   "pmid": "37760659",
+   "pmcid": "PMC10525618",
+   "doi": "10.3390/antibiotics12091362",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  }
+ ]
+}

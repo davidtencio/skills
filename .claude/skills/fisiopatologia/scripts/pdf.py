@@ -34,7 +34,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto
 # Secciones del material con tratamiento visual propio (por el comienzo del título).
 DESTACADAS = {"puntos clave": "clave", "error frecuente": "error", "pregunta de autoevaluación": "pregunta",
               "no verificado": "pendiente", "fuentes": "fuentes", "simplificaciones": "simplificaciones",
-              "lista de verificación": "pendiente"}
+              "lista de verificación": "pendiente", "cómo se buscó": "metodo"}
 # Fuentes que se reconocen en el material para resumirlas en la portada.
 SELLOS = [("CIMA", "Ficha técnica AEMPS (CIMA)"), ("FDA", "Fichas de la FDA"), ("EMA", "EMA"),
           ("ChEMBL", "ChEMBL"), ("UniProt", "UniProt"), ("NCBI Gene", "NCBI Gene"),
@@ -152,15 +152,77 @@ def _normalizar_listas(md):
     return "\n".join(salida)
 
 
-def cuerpo_html(md):
-    """Convierte el material en HTML con secciones, citas y recuadros."""
+# PMID, PMCID, DOI y direcciones web del texto, para enlazarlos en el PDF.
+_IDENTIFICADORES = re.compile(r"(?P<pmid>\bPMID:?\s*(?P<pmidn>\d{6,9})\b)|(?P<pmc>\bPMC\d{5,9}\b)"
+                              r"|(?P<doi>\b(?:doi:\s*|DOI\s+)(?P<doin>10\.\d{4,9}/[^\s<>\"]*[^\s<>\".,;)\]]))"
+                              r"|(?P<url>\bhttps?://[^\s<>\"]*[^\s<>\".,;)\]])")
+
+
+def _enlace_identificador(m):
+    if m.group("pmid"):
+        destino = f"https://pubmed.ncbi.nlm.nih.gov/{m.group('pmidn')}/"
+    elif m.group("pmc"):
+        destino = f"https://pmc.ncbi.nlm.nih.gov/articles/{m.group('pmc')}/"
+    elif m.group("doi"):
+        destino = f"https://doi.org/{m.group('doin')}"
+    else:
+        destino = m.group("url")
+    return f'<a href="{html.escape(destino, quote=True)}">{m.group(0)}</a>'
+
+
+def enlazar_identificadores(contenido):
+    """Convierte en enlaces los PMID, PMCID, DOI y direcciones del texto, sin tocar las etiquetas ni lo que ya es
+    un enlace."""
+    salida, dentro_de_enlace = [], 0
+    for trozo in re.split(r"(<[^>]+>)", contenido):
+        if trozo.startswith("<"):
+            dentro_de_enlace += 1 if re.match(r"<a\b", trozo, re.I) else -1 if re.match(r"</a>", trozo, re.I) else 0
+            dentro_de_enlace = max(dentro_de_enlace, 0)
+            salida.append(trozo)
+        else:
+            salida.append(trozo if dentro_de_enlace else _IDENTIFICADORES.sub(_enlace_identificador, trozo))
+    return "".join(salida)
+
+
+def _citas_numeradas(contenido, numeros):
+    """«[@clave, loc.; @otra]» → «[3, loc.; 5]», con cada número enlazado a su referencia en Fuentes."""
+    def sustituir(m):
+        partes = []
+        for parte in m.group(1).split(";"):
+            c = re.match(r"\s*@([\w.-]+)\s*(?:,\s*(.+))?$", parte)
+            if c and c.group(1) in numeros:
+                n = numeros[c.group(1)]
+                partes.append(f'<a href="#ref-{n}">{n}</a>' + (f", {c.group(2)}" if c.group(2) else ""))
+            else:
+                partes.append(parte.strip())
+        return f'<span class="cita">[{"; ".join(partes)}]</span>'
+    contenido = re.sub(r"<em>\[(@[^\]]+)\]</em>", sustituir, contenido)
+    return re.sub(r"\[(@[^\]<>]+)\]", sustituir, contenido)
+
+
+def _anclas_fuentes(seccion_html):
+    """En la lista numerada de Fuentes, cada referencia lleva el ancla de su número (ref-N)."""
+    m = re.search(r"<ol>(.*?)</ol>", seccion_html, re.S)
+    if not m:
+        return seccion_html
+    contador = iter(range(1, 10000))
+    lista = re.sub(r"<li>", lambda _: f'<li id="ref-{next(contador)}">', m.group(1))
+    return seccion_html[:m.start(1)] + lista + seccion_html[m.end(1):]
+
+
+def cuerpo_html(md, numeros=None):
+    """Convierte el material en HTML con secciones, citas y recuadros. `numeros` ({clave: n}, de la bibliografía
+    estructurada) convierte las citas [@clave] en referencias numeradas y enlazadas."""
     md = _normalizar_listas(md)
     md = re.sub(r"<details>\s*<summary>(.*?)</summary>(.*?)</details>",
                 lambda m: f'<div class="respuesta" markdown="1">\n<p class="respuesta-titulo">{m.group(1)}</p>\n'
                           f'{m.group(2)}\n</div>', md, flags=re.S)
     md = re.sub(r"^- \[ \] ", "- ☐ ", md, flags=re.M)
     cuerpo = markdown.markdown(md, extensions=["tables", "md_in_html", "sane_lists"])
+    if numeros:
+        cuerpo = _citas_numeradas(cuerpo, numeros)
     cuerpo = re.sub(r"<em>\[(.+?)\]</em>", r'<span class="cita">\1</span>', cuerpo)
+    cuerpo = enlazar_identificadores(cuerpo)
     cuerpo = re.sub(r"<p><span class=\"cita\">(.+?)</span></p>", r'<p class="cita-sola"><span class="cita">\1</span></p>',
                     cuerpo)
     partes = re.split(r"<h2>(.*?)</h2>", cuerpo)
@@ -174,9 +236,10 @@ def cuerpo_html(md):
         citas = re.findall(r'<span class="cita">.*?</span>', partes[i])
         titulo_h2 = re.sub(r'\s*<span class="cita">.*?</span>', "", partes[i]).strip()
         bajo_titulo = f'<p class="cita-titulo">{" ".join(citas)}</p>' if citas else ""
+        contenido = _anclas_fuentes(partes[i + 1]) if clase == "fuentes" and numeros else partes[i + 1]
         html_secciones.append(
             f'<section class="seccion {clase}" id="{ident}"><h2><span class="num">{n:02d}</span>{titulo_h2}</h2>'
-            f'{bajo_titulo}<div class="contenido">{partes[i + 1]}</div></section>')
+            f'{bajo_titulo}<div class="contenido">{contenido}</div></section>')
     return "".join(html_secciones), secciones
 
 
@@ -244,6 +307,8 @@ body {{ margin: 0; font-family: Inter, 'Liberation Sans', sans-serif; font-size:
         color: var(--tinta); font-feature-settings: "cv11", "ss01"; hyphens: auto; }}
 h1, h2, h3 {{ font-family: 'Source Serif 4', 'Liberation Serif', serif; color: var(--azul-osc); }}
 a {{ color: inherit; text-decoration: none; }}
+.contenido a {{ color: var(--azul); overflow-wrap: anywhere; }}
+.cita a {{ font-weight: 600; }}
 
 /* Portada */
 .portada {{ page: portada; height: 296mm; position: relative; overflow: hidden; break-after: page;
@@ -335,6 +400,8 @@ tr:nth-child(even) td {{ background: #f6f8fa; }}
              margin: 3mm 0 2mm; }}
 .respuesta-titulo {{ font: 600 7.4pt Inter; letter-spacing: .14em; text-transform: uppercase; color: var(--azul); }}
 .simplificaciones .contenido {{ color: var(--suave); font-size: 9pt; }}
+.metodo .contenido {{ color: #3a4652; font-size: 8.8pt; }}
+.metodo code {{ font-size: 8pt; background: var(--fondo); padding: 0 1mm; border-radius: .8mm; }}
 .fuentes .contenido {{ font-size: 8.4pt; color: #3a4652; columns: 2; column-gap: 8mm; }}
 .fuentes .contenido li {{ break-inside: avoid; }}
 .glosario {{ break-before: page; }}
@@ -448,10 +515,18 @@ def generar(carpeta, portada=None, salida=None, fecha=None):
                        lams[0][0])
     subtitulo = TEXTOS["subtitulo"]
     md, glosario = separar_glosario(md)
-    cuerpo, secciones = cuerpo_html(md)
+    from bibliografia import cargar as cargar_bibliografia, numeracion
+    referencias = cargar_bibliografia(carpeta)
+    numeros = numeracion(carpeta) if referencias else None
+    cuerpo, secciones = cuerpo_html(md, numeros)
     seccion = re.search(r"^## Fuentes\s*$(.*?)(?=^## |\Z)", md, re.M | re.S)  # solo lo citado como fuente
     texto_fuentes = seccion.group(1) if seccion else md
-    sellos = [nombre for clave, nombre in SELLOS if re.search(rf"\b{re.escape(clave)}\b", texto_fuentes)]
+    if referencias:  # bibliografía estructurada: los sellos de las referencias citadas, por orden de cita
+        por_clave = {r["clave"]: r for r in referencias}
+        sellos = list(dict.fromkeys(por_clave[c]["sello"] for c, _ in sorted(numeros.items(), key=lambda x: x[1])
+                                    if por_clave.get(c, {}).get("sello")))
+    else:
+        sellos = [nombre for clave, nombre in SELLOS if re.search(rf"\b{re.escape(clave)}\b", texto_fuentes)]
     salida = Path(salida) if salida else carpeta / f"{carpeta.name}.pdf"
     with tempfile.TemporaryDirectory() as tmp, sync_playwright() as p:
         ruta_html = Path(tmp) / "documento.html"

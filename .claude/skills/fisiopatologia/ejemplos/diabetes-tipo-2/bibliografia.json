@@ -1,0 +1,130 @@
+{
+ "referencias": [
+  {
+   "clave": "mesh",
+   "tipo": "base",
+   "cita": "National Library of Medicine. Medical Subject Headings (MeSH): Diabetes Mellitus, Type 2 (D003924)",
+   "url": "https://www.ncbi.nlm.nih.gov/mesh/?term=D003924",
+   "consultado": "2026-10-02",
+   "sello": "MeSH"
+  },
+  {
+   "clave": "mondo",
+   "tipo": "base",
+   "cita": "Mondo Disease Ontology. Type 2 diabetes mellitus (MONDO:0005148)",
+   "url": "https://www.ebi.ac.uk/ols4/ontologies/mondo/classes?obo_id=MONDO:0005148",
+   "consultado": "2026-10-02",
+   "sello": "MONDO"
+  },
+  {
+   "clave": "defronzo-2009",
+   "tipo": "articulo",
+   "cita": "Defronzo RA. Banting Lecture. From the triumvirate to the ominous octet: a new paradigm for the treatment of type 2 diabetes mellitus. Diabetes. 2009;58(4):773-95.",
+   "pmid": "19336687",
+   "pmcid": "PMC2661582",
+   "doi": "10.2337/db09-9028",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "ada-easd-2026",
+   "tipo": "guia",
+   "cita": "Davies MJ, Aroda VR, Bajaj M, ElSayed NA, Giorgino F, Green J, et al. Management of Type 2 Diabetes, 2026. A Consensus Report by the American Diabetes Association (ADA) and the European Association for the Study of Diabetes (EASD). Diabetes Care. 2026:dci260141.",
+   "pmid": "42825450",
+   "doi": "10.2337/dci26-0141",
+   "consultado": "2026-10-02",
+   "sello": "ADA/EASD",
+   "nota": "Publicado en 2026; solo se leyó el resumen: el texto completo aún no estaba en acceso abierto"
+  },
+  {
+   "clave": "niddk-sintomas",
+   "tipo": "web",
+   "cita": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK). Symptoms & Causes of Diabetes",
+   "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/symptoms-causes",
+   "consultado": "2026-10-02",
+   "sello": "NIDDK"
+  },
+  {
+   "clave": "niddk-diagnostico",
+   "tipo": "web",
+   "cita": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK). Diabetes Tests & Diagnosis",
+   "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis",
+   "consultado": "2026-10-02",
+   "sello": "NIDDK"
+  },
+  {
+   "clave": "oms-diabetes",
+   "tipo": "web",
+   "cita": "Organización Mundial de la Salud. Diabetes (nota descriptiva)",
+   "url": "https://www.who.int/news-room/fact-sheets/detail/diabetes",
+   "consultado": "2026-10-02",
+   "sello": "OMS"
+  },
+  {
+   "clave": "reactome",
+   "tipo": "base",
+   "cita": "Reactome Pathway Knowledgebase. Vías R-HSA-422356, R-HSA-400508, R-HSA-74751, R-HSA-74752 y R-HSA-1445148",
+   "url": "https://reactome.org/",
+   "consultado": "2026-10-02",
+   "sello": "Reactome"
+  },
+  {
+   "clave": "uniprot",
+   "tipo": "base",
+   "cita": "UniProt Knowledgebase. Entradas P35557 (GCK), Q14654 (KCNJ11), P06213 (INSR), P35568 (IRS1), P14672 (SLC2A4), P11168 (SLC2A2), P43220 (GLP1R) y P31639 (SLC5A2)",
+   "url": "https://www.uniprot.org/",
+   "consultado": "2026-10-02",
+   "sello": "UniProt"
+  },
+  {
+   "clave": "fda-12-1",
+   "tipo": "ficha",
+   "cita": "U.S. Food and Drug Administration. Fichas técnicas de los antidiabéticos (prescribing information), sección 12.1 Mechanism of Action; consultadas en openFDA",
+   "url": "https://open.fda.gov/apis/drug/label/",
+   "consultado": "2026-10-02",
+   "sello": "Fichas de la FDA",
+   "nota": "Fichas (producto, set id y fecha de la versión): metformina (Metformin Hydrochloride, 073cf6d9-7142-4d8b-898e-174c62a1f76f, 2026-08-21); glipizida (Glipizide, 00729e82-150a-464a-abe7-a3319721fbdb, 2026-08-27); pioglitazona (Pioglitazone, 060e3169-46a7-419d-9acc-05586cb2406b, 2026-08-17); sitagliptina (Sitagliptin, 58e23b30-451c-f451-e063-6394a90a35a7, 2026-08-12); semaglutida (Ozempic, 42bdd912-2393-44c4-b7e0-47672ca28991, 2026-07-30); tirzepatida (Zepbound, 487cd7e7-434c-4925-99fa-aa80b1cc776b, 2026-08-28); empagliflozina (Jardiance, 59ed43d9-b4e0-72a2-e063-6394a90a327d, 2026-08-26); insulina glargina (Basaglar, 0ad21db3-2b1c-4ed9-a687-bdd6a74d0aae, 2026-06-16)"
+  },
+  {
+   "clave": "ccss-2007",
+   "tipo": "documento",
+   "cita": "Caja Costarricense de Seguro Social, Área de Atención Integral a las Personas. Guía para la atención de las personas diabéticas tipo 2. San José: CCSS; 2007",
+   "url": "https://www.binasss.sa.cr/protocolos/diabetes.pdf",
+   "consultado": "2026-10-02",
+   "sello": "CCSS (Costa Rica)"
+  },
+  {
+   "clave": "ada-2026-s2",
+   "tipo": "guia",
+   "cita": "American Diabetes Association Professional Practice Committee for Diabetes. 2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes-2026. Diabetes Care. 2026;49(Suppl 1):S27-S49.",
+   "pmid": "41358893",
+   "pmcid": "PMC12690183",
+   "doi": "10.2337/dc26-S002",
+   "consultado": "2026-10-02",
+   "sello": "ADA 2026",
+   "nota": "Leído en la copia completa de las Normas 2026 de la Biblioteca Nacional de Salud y Seguridad Social (BINASSS, CCSS): binasss.sa.cr/standards-of-care-2026.pdf"
+  },
+  {
+   "clave": "ada-2026-s6",
+   "tipo": "guia",
+   "cita": "American Diabetes Association Professional Practice Committee for Diabetes. 6. Glycemic Goals, Hypoglycemia, and Hyperglycemic Crises: Standards of Care in Diabetes-2026. Diabetes Care. 2026;49(Suppl 1):S132-S149.",
+   "pmid": "41358894",
+   "pmcid": "PMC12690178",
+   "doi": "10.2337/dc26-S006",
+   "consultado": "2026-10-02",
+   "sello": "ADA 2026",
+   "nota": "Leído en la copia de BINASSS"
+  },
+  {
+   "clave": "ada-2026-s9",
+   "tipo": "guia",
+   "cita": "American Diabetes Association Professional Practice Committee for Diabetes. 9. Pharmacologic Approaches to Glycemic Treatment: Standards of Care in Diabetes-2026. Diabetes Care. 2026;49(Suppl 1):S183-S215.",
+   "pmid": "41358900",
+   "pmcid": "PMC12690185",
+   "doi": "10.2337/dc26-S009",
+   "consultado": "2026-10-02",
+   "sello": "ADA 2026",
+   "nota": "Leído en la copia de BINASSS"
+  }
+ ]
+}

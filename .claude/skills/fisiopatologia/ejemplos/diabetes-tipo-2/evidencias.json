@@ -1,0 +1,288 @@
+{
+ "evidencias": [
+  {
+   "cifras": [
+    "80–85 %"
+   ],
+   "laminas": [
+    1,
+    5
+   ],
+   "afirmacion": "En el tercil superior de la intolerancia a la glucosa se ha perdido el 80–85 % de la función de la célula β.",
+   "fuente": "DeFronzo 2009 (PMC2661582)",
+   "ref": "defronzo-2009",
+   "idioma": "en",
+   "frase": "subjects in the upper tertile of IGT (2-h PG = 180–199 mg/dl) have lost 80–85% of their β-cell function",
+   "verificar": {
+    "tipo": "pmc",
+    "id": "PMC2661582",
+    "patron": "80–85%"
+   }
+  },
+  {
+   "cifras": [
+    "11 %"
+   ],
+   "laminas": [
+    6
+   ],
+   "afirmacion": "Alrededor del 11 % de las muertes cardiovasculares se deben a la glucosa alta.",
+   "fuente": "OMS, nota descriptiva «Diabetes»",
+   "ref": "oms-diabetes",
+   "idioma": "en",
+   "frase": "high blood glucose causes around 11% of cardiovascular deaths",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/diabetes",
+    "patron": "11% of cardiovascular"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 6,5 %"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Diabetes: HbA1c ≥ 6,5 %.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.1",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "A1C ≥6.5% (≥48 mmol/mol)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "A1C ≥6.5%"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 126 mg/dl",
+    "≥ 8 h",
+    "8 horas"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Diabetes: glucosa en ayunas ≥ 126 mg/dl; ayuno de al menos 8 h.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.1",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "FPG ≥126 mg/dL (≥7.0 mmol/L). Fasting is defined as no caloric intake for at least 8 h.",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "no caloric intake"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 200 mg/dl",
+    "2 h"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Diabetes: glucosa ≥ 200 mg/dl a las 2 h de la PTOG.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.1",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "2-h PG ≥200 mg/dL (≥11.1 mmol/L) during OGTT",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "2-h PG ≥200"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 200 mg/dl"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Diabetes: glucosa al azar ≥ 200 mg/dl con síntomas clásicos o crisis hiperglucémica.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.1",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "In an individual with classic symptoms of hyperglycemia or hyperglycemic crisis, a random plasma glucose ≥200 mg/dL (≥11.1 mmol/L).",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "a random plasma glucose ≥200"
+   }
+  },
+  {
+   "cifras": [
+    "5,7–6,4 %",
+    "100–125 mg/dl",
+    "140–199 mg/dl"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Prediabetes: HbA1c 5,7–6,4 %, glucosa en ayunas 100–125 mg/dl o glucosa a las 2 h de la PTOG 140–199 mg/dl.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.2",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "A1C 5.7–6.4% (39–47 mmol/mol) OR FPG 100 mg/dL (5.6 mmol/L) to 125 mg/dL (6.9 mmol/L) (IFG) OR 2-h PG during 75-g OGTT 140 mg/dL (7.8 mmol/L) to 199 mg/dL (11.0 mmol/L) (IGT)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "Table 2.2—Criteria"
+   }
+  },
+  {
+   "cifras": [
+    "< 5,7 %",
+    "< 100 mg/dl",
+    "< 140 mg/dl"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "Normal: HbA1c < 5,7 %, glucosa en ayunas < 100 mg/dl y glucosa a las 2 h < 140 mg/dl (por debajo de los intervalos de prediabetes).",
+   "fuente": "NIDDK, «Diabetes Tests & Diagnosis» (tabla tomada de la ADA)",
+   "ref": "niddk-diagnostico",
+   "idioma": "en",
+   "frase": "Normal below 5.7% 99 mg/dL or below 139 mg/dL or below N/A Prediabetes 5.7% to 6.4% 100 to 125 mg/dL 140 to 199 mg/dL",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis",
+    "patron": "below 5.7%"
+   }
+  },
+  {
+   "cifras": [
+    "3 meses"
+   ],
+   "laminas": [
+    7
+   ],
+   "afirmacion": "La HbA1c refleja la glucemia de los últimos 2 a 3 meses y no requiere ayuno.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 2 (copia de BINASSS), tabla 2.3",
+   "ref": "ada-2026-s2",
+   "idioma": "en",
+   "frase": "Chronic measure of glucose exposure over the past ∼2–3 months",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "past ∼2–3 months"
+   }
+  },
+  {
+   "cifras": [
+    "< 7 %"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "Objetivo de HbA1c < 7 % para muchos adultos no embarazadas, sin hipoglucemia grave.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 6, rec. 6.3a (copia de BINASSS)",
+   "ref": "ada-2026-s6",
+   "idioma": "en",
+   "frase": "An A1C goal of <7%",
+   "fuerza": "nivel de evidencia A (ADA)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "6.3a An A1C goal"
+   }
+  },
+  {
+   "cifras": [
+    "< 45",
+    "< 30"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "Metformina: reducir la dosis con TFGe < 45 y suspenderla con TFGe < 30.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 9 (copia de BINASSS), p. S199",
+   "ref": "ada-2026-s9",
+   "idioma": "en",
+   "frase": "the dose of metformin should be reduced once eGFR is <45 mL/min/1.73 m2 and should be stopped once eGFR is <30 mL/min/1.73 m2",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "dose of metformin should be reduced"
+   }
+  },
+  {
+   "cifras": [
+    "< 30"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "Con ERC avanzada (TFGe < 30) se prefiere un AR GLP-1.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 9 (copia de BINASSS), rec. 9.11",
+   "ref": "ada-2026-s9",
+   "idioma": "en",
+   "frase": "In adults with type 2 diabetes and advanced CKD (eGFR <30 mL/ min/1.73 m2), a GLP-1 RA is preferred for glycemic management due to lower risk of hypoglycemia",
+   "fuerza": "nivel de evidencia B (ADA)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "9.11 In adults"
+   }
+  },
+  {
+   "cifras": [
+    "20–60"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "ERC con TFGe de 20 a 60 y/o albuminuria: iSGLT2 o AR GLP-1 con beneficio demostrado.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 9, rec. 9.10 (copia de BINASSS)",
+   "ref": "ada-2026-s9",
+   "idioma": "en",
+   "frase": "(with confirmed estimated glomerular filtration rate [eGFR] 20–60 mL/min/ 1.73 m2 and/or albuminuria), an SGLT2 inhibitor or GLP-1 RA with demonstrated benefit in this population",
+   "fuerza": "nivel de evidencia A (ADA)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "9.10 In adults"
+   }
+  },
+  {
+   "cifras": [
+    "> 10 %",
+    "≥ 300 mg/dl"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "Considerar insulina si hay síntomas o si la HbA1c es > 10 % o la glucosa ≥ 300 mg/dl.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 9 (copia de BINASSS), rec. 9.20",
+   "ref": "ada-2026-s9",
+   "idioma": "en",
+   "frase": "A1C >10% [>86 mmol/mol] or blood glucose ≥300 mg/dL",
+   "fuerza": "nivel de evidencia E, consenso de expertos (ADA)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "9.20 In adults"
+   }
+  },
+  {
+   "cifras": [
+    "0,1–0,2 U/kg/día"
+   ],
+   "laminas": [
+    9
+   ],
+   "afirmacion": "Dosis inicial de insulina basal: 0,1–0,2 U/kg/día.",
+   "fuente": "Normas de Atención de la ADA 2026, sección 9 (copia de BINASSS), p. S200",
+   "ref": "ada-2026-s9",
+   "idioma": "en",
+   "frase": "starting doses can be estimated based on body weight (0.1–0.2 units/kg/day)",
+   "verificar": {
+    "tipo": "pdf",
+    "url": "https://www.binasss.sa.cr/standards-of-care-2026.pdf",
+    "patron": "0.1–0.2 units/kg/day"
+   }
+  }
+ ]
+}

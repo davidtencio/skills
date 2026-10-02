@@ -1,0 +1,228 @@
+{
+ "evidencias": [
+  {
+   "cifras": [
+    "1 hora"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Se administra en perfusión intravenosa de 1 hora.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.2",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "IMFINZI se administra mediante perfusión intravenosa durante 1 hora.",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "perfusión intravenosa durante 1 hora"
+   }
+  },
+  {
+   "cifras": [
+    "1 500 mg",
+    "4 semanas",
+    "10 mg/kg",
+    "2 semanas"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Pautas: 10 mg/kg cada 2 semanas o 1 500 mg cada 4 semanas (CPNM localmente avanzado).",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.2, tabla 1",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "10 mg/kg cada 2 semanas o 1 500 mg cada 4 semanas",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "Dosis Recomendada de IMFINZI en monoterapia"
+   }
+  },
+  {
+   "cifras": [
+    "18 días"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Semivida terminal de unos 18 días.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 5.2",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "La semivida terminal (t 1/2 ) basada en el valor inicial del CL fue de 18 días, aproximadamente.",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "semivida terminal"
+   }
+  },
+  {
+   "cifras": [
+    "16 semanas"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "El estado estacionario se alcanza hacia las 16 semanas.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 5.2",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "El estado estacionario se alcanzó aproximadamente a las 16 semanas.",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "estado estacionario se alcanzó"
+   }
+  },
+  {
+   "cifras": [
+    "> 10 mg"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Antes de iniciar no se recomiendan corticoides sistémicos por encima de la dosis fisiológica (≤ 10 mg/día de prednisona).",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.5",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "No se recomienda el uso de corticoesteroides sistémicos o de inmunosupresores antes de iniciar el tratamiento con durvalumab, con la excepción de dosis fisiológica sistémica de corticosteroides (≤ 10 mg/día de prednisona o equivalente)",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "No se recomienda el uso de corticoesteroides sistémicos"
+   }
+  },
+  {
+   "cifras": [
+    "18 %",
+    "15 %",
+    "12 %"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Reacciones adversas más frecuentes en monoterapia (redondeadas): tos 18,1 %, diarrea 15,1 %, erupción 15,0 %, hipotiroidismo 11,6 %.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.8",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "Las reacciones adversas más frecuentes (> 10%) fueron tos/tos productiva (18,1%), diarrea (15,1%), erupción (15,0%), artralgia (12,4%), pirexia (12,5%), dolor abdominal (11,8%), infecciones del tracto respiratorio superior (11,8%), prurito (11,1%) e hipotiroidismo (11,6%.)",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "tos/tos productiva"
+   }
+  },
+  {
+   "cifras": [
+    "3 meses"
+   ],
+   "laminas": [
+    4
+   ],
+   "afirmacion": "Anticoncepción eficaz durante el tratamiento y al menos 3 meses tras la última dosis.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.6",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "durante un mínimo de 3 meses tras la última dosis de durvalumab",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "mínimo de 3 meses"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 1 %"
+   ],
+   "laminas": [
+    5
+   ],
+   "afirmacion": "En la UE, CPNM estadio III irresecable solo si PD-L1 ≥ 1 %.",
+   "fuente": "Ficha técnica de Imfinzi (CIMA-AEMPS), 4.1",
+   "ref": "cima-imfinzi",
+   "idioma": "es",
+   "frase": "cuyos tumores expresan PD-L1 ≥ 1% en las células tumorales",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+    "patron": "PD-L1\\s*≥\\s*1"
+   }
+  },
+  {
+   "cifras": [
+    "≥ 1 %"
+   ],
+   "laminas": [
+    6
+   ],
+   "afirmacion": "NICE TA798: recomendado si PD-L1 ≥ 1 %.",
+   "fuente": "NICE TA798, apartado 1.1",
+   "ref": "nice-ta798",
+   "idioma": "en",
+   "frase": "(PD‑L1) on 1% or more of cells and whose disease has not progressed after platinum-based chemoradiation",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://www.nice.org.uk/guidance/ta798/chapter/1-Recommendations",
+    "patron": "1% or more"
+   }
+  },
+  {
+   "cifras": [
+    "500 mg"
+   ],
+   "laminas": [
+    6
+   ],
+   "afirmacion": "Precio de lista: £2 466 por vial de 500 mg.",
+   "fuente": "NICE TA798, apartado 2.3",
+   "ref": "nice-ta798",
+   "idioma": "en",
+   "frase": "list price of durvalumab is £2,466 per 500 mg",
+   "verificar": {
+    "tipo": "pagina",
+    "url": "https://www.nice.org.uk/guidance/ta798/chapter/2-Information-about-durvalumab",
+    "patron": "2,466"
+   }
+  },
+  {
+   "cifras": [
+    "34,9 meses",
+    "9,9 meses"
+   ],
+   "laminas": [
+    6
+   ],
+   "afirmacion": "LACOG 0120: SLP mediana de 9,9 meses y SG mediana de 34,9 meses.",
+   "fuente": "Zukin et al. 2025 (PMID 39813498)",
+   "ref": "lacog-2025",
+   "idioma": "en",
+   "frase": "Median PFS was 9.9 months (95% CI: 7.3-52.4) ... Median OS was 34.9 months (95% CI: 26.0-NR)",
+   "verificar": {
+    "tipo": "pubmed",
+    "id": "39813498",
+    "patron": "Median (PFS|OS)"
+   }
+  },
+  {
+   "cifras": [
+    "5 años",
+    "49,2 %",
+    "59 meses"
+   ],
+   "laminas": [
+    6
+   ],
+   "afirmacion": "PACIFIC-R: SG mediana de 59,0 meses; a 5 años, el 49,2 % seguía vivo.",
+   "fuente": "Girard et al. 2026 (PMID 41643268)",
+   "ref": "pacific-r-2026",
+   "idioma": "en",
+   "frase": "Median OS was 59.0 months (95% CI 52.7-64.3 months); ... 5-year OS was 49.2% (95% CI 46.2% to 52.2%).",
+   "verificar": {
+    "tipo": "pubmed",
+    "id": "41643268",
+    "patron": "OS was"
+   }
+  }
+ ]
+}

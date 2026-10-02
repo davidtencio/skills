@@ -34,7 +34,11 @@ Prueba la red con `python3 scripts/fuentes.py mesh "Diabetes Mellitus, Type 2"`.
 Enfermedad, público (por defecto: profesionales de salud) y uso (proyectar, imprimir). Por defecto se cubren fisiopatología, clínica y diagnóstico, y tratamiento farmacológico. La epidemiología solo se incluye si se pide; en una infección, la transmisión y la prevención (vacunas, profilaxis) sí se incluyen por defecto.
 
 ### 2. Investigar y verificar
-Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato (PMID, PMCID, identificador, URL de la guía). Cada cifra que vaya a una lámina (punto de corte, dosis, duración, porcentaje) se registra en `ejemplos/<enfermedad>/evidencias.json` con la frase literal de la fuente, en su idioma, y cómo volver a encontrarla; el formato está en `scripts/verificar_evidencias.py` y hay un registro completo en `ejemplos/neumonia-nosocomial/`.
+Sigue el orden de `references/fuentes.md`. Tres registros acompañan cada tema (hay ejemplos completos en `ejemplos/neumonia-nosocomial/` y `ejemplos/diabetes-tipo-2/`):
+
+- **Búsquedas:** usa `fuentes.py --registro ejemplos/<enfermedad> …` (o `fuentes.registrar_busquedas(carpeta)` desde Python). Cada consulta queda en `busquedas.jsonl`, que luego se resume en «Cómo se buscó».
+- **Bibliografía:** cada fuente se guarda una vez en `bibliografia.json` con `python3 scripts/bibliografia.py nueva ejemplos/<enfermedad> <clave> --pmid <PMID>`. Con `--doi` toma los datos de Crossref; con `--url … --cita "…"`, una página o un documento. El script toma autores, revista, DOI y PMCID de PubMed y avisa de fe de erratas y retractaciones. Usa `--nota` para decir dónde se leyó el texto (p. ej., una copia en acceso abierto).
+- **Evidencias:** cada cifra que vaya a una lámina (punto de corte, dosis, duración, porcentaje) se registra en `evidencias.json` con la frase literal de la fuente, en su idioma, la clave de la referencia (`ref`), la fuerza de la recomendación cuando la guía la da (`fuerza`) y cómo volver a encontrarla. El formato está en `scripts/verificar_evidencias.py`.
 
 1. **Definición:** `fuentes.py mesh "<término MeSH>"` (cita el identificador D… del campo `mesh`) y `fuentes.py mondo "<nombre en inglés>"`.
 2. **Fisiopatología:**
@@ -43,8 +47,16 @@ Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato 
    - Confirma las vías moleculares con `fuentes.py reactome` y las proteínas con `fuentes.py uniprot <GEN>`; las de un microorganismo, por su nombre, con `fuentes.py uniprot-proteina "<proteína>" [taxón NCBI]`.
 3. **Clínica y diagnóstico:** páginas de la sociedad científica y del instituto del NIH correspondiente (p. ej., diabetes.org y NIDDK; en infecciones, IDSA y NIAID), notas descriptivas de la OMS y `fuentes.py medlineplus`. Léelas con `fuentes.py pagina <URL> "<regex>"`, que quita el HTML y devuelve la frase exacta.
 4. **Tratamiento:**
-   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; `fuentes.py guias-titulo` exige las palabras en el título y da menos ruido. Lee la de texto completo con `fuentes.py pmc` (si NCBI no la da, prueba Europe PMC).
-   - Las guías publicadas en PDF (sociedades, ministerios, AWMF) se leen con `fuentes.py pdf <URL> "<regex>"`, que devuelve cada frase con su página para citarla.
+   - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID y DOI:
+     - Incluye las de los últimos meses, que PubMed aún no ha indexado como guía.
+     - Agrupa los capítulos de unas normas anuales («Standards of Care in Diabetes-2026», en `secciones`) y deja en `anteriores` las ediciones previas.
+     - En enfermedades frecuentes (diabetes, hipertensión, EPOC), `fuentes.py guias-titulo` exige la enfermedad en el título y da menos ruido.
+   - Antes de usar una guía, comprueba con `fuentes.py vigencia <PMID>` que no haya una versión posterior (y si tiene fe de erratas).
+   - Lee el texto completo con `fuentes.py texto <PMID|PMCID|DOI> "<regex>"`: prueba PMC y, si no, las copias legales en acceso abierto que localiza Unpaywall (repositorios institucionales).
+   - Las guías publicadas en PDF (sociedades, ministerios, AWMF, OMS) se leen con `fuentes.py pdf <URL> "<regex>"`, que devuelve cada frase con su página para citarla.
+   - Los documentos de la OMS y de la OPS se buscan con `fuentes.py iris "<consulta>" [--ops]`.
+   - Los protocolos de la CCSS y las copias de guías que aloja BINASSS se buscan con `fuentes.py binasss "<término>"`; así se leyeron las Normas de la ADA 2026, que la editorial no deja descargar.
+   - Anota la fuerza de cada recomendación tal como la da la guía (GRADE fuerte o débil, nivel A–E de la ADA, «soll»/«sollte» de la AWMF).
    - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`). En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), el mecanismo y la resistencia están en la 12.4 *Microbiology* (campo `microbiology`).
    - **Antibacterianos y antifúngicos:** farmacocinética de la ficha (FDA 12.3, CIMA 5.2) e índice FC/FD de cada familia con su fuente, para explicar la dosis (ver «Farmacocinética y farmacodinamia de los antimicrobianos» en `references/plantillas.md`).
    - **Infecciones:** fuentes propias (IDSA, ESCMID, guías del NIH/HHS para VIH, OMS, EUCAST, AWaRe, resistencia local de la OPS e INCIENSA) en la sección «Infecciones» de `references/fuentes.md`.
@@ -93,9 +105,17 @@ Escribe `material.md` con la estructura del de diabetes tipo 2:
 - Puntos clave y recorrido de cada lámina, con tablas para los criterios diagnósticos y el mapa de fármacos.
 - Error frecuente y simplificaciones de las láminas.
 - **Glosario** y fuentes.
+- **Fuentes** y **Cómo se buscó**: las dos se generan y no se escriben a mano.
 - Al final, **«No verificado»**: solo los datos que no se pudieron confirmar y las guías que no se pudieron leer.
 
-Cita cada afirmación con `*[Fuente]*`.
+Cita cada afirmación con la clave de su referencia y, si hace falta, dónde: `*[@ada-2026-s9, rec. 9.10]*`, `*[@s3-2024, p. 11; @ers-2017]*`. Cuando la guía la dé, escribe la fuerza de la recomendación junto a ella.
+
+Las dos secciones generadas se escriben así:
+
+- La lista de `## Fuentes`, en estilo Vancouver y numerada por orden de aparición, con `python3 scripts/bibliografia.py lista ejemplos/<enfermedad> --escribir`.
+- El resumen de `## Cómo se buscó`, con `bibliografia.py busqueda ejemplos/<enfermedad> --escribir`.
+
+Comprueba con `bibliografia.py comprobar ejemplos/<enfermedad> --en-linea`. Falla si hay una clave citada que no existe, una referencia sin citar, una lista desactualizada o una referencia retractada. También avisa de fe de erratas y de versiones posteriores de una guía.
 
 **Glosario (obligatorio):** sección `## Glosario`, en el material justo antes de `## Fuentes` (en el PDF, `pdf.py` la coloca tras el índice). Incluye cada sigla o abreviatura de las láminas y del material, en orden alfabético, con el formato `- **SIGLA:** Desarrollo en español y, si hace falta, qué es en una frase.` Comprueba que no falte ninguna con `python3 scripts/glosario.py ejemplos/<enfermedad>`.
 
@@ -105,7 +125,8 @@ Cita cada afirmación con `*[Fuente]*`.
 - Índice con números de página y marcadores.
 - Glosario en dos columnas, justo después del índice.
 - Una lámina por página, en horizontal.
-- La ficha de la enfermedad con diseño editorial.
+- La ficha de la enfermedad con diseño editorial. Las citas aparecen numeradas y enlazadas con su referencia, y cada referencia enlaza con PubMed, PMC, el DOI o la página.
+- En la portada, «Datos verificados en» sale de los sellos de `bibliografia.json`.
 
 Las láminas entran en el PDF como SVG vectorial (texto nítido y seleccionable) salvo las de miles de formas o muchos degradados, que van en PNG porque ocuparían más (regla `vectorial` de `pdf.py`). Escribe en `material.md`, bajo el título, `<!-- portada: N -->` con la lámina de la portada y `<!-- fecha: AAAA-MM-DD -->` con la fecha del documento: así el PDF sale igual cada vez que se regenera (`--portada` y `--fecha` las cambian de forma puntual). Revisa las páginas convertidas a PNG con Read antes de entregar. Entrega solo el PDF (con SendUserFile si está disponible) y, en el mensaje final, resume en pocas líneas qué se verificó, qué se corrigió y qué no se pudo confirmar.
 

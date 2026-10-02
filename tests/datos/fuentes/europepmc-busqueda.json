@@ -1,0 +1,51 @@
+{
+ "resultList": {
+  "result": [
+   {
+    "pmid": "42767105",
+    "doi": "10.1016/j.ajem.2026.09.025",
+    "title": "The 2026 Surviving Sepsis Campaign Guidelines: The dissenting opinion.",
+    "authorString": "Spiegel R, Haycock K, Miller A, Weingart S, Farkas J, Ajmo I, Rola P.",
+    "pubYear": "2026",
+    "pubTypeList": {
+     "pubType": [
+      "Review",
+      "Journal Article"
+     ]
+    },
+    "isOpenAccess": "N",
+    "citedByCount": 0,
+    "abstractText": "The Surviving Sepsis Campaign (SSC) Guidelines once represented what was considered the pinnacle of care for patients with sepsis and septic shock. Unfortunately, over the past decade, successive iterations of the guidelines have drifted from what is now considered optimal care for critically ill patients with sepsis and septic shock. Moreover, the guidelines have shifted from recommendations intended to guide and support physicians based on the best available evidence, to mandated \"bundles\" which exert substantial influence over what is considered \"standard of care\" in sepsis management. This"
+   },
+   {
+    "pmid": "42461875",
+    "doi": "10.1159/000553535",
+    "title": "Lights and Shadows of Surviving Sepsis Campaign Recommendations.",
+    "authorString": "Ronco C, Premuzic V.",
+    "pubYear": "2026",
+    "pubTypeList": {
+     "pubType": [
+      "Editorial"
+     ]
+    },
+    "isOpenAccess": "N",
+    "citedByCount": 0
+   },
+   {
+    "pmid": "42585380",
+    "pmcid": "PMC13518019",
+    "doi": "10.62675/2965-2774.20260148",
+    "title": "To: Using the 2026 Surviving Sepsis Campaign Guidelines in Practice.",
+    "authorString": "Pedro RAM, Malbouisson LMS.",
+    "pubYear": "2026",
+    "pubTypeList": {
+     "pubType": [
+      "Letter"
+     ]
+    },
+    "isOpenAccess": "Y",
+    "citedByCount": 0
+   }
+  ]
+ }
+}

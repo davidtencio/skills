@@ -1,0 +1,22 @@
+{
+ "_embedded": {
+  "bitstreams": [
+   {
+    "name": "9789240062382-eng.pdf",
+    "_links": {
+     "content": {
+      "href": "https://iris.who.int/server/api/core/bitstreams/61517f8b-3a34-413c-ae36-67a059ebe485/content"
+     }
+    }
+   },
+   {
+    "name": "9789240069374-eng.epub",
+    "_links": {
+     "content": {
+      "href": "https://iris.who.int/server/api/core/bitstreams/4f0f17c0-0962-4255-97c1-1dc7c4a70c33/content"
+     }
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,176 @@
+{
+ "referencias": [
+  {
+   "clave": "cima-imfinzi",
+   "tipo": "ficha",
+   "cita": "Agencia Española de Medicamentos y Productos Sanitarios (AEMPS). Ficha técnica de IMFINZI 50 MG/ML CONCENTRADO PARA SOLUCION PARA PERFUSION. CIMA, n.º de registro 1181322001",
+   "url": "https://cima.aemps.es/cima/dochtml/ft/1181322001/FT_1181322001.html",
+   "idioma": "es",
+   "consultado": "2026-10-02",
+   "sello": "CIMA (AEMPS)",
+   "nota": "Autorización europea: la fecha de la revisión está en el EPAR"
+  },
+  {
+   "clave": "ema-imfinzi",
+   "tipo": "ficha",
+   "cita": "European Medicines Agency. Imfinzi (durvalumab): EPAR, información del producto. EMEA/H/C/004771; autorizado el 21 de septiembre de 2018",
+   "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/imfinzi",
+   "version": "28, del 18 de mayo de 2026",
+   "consultado": "2026-10-02",
+   "sello": "EMA"
+  },
+  {
+   "clave": "fda-imfinzi",
+   "tipo": "ficha",
+   "cita": "U.S. Food and Drug Administration. Prescribing information: IMFINZI (durvalumab) injection, for intravenous use. Set id 8baba4ea-2855-42fa-9bd9-5a7548d4cec3; consultada en openFDA",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8baba4ea-2855-42fa-9bd9-5a7548d4cec3",
+   "version": "del 31 de agosto de 2026",
+   "consultado": "2026-10-02",
+   "sello": "Fichas de la FDA",
+   "nota": "DailyMed publicó después la versión 34 (7 de septiembre de 2026), que no se revisó"
+  },
+  {
+   "clave": "fda-12-1",
+   "tipo": "ficha",
+   "cita": "U.S. Food and Drug Administration. Fichas técnicas de los inhibidores de puntos de control (prescribing information), sección 12.1 Mechanism of Action; consultadas en openFDA",
+   "url": "https://open.fda.gov/apis/drug/label/",
+   "consultado": "2026-10-02",
+   "sello": "Fichas de la FDA",
+   "nota": "Fichas (producto, set id y fecha de la versión): atezolizumab (Tecentriq, 6fa682c9-a312-4932-9831-f286908660ee, 2026-05-20); nivolumab (Opdivo, f570b9c4-6846-4de2-abfa-4d0a4ae4e394, 2026-08-12); pembrolizumab (Keytruda, 9333c79b-d487-4538-a9f0-71b91a02b287); cemiplimab (Libtayo, 4347ae1f-d397-4f18-8b70-03897e1c054a, 2026-08-31); tremelimumab (Imjudo, 6690679c-be2f-4588-a2e4-89fff74dd6be, 2026-08-31); ipilimumab (Yervoy, 2265ef30-253e-11df-8a39-0800200c9a66, 2026-08-20)"
+  },
+  {
+   "clave": "drugs-fda",
+   "tipo": "documento",
+   "cita": "U.S. Food and Drug Administration. Drugs@FDA: IMFINZI, BLA 761069. Historial de aprobaciones y cartas de aprobación de los suplementos S-002, S-018, S-029, S-033, S-035, S-036, S-043, S-045, S-049, S-050, S-052 y S-053",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761069",
+   "consultado": "2026-10-02",
+   "sello": "Drugs@FDA"
+  },
+  {
+   "clave": "uniprot",
+   "tipo": "base",
+   "cita": "UniProt Knowledgebase. Entradas Q9NZQ7 (CD274, PD-L1), Q15116 (PDCD1, PD-1) y P33681 (CD80)",
+   "url": "https://www.uniprot.org/",
+   "consultado": "2026-10-02",
+   "sello": "UniProt"
+  },
+  {
+   "clave": "reactome",
+   "tipo": "base",
+   "cita": "Reactome Pathway Knowledgebase. Co-inhibition by PD-1 (R-HSA-389948)",
+   "url": "https://reactome.org/content/detail/R-HSA-389948",
+   "consultado": "2026-10-02",
+   "sello": "Reactome"
+  },
+  {
+   "clave": "nci",
+   "tipo": "base",
+   "cita": "National Cancer Institute. NCI Thesaurus: Durvalumab (C103194)",
+   "url": "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&code=C103194",
+   "consultado": "2026-10-02",
+   "sello": "NCI Thesaurus"
+  },
+  {
+   "clave": "pdb",
+   "tipo": "base",
+   "cita": "RCSB Protein Data Bank. Estructuras 4ZQK (PD-1 con PD-L1) y 5X8M (PD-L1 con el Fab de durvalumab)",
+   "url": "https://www.rcsb.org/structure/5X8M",
+   "consultado": "2026-10-02",
+   "sello": "RCSB PDB"
+  },
+  {
+   "clave": "stewart-2015",
+   "tipo": "articulo",
+   "cita": "Stewart R, Morrow M, Hammond SA, Mulgrew K, Marcus D, Poon E, et al. Identification and Characterization of MEDI4736, an Antagonistic Anti-PD-L1 Monoclonal Antibody. Cancer Immunol Res. 2015;3(9):1052-62.",
+   "pmid": "25943534",
+   "doi": "10.1158/2326-6066.CIR-14-0191",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "lee-2017",
+   "tipo": "articulo",
+   "cita": "Lee HT, Lee JY, Lim H, Lee SH, Moon YJ, Pyo HJ, et al. Molecular mechanism of PD-1/PD-L1 blockade via anti-PD-L1 antibodies atezolizumab and durvalumab. Sci Rep. 2017;7(1):5532.",
+   "pmid": "28717238",
+   "pmcid": "PMC5514103",
+   "doi": "10.1038/s41598-017-06002-8",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "zak-2015",
+   "tipo": "articulo",
+   "cita": "Zak KM, Kitel R, Przetocka S, Golik P, Guzik K, Musielak B, et al. Structure of the Complex of Human Programmed Death 1, PD-1, and Its Ligand PD-L1. Structure. 2015;23(12):2341-2348.",
+   "pmid": "26602187",
+   "pmcid": "PMC4752817",
+   "doi": "10.1016/j.str.2015.09.010",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "pacific-2017",
+   "tipo": "articulo",
+   "cita": "Antonia SJ, Villegas A, Daniel D, Vicente D, Murakami S, Hui R, et al. Durvalumab after Chemoradiotherapy in Stage III Non-Small-Cell Lung Cancer. N Engl J Med. 2017;377(20):1919-1929.",
+   "pmid": "28885881",
+   "doi": "10.1056/NEJMoa1709937",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "chile-2024",
+   "tipo": "articulo",
+   "cita": "Armijo N, Salas C, Espinoza N, Espinoza M, Balmaceda C. Budget impact analysis of durvalumab consolidation therapy vs no consolidation therapy after chemoradiotherapy in stage III non-small cell lung cancer in the context of the Chilean health care system. PLoS One. 2024;19(7):e0307473.",
+   "pmid": "39058755",
+   "pmcid": "PMC11280244",
+   "doi": "10.1371/journal.pone.0307473",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "markov-2024",
+   "tipo": "articulo",
+   "cita": "Kareff SA, Han S, Haaland B, Jani CJ, Kohli R, Aguiar PN Jr, et al. International Cost-Effectiveness Analysis of Durvalumab in Stage III Non-Small Cell Lung Cancer. JAMA Netw Open. 2024;7(5):e2413938.",
+   "pmid": "38814640",
+   "pmcid": "PMC11140532",
+   "doi": "10.1001/jamanetworkopen.2024.13938",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "lacog-2025",
+   "tipo": "articulo",
+   "cita": "Zukin M, Gondim V, Shimada AK, Lima EMEA, Mathias C, Barra WF, et al. Durvalumab as consolidation therapy in patients who received chemoradiotherapy for unresectable stage III NSCLC: Real-world data from an expanded access program in Brazil (LACOG 0120). J Bras Pneumol. 2025;50(6):e20240228.",
+   "pmid": "39813498",
+   "pmcid": "PMC12063600",
+   "doi": "10.36416/1806-3756/e20240228",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "pacific-r-2026",
+   "tipo": "articulo",
+   "cita": "Girard N, Bar J, Baas P, Chouaid C, Christoph DC, Field JK, et al. Real-world 5-year outcomes with durvalumab after chemoradiotherapy in unresectable stage III NSCLC. ESMO Open. 2026;11(2):106070.",
+   "pmid": "41643268",
+   "pmcid": "PMC12919254",
+   "doi": "10.1016/j.esmoop.2026.106070",
+   "consultado": "2026-10-02",
+   "sello": "PubMed"
+  },
+  {
+   "clave": "nice-ta798",
+   "tipo": "web",
+   "cita": "National Institute for Health and Care Excellence (NICE). Durvalumab for maintenance treatment of unresectable non-small-cell lung cancer after platinum-based chemoradiation. Technology appraisal guidance TA798; 2022",
+   "url": "https://www.nice.org.uk/guidance/ta798",
+   "consultado": "2026-10-02",
+   "sello": "NICE"
+  },
+  {
+   "clave": "nice-ta944",
+   "tipo": "web",
+   "cita": "National Institute for Health and Care Excellence (NICE). Durvalumab with gemcitabine and cisplatin for treating unresectable or advanced biliary tract cancer. Technology appraisal guidance TA944; 2024",
+   "url": "https://www.nice.org.uk/guidance/ta944",
+   "consultado": "2026-10-02",
+   "sello": "NICE"
+  }
+ ]
+}
