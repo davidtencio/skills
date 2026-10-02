@@ -6,7 +6,7 @@ Cada pieza de una lámina tiene una fuente preferida. Mezclarlas permite aprovec
 
 | Papel | Fuente preferida | Alternativas | Licencia | Herramienta |
 |---|---|---|---|---|
-| Diana y mecanismo | Ficha técnica en español: CIMA/AEMPS (5.1) | FDA (DailyMed 12.1), EMA, ChEMBL | Uso con cita / CC BY-SA 3.0 | `fuentes.py cima`, `dailymed`, `chembl` |
+| Diana y mecanismo | Ficha técnica en español: CIMA/AEMPS (5.1) | FDA (DailyMed 12.1; en antimicrobianos, 12.4), EMA, ChEMBL | Uso con cita / CC BY-SA 3.0 | `fuentes.py cima`, `dailymed`, `chembl` |
 | Indicaciones, PK, interacciones, efectos adversos | CIMA (4.1, 4.2, 4.5, 4.8, 5.2) | DailyMed, EMA | Uso con cita | `fuentes.py cima`, `dailymed` |
 | Función de la diana y proteínas de la vía | UniProt (con PMID) | NCBI Gene (NIH), QuickGO | CC BY 4.0 / dominio público | `fuentes.py uniprot`, `gen` |
 | Definición revisada del fármaco (mecanismo, diana, clase) | NCI Thesaurus (NIH) | ChEMBL | Dominio público (cita) | `fuentes.py nci` |
@@ -28,6 +28,15 @@ Cada pieza de una lámina tiene una fuente preferida. Mezclarlas permite aprovec
 | Célula, organelos, proteínas genéricas | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier) | CC BY 3.0 | `recursos.py` |
 | Órganos y tejidos | Kits de Servier (`servier-kits`, `servier-diapositivas`, `servier-extraer`) | NIH BioArt, Bioicons | CC BY 4.0 / dominio público | `fuentes.py` |
 | Flechas, pasos, rótulos, bloqueos, ADN | Biblioteca propia | — | Propia | `componentes.py` |
+
+## Antimicrobianos: sección 12.4
+
+En las fichas de la FDA de antibióticos, antivirales, antifúngicos y antiparasitarios, la sección 12.1 suele decir solo que el fármaco es un antimicrobiano «[ver Microbiología (12.4)]». El mecanismo, el espectro de actividad y los mecanismos de resistencia están en la 12.4.
+
+- `fuentes.py dailymed` devuelve la sección «12.4 Microbiology», y `fuentes.py openfda` la devuelve en el campo `microbiology`.
+- **Fichas antiguas**, sin el formato actual: no tienen el campo `microbiology`, y su apartado «Microbiology» va dentro de `clinical_pharmacology`. Si `openfda` lo corta, búscalo con `dailymed` o usa CIMA 5.1.
+- **Combinaciones a dosis fija:** `openfda` devuelve la primera ficha que contiene el genérico, que puede ser la de una combinación (p. ej., dolutegravir dentro de abacavir/dolutegravir/lamivudina). Comprueba que la frase citada habla del fármaco de la lámina.
+- **Resistencia:** la 12.4 enumera los mecanismos de resistencia (p. ej., en meropenem: menos porinas, PBP con menor afinidad, bombas de expulsión y carbapenemasas). Sirven para explicar en la lámina por qué el fármaco deja de funcionar, citando la ficha.
 
 ## Orden de búsqueda de ilustraciones
 1. **Biblioteca local** `assets/ilustraciones/` (consulta `registro.json`). Reutilizar lo ya elegido mantiene la coherencia entre fármacos.
