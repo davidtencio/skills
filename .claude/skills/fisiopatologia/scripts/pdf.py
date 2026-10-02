@@ -5,8 +5,8 @@ Uso:
     python3 scripts/pdf.py ejemplos/<enfermedad> --portada 3  # lámina que ilustra la portada
 
 Lee `material.md` y todas las láminas de la carpeta (sin límite de número). Cada lámina entra como SVG vectorial
-(nítido a cualquier zoom y con el texto seleccionable) si así ocupa claramente menos en el PDF que como PNG; si no (p. ej.,
-superficies moleculares con miles de degradados), como PNG, para que el PDF no se dispare. La portada usa el PNG.
+(nítido a cualquier zoom y con el texto seleccionable) si tiene pocas formas y degradados (`vectorial`); si no (p. ej.,
+superficies moleculares con miles de formas), como PNG, para que el PDF no se dispare. La portada usa el PNG.
 Para que el PDF sea reproducible, `material.md` puede fijar la lámina de la portada y la fecha con comentarios:
 `<!-- portada: 3 -->` y `<!-- fecha: 2026-10-01 -->` (`--portada` y `--fecha` tienen prioridad). El diseño es
 A4: portada, índice con números de página, glosario de siglas, una lámina por página en horizontal y la ficha en
@@ -109,30 +109,32 @@ def laminas(carpeta, titulos):
             for n in sorted(numeradas)]
 
 
-def _peso_en_pdf(pagina, archivo, tmp):
-    """Bytes que ocupa una lámina impresa sola en una página, como en el PDF final."""
-    html_ = Path(tmp) / "peso.html"
-    html_.write_text(f'<html><body style="margin:0"><div style="width:269mm;height:151.3mm;background:center / '
-                     f'contain no-repeat url({archivo.resolve().as_uri()})"></div></body></html>', encoding="utf-8")
-    pagina.goto(html_.as_uri())
-    pagina.wait_for_load_state("load")
-    return len(pagina.pdf(width="297mm", height="210mm", print_background=True))
+MAX_ELEMENTOS_SVG = 2000  # por encima (superficies moleculares), el vectorial ocupa más que el PNG en el PDF
+MAX_DEGRADADOS_SVG = 16   # la plantilla define 14; los modelos 3D con sombreado añaden decenas
 
 
-AHORRO_SVG = 0.88  # el SVG se usa si ocupa como mucho el 88 % del PNG: con un margen, la elección no cambia
-#                    entre versiones de Chromium (en los ejemplos, los cocientes están por debajo de 0,8 o por encima de 0,95)
+def _contenido_svg(texto):
+    """El SVG con las ilustraciones incrustadas (data:image/svg+xml;base64) ya decodificadas."""
+    import base64
+    partes = [texto]
+    for m in re.finditer(r"data:image/svg\+xml;base64,([A-Za-z0-9+/=]+)", texto):
+        partes.append(_contenido_svg(base64.b64decode(m.group(1)).decode("utf-8", "ignore")))
+    return "".join(partes)
 
 
-def elegir_formatos(pagina, lams, tmp):
-    """Deja cada lámina en SVG solo si ocupa claramente menos en el PDF que su PNG (AHORRO_SVG)."""
-    elegidas = []
-    for n, t, p in lams:
-        png = p.with_suffix(".png")
-        if p.suffix == ".svg" and png.exists() and \
-                _peso_en_pdf(pagina, p, tmp) > AHORRO_SVG * _peso_en_pdf(pagina, png, tmp):
-            p = png
-        elegidas.append((n, t, p))
-    return elegidas
+def vectorial(svg):
+    """True si la lámina conviene en SVG (vectorial, texto seleccionable): pocas formas y degradados. Si no, el PNG
+    ocupa menos. Es una regla sobre el contenido, no una medida, para que el PDF salga igual con cualquier Chromium."""
+    texto = _contenido_svg(Path(svg).read_text(encoding="utf-8"))
+    elementos = len(re.findall(r"<(?:path|polygon|circle|ellipse|rect|line|polyline)\b", texto))
+    degradados = len(re.findall(r"<(?:linear|radial)Gradient\b", texto))
+    return elementos < MAX_ELEMENTOS_SVG and degradados <= MAX_DEGRADADOS_SVG
+
+
+def elegir_formatos(lams):
+    """Deja cada lámina en SVG si `vectorial` lo aconseja y en PNG si no."""
+    return [(n, t, p.with_suffix(".png") if p.suffix == ".svg" and p.with_suffix(".png").exists() and not vectorial(p)
+             else p) for n, t, p in lams]
 
 
 def _normalizar_listas(md):
@@ -421,7 +423,7 @@ def generar(carpeta, portada=None, salida=None, fecha=None):
     fecha = fecha or opciones["fecha"]
     titulo, titulos, md = leer_material(carpeta)
     farmaco = titulo.split(":")[0].strip()
-    lams = laminas(carpeta, titulos)
+    lams = elegir_formatos(laminas(carpeta, titulos))
     if portada is None:
         portada = next((n for n, t, _ in lams if re.search(TEXTOS["portada_incluye"], t, re.I)
                         and not (TEXTOS["portada_excluye"] and re.search(TEXTOS["portada_excluye"], t, re.I))),
@@ -437,7 +439,6 @@ def generar(carpeta, portada=None, salida=None, fecha=None):
         ruta_html = Path(tmp) / "documento.html"
         navegador = p.chromium.launch(executable_path=ejecutable())
         pagina = navegador.new_page()
-        lams = elegir_formatos(pagina, lams, tmp)
         ruta_html.write_text(documento(farmaco, subtitulo, lams, cuerpo, secciones, sellos, portada,
                                        glosario=glosario, fecha=fecha), encoding="utf-8")
         _imprimir(pagina, ruta_html, salida)  # primera pasada: medir páginas
