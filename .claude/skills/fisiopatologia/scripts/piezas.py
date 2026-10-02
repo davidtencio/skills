@@ -1,10 +1,12 @@
 """Piezas comunes de las láminas de una enfermedad: marco de la lámina, pasos, tarjetas, membranas y fichas.
 
 Uso desde ejemplos/<enfermedad>/laminas.py:
-    from piezas import Lamina, leyenda_paso, tarjeta, ficha, membrana, caja, organo_ilustrado
+    from piezas import Lamina, leyenda_paso, tarjeta, ficha, membrana, caja, organo_ilustrado, curva_fcfd
     L = Lamina("DIABETES TIPO 2", fuentes="Fuentes: ...")
     svg = L.dibujar(1, "Contexto", "Título", "Subtítulo", contenido, total=9)
 """
+import math
+
 from componentes import COLOR, paso, svg, texto
 from recursos import ilustracion
 
@@ -92,4 +94,80 @@ def organo_ilustrado(nombre_svg, x, y, w, h, titulo, detalle=None, color=None):
     s += texto(x + w / 2, y + h + 20, titulo, tam=15, peso="bold", anclaje="middle", color=color or COLOR["texto"])
     if detalle:
         s += texto(x + w / 2, y + h + 40, detalle, tam=13, anclaje="middle", color=SUAVE)
+    return s
+
+
+def curva_fcfd(x, y, w, h, indice=None, dosis=3, cmi=0.32, titulo=None):
+    """Curva cualitativa concentración-tiempo de un antimicrobiano con dosis intermitentes y la CMI.
+
+    indice: "tiempo" (T > CMI), "cmax" (Cmáx/CMI), "abc" (ABC/CMI) o None (los tres a la vez).
+    dosis: número de dosis en el intervalo dibujado. cmi: altura de la CMI como fracción de la Cmáx.
+    La curva no tiene datos: lleva el rótulo «Esquema cualitativo: curva sin escala».
+    Tamaño recomendado: al menos 600 × 320 px (por debajo de 300 de alto, el eje se queda corto para los rótulos).
+    """
+    ox, oy, aw, ah = x + 34, y + h - 50, w - 54, h - 96          # origen y tamaño de los ejes
+    tau, subida, k = 1 / dosis, 0.035, 9.0                        # intervalo, infusión y eliminación (relativos)
+
+    def conc(t):
+        c = 0.0
+        for i in range(dosis):
+            d = t - i * tau
+            if 0 <= d < subida:
+                c += 0.88 * d / subida * math.exp(-k * d)
+            elif d >= subida:
+                c += 0.88 * math.exp(-k * d)
+        return c
+
+    ts = [i / 400 for i in range(401)]
+    cs = [conc(t) for t in ts]
+    escala = max(cs)
+    px = lambda t: ox + t * aw                                    # noqa: E731
+    py = lambda c: oy - c / escala * ah * 0.92                    # noqa: E731
+    puntos = " ".join(f"{px(t):.1f},{py(c):.1f}" for t, c in zip(ts, cs))
+    ycmi = py(cmi * escala)
+    azul, borde_cmi = COLOR["farmaco"], COLOR["patogeno_borde"]
+    s = ""
+    if indice in ("abc", None):                                   # área bajo la curva
+        s += (f'<polygon points="{px(0):.1f},{oy:.1f} {puntos} {px(1):.1f},{oy:.1f}" fill="{azul}" '
+              f'fill-opacity="0.13"/>')
+    if indice in ("tiempo", None):                                # tramos con concentración por encima de la CMI
+        tramos, inicio = [], None
+        for t, c in zip(ts, cs):
+            if c > cmi * escala and inicio is None:
+                inicio = t
+            elif c <= cmi * escala and inicio is not None:
+                tramos.append((inicio, t))
+                inicio = None
+        if inicio is not None:
+            tramos.append((inicio, 1.0))
+        for a, b in tramos:
+            s += (f'<rect x="{px(a):.1f}" y="{oy + 8:.1f}" width="{px(b) - px(a):.1f}" height="10" rx="3" '
+                  f'fill="{COLOR["receptor_borde"]}"/>')
+        s += texto(px(tramos[0][0] if tramos else 0), oy + 40, "T > CMI: tiempo por encima de la CMI", tam=14,
+                   peso="bold", color=COLOR["receptor_borde"])
+    s += f'<polyline points="{puntos}" fill="none" stroke="{azul}" stroke-width="3"/>'
+    s += (f'<line x1="{ox:.1f}" y1="{ycmi:.1f}" x2="{ox + aw:.1f}" y2="{ycmi:.1f}" stroke="{borde_cmi}" '
+          f'stroke-width="2.2" stroke-dasharray="8 6"/>')
+    s += texto(ox + aw, ycmi - 8, "CMI", tam=15, peso="bold", color=borde_cmi, anclaje="end")
+    if indice in ("cmax", None):                                  # pico y cociente Cmáx/CMI
+        tp = max(range(len(cs) // dosis), key=lambda i: cs[i]) / 400
+        xp, yp = px(tp), py(conc(tp))
+        s += (f'<circle cx="{xp:.1f}" cy="{yp:.1f}" r="6" fill="{azul}"/>'
+              f'<line x1="{xp + 16:.1f}" y1="{yp:.1f}" x2="{xp + 16:.1f}" y2="{ycmi:.1f}" stroke="{azul}" '
+              f'stroke-width="1.6" marker-start="url(#flecha)" marker-end="url(#flecha)"/>')
+        s += texto(xp + 26, yp + 18, ["Cmáx/CMI"], tam=15, peso="bold", color=azul)
+    if indice in ("abc", None):
+        s += texto(px(0.04), py(0.07 * escala), "ABC/CMI", tam=15, peso="bold", color=azul)  # bajo el primer pico
+    s += (f'<path d="M{ox:.1f},{oy - ah:.1f} L{ox:.1f},{oy:.1f} L{ox + aw:.1f},{oy:.1f}" fill="none" '
+          f'stroke="{COLOR["linea"]}" stroke-width="1.6"/>')
+    s += texto(ox + aw, oy + 22, "Tiempo", tam=14, color=SUAVE, anclaje="end")
+    s += (f'<text transform="translate({ox - 14:.1f} {oy - ah / 2:.1f}) rotate(-90)" font-family="Arial, sans-serif" '
+          f'font-size="14" fill="{SUAVE}" text-anchor="middle">{"Concentración del fármaco" if ah > 200 else "Concentración"}'
+          '</text>')
+    for i in range(dosis):
+        s += texto(px(i * tau), oy - ah - 6, "dosis", tam=13, color=SUAVE, anclaje="middle")
+    s += texto(x + w, y + h - 4, "Esquema cualitativo: curva sin escala", tam=13, color=SUAVE, anclaje="end",
+               cursiva=True)
+    if titulo:
+        s = texto(x, y - 10, titulo, tam=17, peso="bold") + s
     return s

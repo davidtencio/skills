@@ -44,6 +44,23 @@ Las guías nacionales de otros países y la literatura en otros idiomas completa
 | Italia (italiano) | AIFA (aifa.gov.it) | Notas y planes terapéuticos de la agencia del medicamento | Responde |
 | Reino Unido (inglés) | NICE (nice.org.uk) | Guías nacionales | Responde |
 
+## Bibliotecas de imágenes en otros idiomas
+
+Completan a Servier cuando falta un dibujo (hongos, micobacterias, paredes bacterianas, coronavirus). Antes de usar una imagen, comprueba su licencia en la ficha de la imagen, no en la portada del sitio.
+
+| Biblioteca e idioma | Qué aporta | Licencia | Cómo usarla |
+|---|---|---|---|
+| **TogoTV** (DBCLS, Japón; japonés e inglés) | Galería de ciencias de la vida: microorganismos (*M. tuberculosis*, *P. aeruginosa*, *Candida*, *Cryptococcus*, SARS-CoV-2, paredes grampositiva y gramnegativa), órganos, inmunoglobulinas, material de laboratorio | CC BY 4.0. Crédito: «TogoTV (© 2016 DBCLS TogoTV, CC BY 4.0)» | `fuentes.py togopic <término>` y `togopic-descargar <svg> <nombre> <doi>`. Busca en japonés: en inglés solo encuentra por el nombre de la imagen |
+| **Wikimedia Commons** (multilingüe) | Diagramas de farmacocinética, ciclos de parásitos, anatomía; se busca en cualquier idioma (`Pharmakokinetik`, `pharmacocinétique`, `farmacocinetica`) | La de cada archivo; `commons` descarta NC y ND, y marca CC BY-SA | `fuentes.py commons <término>` y `commons-descargar "File:…" <nombre>`. Cita la autoría en el material |
+| **Planet-Vie** (ENS, Francia; francés) | Esquemas de biología celular y microbiología para docencia | Una por imagen, a menudo con NC o ND | Solo como referencia para dibujar; reutiliza la imagen solo si su ficha dice CC BY, CC BY-SA o CC0 |
+| **DocCheck Flexikon** (Alemania; alemán) | Imágenes de usuarios en artículos médicos | Mixta y no siempre visible | No la uses salvo que la ficha de la imagen tenga una licencia libre explícita |
+
+**Términos de búsqueda en TogoTV comprobados:** 感染症 (enfermedad infecciosa), 細菌 (bacteria), ウイルス (virus), 真菌 (hongo), 寄生虫 (parásito), 結核 (tuberculosis), 免疫 (inmunidad), 肺 (pulmón), 薬 (medicamento).
+
+**Estilo:** las imágenes de TogoTV y de Commons no siguen el estilo de Servier. Úsalas cuando no haya un dibujo de Servier, sin mezclar las dos familias en la misma escena (ver `estilo.md`), y prefiere las esquemáticas a las de estilo fotográfico o de acuarela.
+
+**Otras bibliotecas comprobadas, en inglés:** NIH BioArt (bioart.niaid.nih.gov, dominio público, muchos microorganismos; carga con JavaScript, así que la descarga es manual), PHIL de los CDC (phil.cdc.gov, micrografías de dominio público para la lámina de diagnóstico; la página responde, pero la descarga automática no se ha probado), SwissBioPics (CC BY 4.0, también en Bioicons), Health Icons (healthicons.org, CC0) y la biblioteca de iconos de Reactome (CC BY 4.0).
+
 **No disponibles:**
 
 - **NHG-Standaarden** (richtlijnen.nhg.org, Países Bajos): responde 401 y requiere sesión.

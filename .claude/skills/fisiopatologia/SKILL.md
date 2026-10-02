@@ -45,6 +45,7 @@ Sigue el orden de `references/fuentes.md` y anota la fuente exacta de cada dato 
 4. **Tratamiento:**
    - `fuentes.py guias "<enfermedad en inglés>"` lista guías y consensos de los últimos 5 años con su PMCID; lee la de texto completo con `fuentes.py pmc`.
    - El mecanismo de cada grupo de fármacos sale de la sección 12.1 de la ficha de la FDA (`fuentes.py openfda <fármaco>`) o de la 5.1 de CIMA (`fuentes.py cima <fármaco>`). En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), el mecanismo y la resistencia están en la 12.4 *Microbiology* (campo `microbiology`).
+   - **Antibacterianos y antifúngicos:** farmacocinética de la ficha (FDA 12.3, CIMA 5.2) e índice FC/FD de cada familia con su fuente, para explicar la dosis (ver «Farmacocinética y farmacodinamia de los antimicrobianos» en `references/plantillas.md`).
    - **Infecciones:** fuentes propias (IDSA, ESCMID, guías del NIH/HHS para VIH, OMS, EUCAST, AWaRe, resistencia local de la OPS e INCIENSA) en la sección «Infecciones» de `references/fuentes.md`.
 5. **Fuentes en otros idiomas:** guías nacionales de otros países (Käypä hoito en Finlandia, Nationale VersorgungsLeitlinien y AWMF en Alemania, Helsedirektoratet en Noruega, HAS en Francia, Farmacotherapeutisch Kompas en los Países Bajos…) y literatura con el filtro de idioma de PubMed (`ger[la]`, `fin[la]`, `nor[la]`…).
    - Úsalas para contrastar una recomendación, sustituir una guía bloqueada o añadir datos que solo publica un país.
@@ -65,15 +66,16 @@ Según el tipo de enfermedad, ver `references/plantillas.md` (metabólica, cardi
 Numera «LÁMINA N DE TOTAL» con el total real.
 
 ### 4. Reunir las piezas visuales
-Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células inmunitarias y microorganismos: virus, bacterias, parásitos) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → dibujo propio. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json`.
+Biblioteca local (`assets/ilustraciones/`: órganos, tejidos, células, células inmunitarias y microorganismos: virus, bacterias, parásitos) → Bioicons (`fuentes.py bioicons`) → kits de Servier (`fuentes.py servier-kits`, `servier-diapositivas`, `servier-extraer`) → TogoTV (`fuentes.py togopic`, mejor con términos en japonés) y Wikimedia Commons (`fuentes.py commons`, en cualquier idioma) → dibujo propio. Ver «Bibliotecas de imágenes en otros idiomas» en `references/idiomas.md`. Cuando haya varias opciones, genera una hoja de comparación (`python3 scripts/hoja_comparacion.py hoja.png a.svg b.svg ...`), revísala con Read y elige. Registra cada pieza nueva en `assets/ilustraciones/registro.json`.
 
 ### 5. Componer
 Crea `ejemplos/<enfermedad>/laminas.py` a partir del de diabetes tipo 2. Bibliotecas disponibles:
 - `scripts/piezas.py`:
    - `Lamina(enfermedad, fuentes)` dibuja el marco común: cabecera, título, pie y aviso.
    - `tarjeta`, `ficha`, `caja`, `leyenda_paso`, `membrana` y `organo_ilustrado`.
+   - `curva_fcfd`: curva cualitativa concentración-tiempo con la CMI y el índice FC/FD resaltado (T > CMI, Cmáx/CMI, ABC/CMI).
 - `scripts/componentes.py`: capa de estilo con textos, flechas, pasos, bloqueos, vesículas, mitocondria, `etiqueta_farmaco` y la paleta `COLOR`.
-- `scripts/recursos.py`: `ilustracion(nombre, x, y, w, h)` inserta un SVG de `assets/ilustraciones/`.
+- `scripts/recursos.py`: `ilustracion(nombre, x, y, w, h)` inserta un SVG de `assets/ilustraciones/`; `atribucion(*archivos)` da el crédito del pie.
 - `scripts/fuentes.py`: consultas a las fuentes y descargas de ilustraciones.
 
 Reglas de estilo en `references/estilo.md`. El pie común lleva las fuentes generales en una línea; si una lámina necesita citar más, hazlo dentro de la lámina (recuadro) o en el material, nunca alargando el pie.
@@ -107,4 +109,4 @@ Usa `--portada N` para elegir otra lámina de portada. Revisa las páginas conve
 
 ## Licencias
 - Usa preferentemente CC0, dominio público y CC BY. Evita CC BY-SA salvo que no haya alternativa, y avísalo.
-- Cada lámina lleva en el pie la atribución de las ilustraciones: «Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0)». `assets/ilustraciones/ATRIBUCION.md` y `registro.json` documentan cada archivo.
+- Cada lámina lleva en el pie la atribución de las ilustraciones: «Ilustraciones: Servier Medical Art (CC BY 3.0 y 4.0)», o la que devuelva `recursos.atribucion(...)` si usa TogoTV o Commons. `assets/ilustraciones/ATRIBUCION.md` y `registro.json` documentan cada archivo.

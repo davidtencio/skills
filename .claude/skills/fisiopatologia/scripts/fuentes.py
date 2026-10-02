@@ -46,6 +46,8 @@ LICENCIAS = {
     "alphafold": "CC BY 4.0 (AlphaFold DB, EMBL-EBI/Google DeepMind)",
     "nih-bioart": "Dominio público salvo indicación (NIH BioArt, bioart.niaid.nih.gov)",
     "bioicons": "Según carpeta de licencia del icono (Bioicons)",
+    "togotv": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "commons": "Según la ficha del archivo en Wikimedia Commons",
 }
 
 
@@ -170,6 +172,70 @@ def bioicons(termino, repo=CACHE / "bioicons"):
         subprocess.run(["git", "-C", str(repo), "sparse-checkout", "set", "static/icons"], check=True, timeout=600)
     base = repo / "static" / "icons"
     return [str(p.relative_to(base)) for p in base.rglob("*.svg") if termino.lower() in p.name.lower()]
+
+
+def togopic(termino, maximo=30):
+    """Busca en la galería de TogoTV (DBCLS, Japón; CC BY 4.0). La búsqueda mira el nombre y las etiquetas:
+    en inglés solo encuentra por el nombre; en japonés también por la etiqueta (感染症, 細菌, ウイルス, 真菌…)."""
+    q = urllib.parse.urlencode({"target": "pictures", "text": termino})
+    datos = json.loads(_get(f"https://togotv-api.dbcls.jp/api/search?{q}"))["data"][:maximo]
+    return [{"nombre": d.get("name_en"), "nombre_ja": d.get("name"), "svg": d.get("svg"), "doi": d.get("id"),
+             "licencia": d.get("license"), "autoria": d.get("author_str"), "fecha": d.get("uploadDate"),
+             "etiquetas": d.get("other_tags_comma_en")} for d in datos if d.get("svg")]
+
+
+def togopic_descargar(svg, nombre, doi=""):
+    """Descarga un SVG de TogoTV a assets/ilustraciones/togotv-<nombre>.svg y lo registra.
+    svg: el campo «svg» de togopic(); doi: el campo «doi» (identifica la imagen en el registro)."""
+    destino = ILUSTRACIONES / f"togotv-{nombre}.svg"
+    destino.write_bytes(_get("https://dbarchive.biosciencedbc.jp/data/togo-pic/image/" + urllib.parse.quote(svg),
+                             timeout=120))
+    registrar(destino, "togotv", f"TogoTV {svg} {doi}".strip())
+    return destino
+
+
+def _commons_info(paginas):
+    salida = []
+    for pagina_ in paginas:
+        info = pagina_["imageinfo"][0]
+        meta = info.get("extmetadata", {})
+        licencia = meta.get("LicenseShortName", {}).get("value", "")
+        if re.search(r"\bN[CD]\b|NonCommercial|NoDeriv", licencia, re.I):
+            continue
+        salida.append({"titulo": pagina_["title"], "url": info["url"].split("?")[0], "licencia": licencia,
+                       "autoria": _texto_plano(meta.get("Artist", {}).get("value", "")).strip()[:120],
+                       "aviso": "CC BY-SA: avisa antes de usarla" if "SA" in licencia else None})
+    return salida
+
+
+def _commons_api(parametros):
+    q = urllib.parse.urlencode({"action": "query", "format": "json", "prop": "imageinfo",
+                                "iiprop": "url|extmetadata", **parametros})
+    datos = json.loads(_get(f"https://commons.wikimedia.org/w/api.php?{q}", cabeceras=COMMONS_UA))
+    return list(datos.get("query", {}).get("pages", {}).values())
+
+
+COMMONS_UA = {"User-Agent": "skills-docencia/1.0 (https://github.com/davidtencio/skills; material educativo)"}
+
+
+def commons(termino, maximo=20):
+    """Busca dibujos y diagramas en Wikimedia Commons, en cualquier idioma (p. ej., «Pharmakokinetik»,
+    «pharmacocinétique»). Devuelve la licencia y la autoría de cada archivo; descarta las licencias NC y ND."""
+    return _commons_info(_commons_api({"generator": "search", "gsrnamespace": 6,
+                                       "gsrsearch": f"{termino} filetype:drawing", "gsrlimit": maximo}))
+
+
+def commons_descargar(titulo, nombre):
+    """Descarga un archivo de Wikimedia Commons («File:…») a assets/ilustraciones/commons-<nombre>.<ext>
+    y lo registra con su licencia y autoría. Rechaza las licencias NC y ND."""
+    archivos = _commons_info(_commons_api({"titles": titulo}))
+    if not archivos:
+        raise ValueError(f"{titulo}: no existe o su licencia no permite reutilizarlo (NC o ND)")
+    r = archivos[0]
+    destino = ILUSTRACIONES / f"commons-{nombre}{Path(r['url']).suffix}"
+    destino.write_bytes(_get(r["url"], timeout=120, cabeceras=COMMONS_UA))
+    registrar(destino, "commons", f"Wikimedia Commons, {r['titulo']}", f"{r['licencia']}; autoría: {r['autoria']}")
+    return destino
 
 
 def servier_kits():
@@ -682,7 +748,7 @@ if __name__ == "__main__":
     accion, *args = sys.argv[1:]
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
                   "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones", "mesh", "mondo",
-                  "guias"):
+                  "guias", "togopic", "commons"):
         args = [" ".join(args)]
     funciones = {"pubchem": pubchem, "chembl": chembl, "pdb-buscar": pdb_buscar, "pdb-ligandos": pdb_ligandos,
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
@@ -695,6 +761,8 @@ if __name__ == "__main__":
                  "actividad": lambda nombre, diana=None: chembl_actividad(nombre, diana),
                  "bindingdb": bindingdb, "epar": ema_epar, "fda-indicaciones": fda_indicaciones,
                  "mesh": mesh, "mondo": mondo, "guias": guias,
+                 "togopic": togopic, "togopic-descargar": togopic_descargar, "commons": commons,
+                 "commons-descargar": commons_descargar,
                  "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones),
                  "pagina": lambda url, *patrones: pagina(url, patrones)}
     resultado = funciones[accion](*args)

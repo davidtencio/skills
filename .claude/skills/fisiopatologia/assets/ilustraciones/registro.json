@@ -236,5 +236,40 @@
     "origen": "Bioicons cc-by-3.0/Human_physiology/Servier/healthy-lung.svg",
     "fecha": "2026-10-02",
     "notas": ""
+  },
+  "togotv-pared-gramnegativa.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202209_Gram_Negative_Bacteria.svg https://doi.org/10.7875/togopic.2022.444",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-pared-grampositiva.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202209_Gram_Positive_Bacteria.svg https://doi.org/10.7875/togopic.2022.443",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-sars-cov-2.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 202204_SARS-CoV-2.svg https://doi.org/10.7875/togopic.2022.072",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-mycobacterium-tuberculosis.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 201708_Mycobacterium_tuberculosis.svg https://doi.org/10.7875/togopic.2017.37",
+    "fecha": "2026-10-02",
+    "notas": ""
+  },
+  "togotv-pseudomonas-aeruginosa.svg": {
+    "fuente": "togotv",
+    "licencia": "CC BY 4.0 (© DBCLS TogoTV, togotv.dbcls.jp)",
+    "origen": "TogoTV 201708_Pseudomonas_aeruginosa.svg https://doi.org/10.7875/togopic.2017.38",
+    "fecha": "2026-10-02",
+    "notas": ""
   }
 }

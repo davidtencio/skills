@@ -23,7 +23,7 @@
 | Mecanismo de cada fármaco | Ficha de la FDA, sección 12.1 | CIMA 5.1 | `fuentes.py openfda`, `cima` |
 | Guías nacionales en otros idiomas | Käypä hoito, NVL/AWMF, Helsedirektoratet, HAS, Farmacotherapeutisch Kompas (ver `idiomas.md`) | PubMed con filtro de idioma (`ger[la]`, `fin[la]`…) | `fuentes.py pagina`, `pubmed` |
 | Afirmaciones sueltas | PubMed (por relevancia) y Europe PMC (por citas) | — | `fuentes.py pubmed`, `europepmc` |
-| Órganos, tejidos y células | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier), kits de Servier | `recursos.py`, `fuentes.py bioicons`, `servier-*` |
+| Órganos, tejidos y células | Biblioteca local (`assets/ilustraciones/`) | Bioicons (Servier), kits de Servier; TogoTV y Wikimedia Commons (ver «Bibliotecas de imágenes en otros idiomas» en `idiomas.md`) | `recursos.py`, `fuentes.py bioicons`, `servier-*`, `togopic`, `commons` |
 | Flechas, pasos, rótulos, tarjetas | Biblioteca propia | — | `componentes.py`, `piezas.py` |
 
 ## Infecciones
@@ -36,6 +36,9 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 | Tratamiento | Guías de la IDSA (idsociety.org) y de la ESCMID con texto completo en PMC; guías de la OMS y la OPS | Guías nacionales en otros idiomas (ver `idiomas.md`) | `fuentes.py guias`, `pmc`, `pagina` |
 | VIH | Guías del NIH/HHS (clinicalinfo.hiv.gov) | Guías de la OMS; EACS (eacsociety.org) | `fuentes.py pagina` |
 | Tuberculosis, malaria, enfermedades desatendidas | Guías y manuales de la OMS | OPS, guías nacionales | `fuentes.py pagina` |
+| Farmacocinética de un antimicrobiano | Ficha de la FDA, sección 12.3 (campo `pharmacokinetics`) | CIMA 5.2 | `fuentes.py openfda`, `cima` |
+| Índices y objetivos FC/FD por familia | Documento de posición sobre monitorización de antimicrobianos en pacientes críticos (*Intensive Care Med* 2020, PMID 32383061, texto completo en PMC7223855) | Documentos de justificación de EUCAST (eucast.org/publications-and-documents/rd), que explican los puntos de corte FC/FD de cada fármaco | `fuentes.py pmc`, `pagina` |
+| Monitorización de vancomicina | Consenso revisado de 2020 (*Clin Infect Dis*, PMID 32658968; sin texto completo en PMC: usa el resumen y anótalo) | Resumen ejecutivo en *Pharmacotherapy* (PMID 32227354) | `fuentes.py pubmed` |
 | Mecanismo y resistencia de un antimicrobiano | Ficha de la FDA, sección 12.4 *Microbiology* (campo `microbiology` en openFDA) | CIMA 5.1; DailyMed «12.4 Microbiology» | `fuentes.py openfda`, `cima`, `dailymed` |
 | Puntos de corte de sensibilidad | EUCAST (eucast.org, tablas de puntos de corte) | CLSI (resúmenes públicos) | `fuentes.py pagina` |
 | Uso racional de antimicrobianos | Clasificación AWaRe y manual de antibióticos de la OMS | — | `fuentes.py pagina` |
@@ -45,6 +48,7 @@ Las fuentes de arriba sirven igual; además, en una enfermedad infecciosa:
 - **Mecanismo de los antimicrobianos:** en su ficha de la FDA, la sección 12.1 suele decir solo «es un antibacteriano [ver Microbiología (12.4)]». El mecanismo, la resistencia y la actividad están en la 12.4. Las fichas antiguas, sin el formato actual, no tienen el campo `microbiology`: la sección «Microbiology» va dentro de `clinical_pharmacology`. Si `openfda` la corta, búscala con `dailymed` o usa CIMA 5.1.
 - **Combinaciones a dosis fija:** `openfda` devuelve la primera ficha que contiene el genérico, que puede ser la de una combinación (p. ej., dolutegravir dentro de abacavir/dolutegravir/lamivudina). Comprueba que la frase citada habla del fármaco que te interesa.
 - **Resistencia y elección del tratamiento empírico:** dependen del país. Si la guía usada es extranjera, dilo y busca datos de resistencia de Costa Rica o de Latinoamérica; si no los encuentras, anótalo en «No verificado».
+- **Objetivos FC/FD:** cópialos con el índice, la familia y la fuente («%fT > CMI», «ABC₀₋₂₄/CMI ≥ …»). Los objetivos cambian según la gravedad y el microorganismo: no los generalices de un fármaco a toda la familia sin que la fuente lo diga.
 - **Puntos de corte:** cópialos literalmente con su versión (p. ej., «EUCAST, tabla v. 15.0») y no los conviertas entre EUCAST y CLSI.
 - Responden desde este entorno: who.int, paho.org, niaid.nih.gov, idsociety.org, escmid.org, clinicalinfo.hiv.gov, eacsociety.org, eucast.org e inciensa.sa.cr. Algunas son índices de guías: sigue el enlace a la guía o búscala en PMC.
 

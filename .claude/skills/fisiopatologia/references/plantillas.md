@@ -57,6 +57,17 @@ Cada tipo de agente cambia lo que se dibuja:
 | **Toxina** | Tétanos, botulismo, cólera | La toxina y su diana en el huésped; el microorganismo puede no invadir | Antitoxina, soporte y antimicrobiano si procede; vacunación |
 | **Síndrome** (varios agentes posibles) | Sepsis, neumonía adquirida en la comunidad, infección urinaria, meningitis | Respuesta del huésped común a todos los agentes; tabla de agentes según la edad, el lugar de adquisición y los factores de riesgo | Tratamiento empírico de la guía según la gravedad y los factores de riesgo, desescalada con el cultivo y duración |
 
+### Farmacocinética y farmacodinamia de los antimicrobianos
+
+En las infecciones tratadas con antibacterianos o antifúngicos, añade al menos una lámina de FC/FD tras el mapa de fármacos: explica por qué cada familia se dosifica como se dosifica.
+
+- **Índice FC/FD de cada familia** (tabla): dependiente del tiempo (%fT > CMI), de la concentración (Cmáx/CMI) o de la exposición (ABC₀₋₂₄/CMI). Dibújalo con `curva_fcfd` de `piezas.py`, que resalta el índice pedido y lleva el rótulo «Esquema cualitativo».
+- **Consecuencia para la dosis:** infusión prolongada o continua si importa el tiempo; dosis única diaria si importa el pico; dosis ajustada al ABC si importa la exposición total. Cada estrategia, con la guía que la recomienda.
+- **El huésped cambia la exposición:** volumen de distribución aumentado en la sepsis (dosis de carga), aclaramiento renal aumentado o disminuido, terapia de reemplazo renal, obesidad y penetración en el sitio de la infección (líquido cefalorraquídeo, hueso, pulmón).
+- **Monitorización de concentraciones** cuando la guía la recomienda (p. ej., vancomicina guiada por ABC, aminoglucósidos).
+- **Ejemplo verificado:** en la tabla 1 del documento de posición sobre monitorización de antimicrobianos en pacientes críticos (*Intensive Care Med* 2020, PMID 32383061, PMC7223855), los betalactámicos se asocian a %fT > CMI; los aminoglucósidos, a ABC₀₋₂₄/CMI y Cmáx/CMI; y las fluoroquinolonas y la vancomicina, a ABC₀₋₂₄/CMI. Copia los objetivos numéricos de la fuente con su frase exacta, no de esta lista.
+- La farmacocinética detallada de un fármaco concreto (absorción, metabolismo, interacciones) corresponde a la skill `mecanismo-accion`; aquí se explica a nivel de familia y solo lo que guía la dosis.
+
 **Recordatorios:**
 
 - El microorganismo se dibuja con la ilustración de Servier de la biblioteca (`servier-hiv-virus`, `servier-bacterium`, `servier-sporozoites`…) o con el color `patogeno` de `componentes.py` si es un esquema propio (ver `estilo.md`).
