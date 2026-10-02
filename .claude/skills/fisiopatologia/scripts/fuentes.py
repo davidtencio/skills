@@ -52,7 +52,8 @@ LICENCIAS = {
 
 
 def _get(url, timeout=60, datos=None, cabeceras=None, intentos=4):
-    """Descarga una URL. Reintenta con espera creciente si el servidor limita la frecuencia (429) o falla (5xx)."""
+    """Descarga una URL. Reintenta con espera creciente si el servidor limita la frecuencia (429), falla (5xx)
+    o se corta la conexión; ante un 429 respeta la cabecera Retry-After (hasta 30 s)."""
     import time
     import urllib.error
     req = urllib.request.Request(url, data=datos, headers=cabeceras or {"User-Agent": "fisiopatologia/1.0"})
@@ -62,6 +63,12 @@ def _get(url, timeout=60, datos=None, cabeceras=None, intentos=4):
                 return r.read()
         except urllib.error.HTTPError as e:
             if (e.code == 429 or e.code >= 500) and intento < intentos - 1:
+                espera = e.headers.get("Retry-After", "") if e.headers else ""
+                time.sleep(min(int(espera), 30) if espera.isdigit() else 2 ** intento)
+                continue
+            error = e
+        except (urllib.error.URLError, ConnectionError, TimeoutError) as e:
+            if intento < intentos - 1:  # corte de red o túnel cerrado: suele ser pasajero
                 time.sleep(2 ** intento)
                 continue
             error = e

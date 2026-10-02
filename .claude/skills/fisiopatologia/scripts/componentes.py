@@ -235,6 +235,7 @@ def nucleo(cx, cy, rx, ry, etiqueta="Núcleo", poros=(-90, -56.6, -123.4, -20, -
 
 def adn(x1, x2, y, region=None, etiqueta_region=None):
     """Doble hélice horizontal; `region` = (xa, xb) destaca un elemento de respuesta."""
+    x1, x2 = round(x1), round(x2)  # el paso de 3 px y los pares de bases necesitan enteros
     partes = []
     if region:
         xa, xb = region
