@@ -258,8 +258,10 @@ def _texto_plano(contenido):
     return _html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", contenido)))
 
 
-def dailymed(nombre, secciones=("12.1 Mechanism of Action", "12.3 Pharmacokinetics", "5.1 ", "7.1 "), largo=1200):
-    """Ficha técnica de la FDA (DailyMed): devuelve fragmentos de las secciones pedidas."""
+def dailymed(nombre, secciones=("12.1 Mechanism of Action", "12.3 Pharmacokinetics", "12.4 Microbiology", "5.1 ",
+                                 "7.1 "), largo=1200):
+    """Ficha técnica de la FDA (DailyMed): devuelve fragmentos de las secciones pedidas.
+    En los antimicrobianos, el mecanismo, la resistencia y la sensibilidad están en 12.4 Microbiology."""
     q = urllib.parse.quote(nombre)
     datos = json.loads(_get(f"https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name={q}&pagesize=1"))
     if not datos["data"]:
@@ -506,9 +508,11 @@ def ema_epar(nombre, patron, documento="public-assessment-report", contexto=1):
     return salida
 
 
-def openfda(nombre, secciones=("clinical_pharmacology", "pharmacokinetics", "drug_interactions",
-                               "pharmacogenomics", "use_in_specific_populations"), largo=2500):
-    """Ficha de la FDA ya separada por secciones (openFDA). nombre: genérico en inglés."""
+def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "microbiology", "pharmacokinetics",
+                               "drug_interactions", "pharmacogenomics", "use_in_specific_populations"), largo=2500):
+    """Ficha de la FDA ya separada por secciones (openFDA). nombre: genérico en inglés.
+    En los antimicrobianos, 12.1 suele remitir a 12.4 («microbiology»): ahí están el mecanismo y la resistencia.
+    Las fichas antiguas sin formato PLR no tienen ese campo; su «Microbiology» va dentro de clinical_pharmacology."""
     q = urllib.parse.quote(f'openfda.generic_name:"{nombre}"')
     r = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=1", timeout=90))["results"][0]
     salida = {"set_id": r.get("set_id"), "fecha": r.get("effective_time")}
