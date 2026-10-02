@@ -395,3 +395,74 @@ def test_registro_anota_solo_las_consultas_de_primer_nivel(red, tmp_path, monkey
     assert lineas[0]["funcion"] == "pubmed" and lineas[0]["argumentos"] == ["sepsis guideline"]
     assert lineas[0]["resultado"]["n"] == 4 and "27418577" in lineas[0]["resultado"]["ids"]
     assert [x["funcion"] for x in lineas].count("pubmed") == 1
+
+
+# --- Medicamentos: fichas, EMA y ensayos ---------------------------------------------------------------------------
+
+def test_openfda_prefiere_el_principio_activo_solo_aunque_lleve_sal():
+    solo = {"openfda": {"generic_name": ["METFORMIN HYDROCHLORIDE"]}, "mechanism_of_action": ["x"], "effective_time": "2024"}
+    combinada = {"openfda": {"generic_name": ["EMPAGLIFLOZIN AND METFORMIN HYDROCHLORIDE"]}, "mechanism_of_action": ["x"],
+                 "effective_time": "2026"}
+    assert max([combinada, solo], key=lambda f: fuentes._puntuar_ficha(f, "metformin", ("mechanism_of_action",))) is solo
+
+
+def test_dailymed_elige_la_ficha_sin_combinar(red):
+    respuestas, pedidas = red
+    respuestas.update({
+        r"spls\.json": json.dumps({"data": [
+            {"title": "SYNJARDY (EMPAGLIFLOZIN AND METFORMIN HYDROCHLORIDE) TABLET [BI]", "setid": "combo", "spl_version": 23,
+             "published_date": "Aug 27, 2026"},
+            {"title": "JARDIANCE (EMPAGLIFLOZIN) TABLET, FILM COATED [REENVASADOR]", "setid": "reenvase", "spl_version": 2,
+             "published_date": "Jan 01, 2025"},
+            {"title": "JARDIANCE (EMPAGLIFLOZIN) TABLET, FILM COATED [BI]", "setid": "original", "spl_version": 31,
+             "published_date": "Feb 02, 2026"}]}).encode(),
+        r"spls/original\.xml": b"<document>12.1 Mechanism of Action Empagliflozin is an inhibitor of SGLT2.</document>"})
+    r = fuentes.dailymed("empagliflozin", secciones=("12.1 Mechanism of Action",))
+    assert r["setid"] == "original" and r["version"] == 31 and r["fecha"] == "Feb 02, 2026"
+    assert "inhibitor of SGLT2" in r["12.1 Mechanism of Action"]
+
+
+def test_pubmed_numero_de_ensayo_y_revision_de_monografia(red):
+    respuestas, _ = red
+    respuestas.update({r"esearch": json.dumps({"esearchresult": {"idlist": ["1", "2"]}}).encode(), r"efetch": b"""
+<PubmedArticleSet>
+ <PubmedArticle><MedlineCitation Status="MEDLINE"><PMID>1</PMID><Article><ArticleTitle>Empagliflozin, Cardiovascular
+  Outcomes.</ArticleTitle><Abstract><AbstractText>Funded; EMPA-REG OUTCOME NCT01131676.</AbstractText></Abstract>
+  <DataBankList><DataBank><DataBankName>ClinicalTrials.gov</DataBankName><AccessionNumberList>
+  <AccessionNumber>NCT01131676</AccessionNumber></AccessionNumberList></DataBank></DataBankList></Article>
+  </MedlineCitation></PubmedArticle>
+ <PubmedBookArticle><BookDocument><PMID>2</PMID><Book><BookTitle>LiverTox</BookTitle></Book>
+  <ArticleTitle>Sodium-Glucose Cotransporter-2 (SGLT2) Inhibitors</ArticleTitle>
+  <ContributionDate><Year>2023</Year><Month>2</Month><Day>10</Day></ContributionDate></BookDocument>
+ </PubmedBookArticle>
+</PubmedArticleSet>"""})
+    articulo, libro = fuentes.pubmed("x", maximo=2)
+    assert articulo["ensayos"] == ["NCT01131676"] and articulo["revisado"] is None
+    assert libro["estado"] == "libro" and libro["revisado"] == "2023-02-10"
+
+
+def test_ensayos_pone_primero_los_pivotales(monkeypatch):
+    def reg(pmid, titulo, tipos, revista="J", nct=()):
+        return {**_registro(pmid, titulo, "2020", tipos, revista=revista), "ensayos": list(nct)}
+    candidatos = [reg("1", "Empagliflozin in heart failure: a post hoc analysis of EMPEROR-Reduced",
+                      ("Randomized Controlled Trial",), "N Engl J Med", ["NCT03057977"]),
+                  reg("2", "Empagliflozin and liver fat: a pilot trial", ("Randomized Controlled Trial",)),
+                  reg("3", "Cardiovascular and Renal Outcomes with Empagliflozin in Heart Failure",
+                      ("Randomized Controlled Trial", "Multicenter Study"), "N Engl J Med", ["NCT03057977"])]
+    monkeypatch.setattr(fuentes, "pubmed", lambda consulta, **_: [dict(c) for c in candidatos])
+    orden = [r["pmid"] for r in fuentes.ensayos("empagliflozin")]
+    assert orden[0] == "3" and orden.index("1") > orden.index("3"), "el análisis post hoc, detrás del principal"
+
+
+def test_ema_medicamento_lee_los_datos_publicos(red, tmp_path, monkeypatch):
+    respuestas, _ = red
+    monkeypatch.setattr(fuentes, "CACHE", tmp_path)
+    comun = {"category": "Human", "active_substance": "empagliflozin", "medicine_status": "Authorised",
+             "international_non_proprietary_name_common_name": "empagliflozin", "biosimilar": "No"}
+    respuestas.update({r"medicines_json-report": json.dumps({"data": [
+        {**comun, "name_of_medicine": "Empagliflozin Genérico", "generic": "Yes"},
+        {**comun, "name_of_medicine": "Jardiance", "generic": "No", "ema_product_number": "EMEA/H/C/002677",
+         "revision_number": "33", "last_updated_date": "24/03/2026",
+         "medicine_url": "https://www.ema.europa.eu/en/medicines/human/EPAR/jardiance"}]}).encode()})
+    r = fuentes.ema_medicamento("empagliflozin")
+    assert r[0]["nombre"] == "Jardiance" and r[0]["revision"] == "33" and r[1]["generico"]

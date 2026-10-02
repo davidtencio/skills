@@ -305,7 +305,7 @@ body {{ margin: 0; font-family: Inter, 'Liberation Sans', sans-serif; font-size:
         color: var(--tinta); font-feature-settings: "cv11", "ss01"; hyphens: auto; }}
 h1, h2, h3 {{ font-family: 'Source Serif 4', 'Liberation Serif', serif; color: var(--azul-osc); }}
 a {{ color: inherit; text-decoration: none; }}
-.contenido a {{ color: var(--azul); }}
+.contenido a {{ color: var(--azul); overflow-wrap: anywhere; }}
 .cita a {{ font-weight: 600; }}
 
 /* Portada */

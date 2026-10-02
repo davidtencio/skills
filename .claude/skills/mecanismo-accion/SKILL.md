@@ -33,9 +33,16 @@ Las fuentes en línea pueden estar bloqueadas por la red del entorno. Prueba ant
 Fármaco, público (por defecto: estudiantes de farmacia de pregrado) y uso (proyectar, imprimir). Si el fármaco tiene varios mecanismos, acordar cuál se ilustra.
 
 ### 2. Investigar y verificar
-Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha, PMID, identificador). Puedes registrar cada cifra de las láminas con su frase literal en `ejemplos/<farmaco>/evidencias.json` y comprobarlas con `python3 scripts/verificar_evidencias.py ejemplos/<farmaco> --en-linea` (formato en el propio script). Solo lo que no aparezca en ninguna queda como «pendiente de verificar»; no lo presentes como confirmado.
+Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha, PMID, identificador). Solo lo que no aparezca en ninguna fuente queda como «pendiente de verificar»; no lo presentes como confirmado. Tres registros acompañan cada fármaco (ejemplo completo en `ejemplos/durvalumab/`):
 
-1. **Ficha técnica**, primero en español: `python3 scripts/fuentes.py cima <nombre>` (AEMPS; secciones 4.1, 4.2, 4.5, 4.8, 5.1, 5.2, 5.3). Contrasta con `fuentes.py dailymed <nombre en inglés>` (FDA) o con la EMA. Si las fichas difieren en una cifra, muestra el rango y cita ambas. En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), la sección 12.1 de la FDA suele remitir a la 12.4 *Microbiology*, que es donde están el mecanismo, la actividad y los mecanismos de resistencia: `dailymed` la incluye y `openfda` la devuelve en el campo `microbiology` (ver «Antimicrobianos: sección 12.4» en `references/fuentes.md`).
+- **Búsquedas:** `fuentes.py --registro ejemplos/<farmaco> …` anota cada consulta en `busquedas.jsonl`.
+- **Bibliografía:** cada fuente va una vez en `bibliografia.json`. Créala con `python3 scripts/bibliografia.py nueva ejemplos/<farmaco> <clave>` y una de estas opciones:
+  - `--pmid <PMID>` (artículos) o `--nct <NCT>` (registro de un ensayo);
+  - `--cima <principio activo>`, `--dailymed <nombre en inglés>` o `--ema <marca>` (fichas técnicas, con su versión y fecha);
+  - `--url … --cita "…"` (otras páginas).
+- **Evidencias:** cada cifra de las láminas va en `evidencias.json` con su frase literal y la clave de la referencia (`ref`). Compruébalas con `python3 scripts/verificar_evidencias.py ejemplos/<farmaco> --en-linea` (formato en el propio script).
+
+1. **Ficha técnica**, primero en español: `python3 scripts/fuentes.py cima <nombre>` (AEMPS; secciones 4.1, 4.2, 4.5, 4.8, 5.1, 5.2, 5.3). Prefiere el original comercializado y sin combinar, y devuelve la fecha del texto y las notas de seguridad de la AEMPS (`notas_seguridad`). Si el medicamento es de autorización europea, `fuentes.py ema <marca>` da su estado, la revisión y la fecha del EPAR. Contrasta con `fuentes.py dailymed <nombre en inglés>` (FDA) o con la EMA. Si las fichas difieren en una cifra, muestra el rango y cita ambas. En los antimicrobianos (antibióticos, antivirales, antifúngicos, antiparasitarios), la sección 12.1 de la FDA suele remitir a la 12.4 *Microbiology*, que es donde están el mecanismo, la actividad y los mecanismos de resistencia: `dailymed` la incluye y `openfda` la devuelve en el campo `microbiology` (ver «Antimicrobianos: sección 12.4» en `references/fuentes.md`).
 2. **Fármaco y diana en bases curadas:** `fuentes.py chembl <nombre en inglés>` (mecanismo y diana), `fuentes.py pubchem <nombre>` (SMILES, fórmula, CID del fármaco y de los ligandos o sustratos naturales), `fuentes.py uniprot <GEN>` (función de la diana, con PMID).
 3. **Vía biológica:** `fuentes.py reactome "<términos>"` para confirmar la secuencia de pasos de la lámina 2 y los mecanismos compensatorios.
 4. **NIH:** `fuentes.py gen <GEN>` (resumen curado de NCBI Gene), `fuentes.py nci <nombre en inglés>` (definición del NCI Thesaurus: mecanismo y diana, sobre todo en oncología) y `fuentes.py medlineplus <nombre>` (información en español para pacientes; útil para el lenguaje de la lámina final).
@@ -46,7 +53,11 @@ Verifica cada dato en este orden y anota la fuente exacta (sección de la ficha,
    - Si hay indicaciones nuevas en los últimos 3 años o diferencias con la UE, añade la lámina «Indicaciones aprobadas» (línea de tiempo; ejemplo: lámina 5 de trastuzumab deruxtecán). Si no, basta una sección breve en el material.
 7. **Farmacocinética detallada:** `fuentes.py openfda <nombre en inglés>` (ficha de la FDA por secciones: 12.1, 12.2, 12.3, 12.4 en los antimicrobianos, 7, 8, farmacogenómica) y `fuentes.py epar <marca> "<regex>"` (informe de evaluación de la EMA, con página; solo existe para medicamentos de autorización centralizada: biológicos, oncológicos y la mayoría de los nuevos). `fuentes.py openfda-eventos` da las notificaciones de FAERS, que solo orientan y nunca dan frecuencias.
 8. **Farmacogenética y poblaciones especiales:** `fuentes.py cpic <nombre en inglés>` (pares gen-fármaco con nivel CPIC y recomendaciones por fenotipo), `fuentes.py lactmed <nombre>` (lactancia) y `fuentes.py livertox <nombre>` (hepatotoxicidad), ambas del NIH y con PMID.
-9. **Literatura:** `fuentes.py pubmed "<consulta>" "<regex de la frase>"` (PubMed, por relevancia; incluye revisiones recientes) y `fuentes.py europepmc ...` (ordenado por citas) devuelven frases de resúmenes que respaldan una afirmación concreta; cita el PMID en el material.
+9. **Ensayos y literatura:**
+   - `fuentes.py ensayos <nombre en inglés>` lista los ensayos aleatorizados con el fármaco en el título: primero los de fase III con registro (NCT), detrás los análisis post hoc y de subgrupos. `fuentes.py ensayo <NCT>` da el registro en ClinicalTrials.gov. Comprueba con la sección 14 de la FDA o la 5.1 de la ficha europea cuál es el ensayo de la autorización.
+   - `fuentes.py pubmed "<consulta>" "<regex de la frase>"` (PubMed, por relevancia; incluye revisiones recientes) y `fuentes.py europepmc ...` devuelven frases de resúmenes que respaldan una afirmación concreta. Cita el PMID.
+   - Los avisos de la NLM (retractado, fe de erratas, actualizado) salen en `avisos`. Antes de usar una revisión o una guía, `fuentes.py vigencia <PMID>` busca versiones posteriores.
+   - Para el texto completo, `fuentes.py texto <PMID|PMCID|DOI> "<regex>"` prueba PMC y las copias legales en acceso abierto (Unpaywall).
 10. **Farmacoeconomía y vida real** (para la lámina opcional «Del ensayo a la práctica»), con `scripts/valor.py`, **priorizando Costa Rica y Latinoamérica** y completando con fuentes globales:
    - Evaluaciones económicas y estudios observacionales: `valor.py economia <nombre en inglés> latam` y `valor.py vida-real <nombre en inglés> latam`. Usan PubMed con filtros de Latinoamérica y, si no hay resultados, pasan a la búsqueda global. Lee el resumen completo (`fuentes.pubmed("<PMID>[uid]", completo=True)`) antes de citar una cifra.
    - Medicamento esencial: `valor.py eml`. Fondo Estratégico de la OPS: `valor.py ops`.
@@ -94,7 +105,14 @@ Reglas de estilo en `references/estilo.md`.
 `python3 scripts/revisar_lamina.py <carpeta>` mide las láminas en Chromium y señala textos que se pisan o se salen de la lámina o de su recuadro; corrige esos errores. Después, `python3 scripts/renderizar.py lamina-N.svg` y **mira cada PNG con Read**: el revisor no ve flechas mal dirigidas ni elementos tapados. Corrige hasta que pase la lista de `references/verificacion.md` (textos que se pisan, elementos sobre la membrana, tamaño mínimo de letra, atribuciones, rótulos de esquema). Es normal necesitar 2–4 rondas por lámina.
 
 ### 8. Material de apoyo
-Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título `# <Fármaco>: ¿cómo actúa?`, lista numerada de láminas con enlace (`1. [Título](lamina-1.png)`), puntos clave, recorrido de cada lámina, farmacocinética, clase farmacológica, error frecuente, pregunta de autoevaluación con respuesta, simplificaciones, **glosario** y fuentes, con la cita de cada afirmación. Termina con **«No verificado»**: solo los datos que no se pudieron confirmar (idealmente, ninguno). Usa listas con línea en blanco antes y sangría de 3–4 espacios para las sublistas, y cita con `*[Fuente]*`.
+Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título `# <Fármaco>: ¿cómo actúa?`, lista numerada de láminas con enlace (`1. [Título](lamina-1.png)`), puntos clave, recorrido de cada lámina, farmacocinética, clase farmacológica, error frecuente, pregunta de autoevaluación con respuesta, simplificaciones, **glosario** y fuentes, con la cita de cada afirmación. Termina con **«No verificado»**: solo los datos que no se pudieron confirmar (idealmente, ninguno). Usa listas con línea en blanco antes y sangría de 3–4 espacios para las sublistas.
+
+Cita con la clave de la referencia y, si hace falta, dónde: `*[@cima-imfinzi, 5.1; @pacific-2017]*`. Genera las secciones:
+
+- La lista de `## Fuentes` (Vancouver, numerada por orden de aparición) con `python3 scripts/bibliografia.py lista ejemplos/<farmaco> --escribir`.
+- `## Cómo se buscó` con `bibliografia.py busqueda ejemplos/<farmaco> --escribir`.
+
+Comprueba con `bibliografia.py comprobar ejemplos/<farmaco> --en-linea`. Los ejemplos anteriores a este sistema citan con `*[Fuente]*` y siguen siendo válidos.
 
 **Glosario (obligatorio):** sección `## Glosario` (en el material, justo antes de `## Fuentes`; en el PDF, `pdf.py` la coloca tras el índice), con cada sigla o abreviatura que aparezca en las láminas o en el material, en orden alfabético y con el formato `- **SIGLA:** Desarrollo en español y, si hace falta, qué es en una frase.` Incluye también las de las fuentes (CIMA, FDA, PDB, PMID…), las de los ensayos clínicos y los símbolos de genes y proteínas. Comprueba que no falte ninguna con `python3 scripts/glosario.py ejemplos/<farmaco>`, que lista las siglas sin definición y termina con error si falta alguna.
 
@@ -105,6 +123,7 @@ Escribe `material.md` con la estructura del de trastuzumab deruxtecán: título 
 - Una lámina por página, en horizontal.
 - La ficha del mecanismo con diseño editorial: puntos clave en tarjetas, tablas, citas como etiquetas y recuadros para el error frecuente, la autoevaluación y lo no verificado.
 - El glosario de siglas, en dos columnas, justo después del índice y antes de las láminas, para conocer las abreviaturas antes de empezar a leer.
+- Con `bibliografia.json`, las citas numeradas y enlazadas con su referencia, cada referencia enlazada con PubMed, PMC, el DOI o la página, y los sellos de la portada tomados de la bibliografía.
 
 Antes de generarlo, `python3 scripts/glosario.py ejemplos/<farmaco>` debe terminar sin siglas pendientes.
 

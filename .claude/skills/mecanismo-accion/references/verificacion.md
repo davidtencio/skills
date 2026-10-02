@@ -17,6 +17,9 @@ Ejecuta primero `python3 scripts/revisar_lamina.py <carpeta>`: debe terminar sin
 - [ ] Los rótulos de honestidad están presentes (estructura real, esquema, sin escala).
 - [ ] El error frecuente y la pregunta de autoevaluación son correctos y útiles para el examen.
 - [ ] El glosario explica todas las siglas de las láminas y del material (`scripts/glosario.py` sin pendientes).
+- [ ] Las fichas técnicas se citan con su versión o fecha, y los ensayos con su PMID y su NCT; la ficha citada es la del fármaco y no la de una combinación.
+- [ ] `scripts/bibliografia.py comprobar <carpeta> --en-linea` termina sin errores (si el ejemplo tiene `bibliografia.json`): ninguna referencia retractada, las listas de Fuentes y «Cómo se buscó» generadas.
+- [ ] `scripts/verificar_evidencias.py <carpeta> --en-linea` termina sin errores (si el ejemplo tiene `evidencias.json`).
 
 ## Licencias
 - [ ] El pie de cada lámina cita todas las fuentes que usa.

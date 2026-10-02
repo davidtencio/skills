@@ -104,6 +104,12 @@ COMPROBACIONES = {
         ("NICE", "www.nice.org.uk", "v.nice('dapagliflozin')", _no_vacio),
         ("ClinicalTrials.gov (observacionales)", "clinicaltrials.gov", "v.observacionales('metformin', 'global')",
          _no_vacio),
+        ("EMA (datos públicos de medicamentos)", "www.ema.europa.eu", "f.ema_medicamento('imfinzi')",
+         lambda r: r and r[0].get("revision") and r[0].get("url")),
+        ("ClinicalTrials.gov (registro de un ensayo)", "clinicaltrials.gov", "f.ensayo('NCT02125461')",
+         lambda r: r.get("acronimo") == "PACIFIC"),
+        ("CIMA (notas de seguridad)", "cima.aemps.es", "f.cima('empagliflozina', secciones=())",
+         lambda r: r.get("notas_seguridad")),
     ],
 }
 

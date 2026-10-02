@@ -10,12 +10,15 @@ Cada pieza de una lámina tiene una fuente preferida. Mezclarlas permite aprovec
 | Indicaciones, PK, interacciones, efectos adversos | CIMA (4.1, 4.2, 4.5, 4.8, 5.2) | DailyMed, EMA | Uso con cita | `fuentes.py cima`, `dailymed` |
 | Función de la diana y proteínas de la vía | UniProt (con PMID) | NCBI Gene (NIH), QuickGO | CC BY 4.0 / dominio público | `fuentes.py uniprot`, `gen` |
 | Definición revisada del fármaco (mecanismo, diana, clase) | NCI Thesaurus (NIH) | ChEMBL | Dominio público (cita) | `fuentes.py nci` |
+| Estado en la UE, fechas y versión del EPAR | Datos públicos de la EMA (estado, autorización, revisión, última actualización, página del EPAR) | CIMA (`autorizacion_europea`) | Uso con cita | `fuentes.py ema` |
+| Ensayos pivotales | PubMed: ensayos aleatorizados con el fármaco en el título, fase III y registro primero | Sección 14 de la FDA y 5.1 de la ficha europea (nombran los ensayos de la autorización); ClinicalTrials.gov | Cita con PMID y NCT | `fuentes.py ensayos`, `ensayo <NCT>` |
+| Alertas de seguridad | Notas de seguridad de la AEMPS (en `cima`, campo `notas_seguridad`) | Ficha técnica 4.4; FAERS solo orienta | Uso con cita | `fuentes.py cima` |
 | Indicaciones aprobadas en EE. UU. y su historial | Drugs@FDA (suplementos de eficacia y cartas de aprobación) + openFDA (sección 1 vigente y «Recent Major Changes») | CIMA 4.1 para comparar con la UE | Dominio público | `fuentes.py fda-indicaciones` |
 | Potencia y selectividad (IC50, Ki) | ChEMBL, actividades | BindingDB (segunda fuente) | CC BY-SA 3.0 / CC BY 3.0 (cita) | `fuentes.py actividad`, `fuentes.bindingdb` |
 | Farmacocinética detallada, exposición-respuesta | EPAR de la EMA (autorización centralizada) | openFDA (ficha FDA por secciones) | Uso con cita / dominio público | `fuentes.py epar`, `openfda` |
 | Farmacogenética | CPIC (nivel A/B: hay recomendación) | Sección de farmacogenómica de la FDA | CC0 | `fuentes.py cpic` |
 | Lactancia | LactMed (NICHD, NIH) | Ficha técnica 4.6 | Dominio público | `fuentes.py lactmed` |
-| Hepatotoxicidad | LiverTox (NIDDK, NIH) | Ficha técnica 4.4 y 4.8 | Dominio público | `fuentes.py livertox` |
+| Hepatotoxicidad | LiverTox (NIDDK, NIH; si el fármaco no tiene monografía propia, la de su clase) | Ficha técnica 4.4 y 4.8 | Dominio público | `fuentes.py livertox` |
 | Farmacoeconomía (prioridad Latinoamérica) | PubMed con filtros MeSH de evaluación económica y de Latinoamérica | NICE, OMS (eEML), OPS (Fondo Estratégico), NADAC; CONITEC, IETS, CONETEC, CENETEC, IETSI, HAS, G-BA, ICER, PBAC (`valor.py agencias`) | Cita con país, año y moneda | `valor.py economia`, `nice`, `eml`, `ops`, `nadac` |
 | Estudios de vida real | PubMed (estudios observacionales, prioridad Latinoamérica) | ClinicalTrials.gov (observacionales), catálogo de vida real de la EMA | Cita con diseño y tamaño | `valor.py vida-real`, `observacionales`, `ema-rwd` |
 | Orientación sobre efectos adversos notificados | FAERS (openFDA) | — | Dominio público; no da frecuencias | `fuentes.py openfda-eventos` |
@@ -35,8 +38,24 @@ En las fichas de la FDA de antibióticos, antivirales, antifúngicos y antiparas
 
 - `fuentes.py dailymed` devuelve la sección «12.4 Microbiology», y `fuentes.py openfda` la devuelve en el campo `microbiology`.
 - **Fichas antiguas**, sin el formato actual: no tienen el campo `microbiology`, y su apartado «Microbiology» va dentro de `clinical_pharmacology`. Si `openfda` lo corta, búscalo con `dailymed` o usa CIMA 5.1.
-- **Combinaciones a dosis fija:** `openfda` devuelve la primera ficha que contiene el genérico, que puede ser la de una combinación (p. ej., dolutegravir dentro de abacavir/dolutegravir/lamivudina). Comprueba que la frase citada habla del fármaco de la lámina.
+- **Combinaciones a dosis fija:** `openfda`, `dailymed` y `cima` prefieren la ficha del principio activo solo (aunque lleve sal: «METFORMIN HYDROCHLORIDE») y, en CIMA, el original comercializado antes que los genéricos. Si el fármaco solo existe en combinación, devuelven la de la combinación: comprueba en `producto` (openFDA) o en `fuente` que la frase citada habla del fármaco de la lámina.
 - **Resistencia:** la 12.4 enumera los mecanismos de resistencia (p. ej., en meropenem: menos porinas, PBP con menor afinidad, bombas de expulsión y carbapenemasas). Sirven para explicar en la lámina por qué el fármaco deja de funcionar, citando la ficha.
+
+## Versiones, fechas y vigencia de lo que se cita
+
+- **Fichas técnicas:** cambian varias veces al año. Cítalas con su versión:
+  - CIMA da `fecha_ficha` (las de autorización europea no la tienen: usa la revisión del EPAR con `fuentes.py ema`).
+  - DailyMed da `version` y `fecha`; openFDA da `set_id` y `fecha`.
+  - `bibliografia.py nueva <carpeta> <clave> --cima|--dailymed|--ema <nombre>` crea la referencia con esos datos.
+- **Ensayos:** cita la publicación del resultado principal (PMID) y su registro (NCT): `--pmid` y `--nct`. Comprueba en la ficha (FDA 14, ficha europea 5.1) que es el ensayo de la autorización. Un análisis post hoc o de subgrupos no sustituye al ensayo principal.
+- **Revisiones y guías:** antes de usarlas, comprueba con `fuentes.py vigencia <PMID>` si hay una versión posterior, una fe de erratas o una retractación. Lee el texto completo con `fuentes.py texto <PMID|PMCID|DOI> "<regex>"` (PMC y, si no, copias en acceso abierto de Unpaywall).
+- **Monografías del NIH:** LiverTox y LactMed traen la fecha de su última revisión (`revisado`).
+
+## Costa Rica
+
+- **Lista Oficial de Medicamentos (LOM) de la CCSS:** no se puede consultar desde este entorno (www.ccss.sa.cr corta la conexión). Si el material la necesita (p. ej., si el fármaco está en la LOM y en qué nivel), pide a la persona usuaria el dato o una captura con su fecha y anótalo; si no, va a «No verificado».
+- **Registro sanitario del Ministerio de Salud** (registrelo.go.cr): la página se genera con JavaScript y `pagina` no la lee.
+- **BINASSS** (`fuentes.py binasss "<término>"`): protocolos, normas y guías de la CCSS y copias de guías internacionales, en PDF.
 
 ## Orden de búsqueda de ilustraciones
 1. **Biblioteca local** `assets/ilustraciones/` (consulta `registro.json`). Reutilizar lo ya elegido mantiene la coherencia entre fármacos.

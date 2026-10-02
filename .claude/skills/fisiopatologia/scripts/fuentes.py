@@ -23,6 +23,9 @@ Uso rápido desde la terminal:
   python3 fuentes.py texto 27418577 "MRSA"          # texto completo: PMC y, si no, acceso abierto (Unpaywall)
   python3 fuentes.py iris "AWaRe antibiotic book" [--ops]   # documentos de la OMS (o de la OPS) con su PDF
   python3 fuentes.py binasss "infecciones"          # protocolos y normas de la CCSS (BINASSS, Costa Rica)
+  python3 fuentes.py ema jardiance                  # medicamento de la EMA: estado, fechas y página del EPAR
+  python3 fuentes.py ensayos empagliflozin          # ensayos aleatorizados (fase III primero) con su NCT
+  python3 fuentes.py ensayo NCT01131676             # registro del ensayo en ClinicalTrials.gov
   python3 fuentes.py --registro ejemplos/<tema> pubmed "..."   # anota la consulta en busquedas.jsonl
   python3 fuentes.py uniprot-proteina "beta-lactamase" 1280   # proteína de S. aureus (taxón 1280)
 
@@ -425,13 +428,19 @@ def dailymed(nombre, secciones=("12.1 Mechanism of Action", "12.3 Pharmacokineti
     """Ficha técnica de la FDA (DailyMed): devuelve fragmentos de las secciones pedidas.
     En los antimicrobianos, el mecanismo, la resistencia y la sensibilidad están en 12.4 Microbiology."""
     q = urllib.parse.quote(nombre)
-    datos = json.loads(_get(f"https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name={q}&pagesize=1"))
+    datos = json.loads(_get(f"https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name={q}&pagesize=25"))
     if not datos["data"]:
         return {}
-    spl = datos["data"][0]
+    # La del principio activo solo antes que una combinación («SYNJARDY (EMPAGLIFLOZIN AND METFORMIN …)»).
+    def combinacion(d):  # los principios activos van entre los primeros paréntesis del título
+        activos = re.search(r"\(([^)]*)\)", d["title"])
+        return bool(activos and re.search(r"\bAND\b|/|,", activos.group(1)))
+    spl = min(datos["data"], key=lambda d: (combinacion(d), -(d.get("spl_version") or 0)))
     texto = _texto_plano(_get(f"https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/{spl['setid']}.xml",
                               timeout=120).decode("utf-8", "ignore"))
-    salida = {"fuente": f"DailyMed, {spl['title'][:120]} (setid {spl['setid']})"}
+    salida = {"fuente": f"DailyMed, {spl['title'][:120]} (setid {spl['setid']})", "setid": spl["setid"],
+              "version": spl.get("spl_version"), "fecha": spl.get("published_date"),
+              "url": f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={spl['setid']}"}
     for sec in secciones:
         i = texto.find(sec)
         if i >= 0:
@@ -441,17 +450,34 @@ def dailymed(nombre, secciones=("12.1 Mechanism of Action", "12.3 Pharmacokineti
 
 @_registrada
 def cima(nombre, secciones=("4.1", "4.2", "4.5", "4.8", "5.1", "5.2", "5.3"), largo=1500):
-    """Ficha técnica española (CIMA, AEMPS), en español. Prefiere monofármacos."""
+    """Ficha técnica española (CIMA, AEMPS), en español, con la fecha del texto y las notas de seguridad de la AEMPS.
+    Prefiere el medicamento original comercializado y sin combinar. nombre: principio activo o marca."""
     q = urllib.parse.quote(nombre)
-    res = json.loads(_get(f"https://cima.aemps.es/cima/rest/medicamentos?nombre={q}"))["resultados"]
-    res = sorted(res, key=lambda r: ("/" in r["nombre"], len(r["nombre"])))
+    res = {}  # por principio activo (encuentra el original, p. ej. Jardiance) y por nombre del medicamento
+    for campo in ("practiv1", "nombre"):
+        for r in json.loads(_get(f"https://cima.aemps.es/cima/rest/medicamentos?{campo}={q}"))["resultados"]:
+            res.setdefault(r["nregistro"], r)
+    res = list(res.values())
+    # el original comercializado antes que los genéricos y las combinaciones
+    res = sorted(res, key=lambda r: ("/" in r["nombre"], bool(r.get("generico")), not r.get("comerc"), len(r["nombre"])))
     for r in res:
         ficha = next((d for d in r.get("docs", []) if d["tipo"] == 1 and d.get("urlHtml")), None)
         if not ficha:
             continue
         texto = _texto_plano(_get(ficha["urlHtml"], timeout=120).decode("utf-8", "ignore"))
+        fecha = date.fromtimestamp(ficha["fecha"] / 1000).isoformat() if ficha.get("fecha") else None
         salida = {"fuente": f"CIMA (AEMPS), ficha técnica de {r['nombre']} (n.º registro {r['nregistro']})",
-                  "url": ficha["urlHtml"]}
+                  "url": ficha["urlHtml"], "nregistro": r["nregistro"], "fecha_ficha": fecha,
+                  "titular": r.get("labtitular"), "comercializado": r.get("comerc"),
+                  "autorizacion_europea": bool(r.get("ema"))}
+        if r.get("notas"):  # notas de seguridad de la AEMPS sobre el medicamento
+            try:
+                salida["notas_seguridad"] = [
+                    {"fecha": date.fromtimestamp(n["fecha"] / 1000).isoformat(), "referencia": n.get("referencia"),
+                     "asunto": n.get("asunto"), "url": n.get("url")}
+                    for n in json.loads(_get(f"https://cima.aemps.es/cima/rest/notas?nregistro={r['nregistro']}"))]
+            except (RuntimeError, ValueError):
+                salida["notas_seguridad"] = None
         for sec in secciones:
             m = re.search(rf"\b{re.escape(sec)}\.? [A-ZÁÉÍÓÚ][^0-9]{{3,60}}", texto)
             if m:
@@ -606,6 +632,12 @@ def _articulos_pubmed(xml):
             avisos.append("es una fe de erratas")
         if "Retraction of Publication" in tipos:
             avisos.append("es un aviso de retracción")
+        revisado = cita.find("ContributionDate")  # libros (LiverTox, LactMed): fecha de la última revisión
+        resumen = " ".join(_texto_xml(t) for t in cita.findall(".//Abstract/AbstractText"))
+        ensayos = [_texto_xml(n) for banco in cita.findall(".//DataBankList/DataBank")
+                   if _texto_xml(banco.find("DataBankName")) == "ClinicalTrials.gov"
+                   for n in banco.findall(".//AccessionNumber")]
+        ensayos = list(dict.fromkeys(ensayos + re.findall(r"\bNCT\d{8}\b", resumen)))
         salida.append({
             "pmid": _texto_xml(cita.find("PMID")),
             "titulo": _texto_xml(cita.find(".//ArticleTitle")) or _texto_xml(cita.find(".//BookTitle")),
@@ -614,8 +646,10 @@ def _articulos_pubmed(xml):
                         or _texto_xml(cita.find(".//BookTitle"))),
             "anio": anio, "doi": ids.get("doi"), "pmcid": ids.get("pmc"), "tipos": tipos,
             "estado": cita.get("Status") or ("libro" if art.tag == "PubmedBookArticle" else None),
-            "avisos": avisos,
-            "resumen": " ".join(_texto_xml(t) for t in cita.findall(".//Abstract/AbstractText")),
+            "avisos": avisos, "ensayos": ensayos,
+            "revisado": "-".join(_texto_xml(revisado.find(c)).zfill(2) for c in ("Year", "Month", "Day"))
+            if revisado is not None else None,
+            "resumen": resumen,
         })
     return salida
 
@@ -680,12 +714,17 @@ def nci_tesauro(nombre):
 
 
 def _monografia_nih(nombre, editor, libro, patron=None):
-    """Monografías del NIH indexadas en PubMed como libro (LiverTox, LactMed): texto completo del resumen."""
+    """Monografías del NIH indexadas en PubMed como libro (LiverTox, LactMed): texto completo del resumen y fecha
+    de la última revisión («revisado»). Si el fármaco no tiene monografía propia, busca la de su clase."""
     import html as _html
-    res = pubmed(f'"{nombre}"[ti] AND "{editor}"[pb]', patron, maximo=5, completo=True)
+    res = [r for r in pubmed(f'"{nombre}"[ti] AND "{editor}"[pb]', patron, maximo=5, completo=True)
+           if libro in _html.unescape(r["revista"])]
+    if not res:  # monografía de la clase («Sodium-Glucose Cotransporter-2 (SGLT2) Inhibitors»)
+        res = [r for r in pubmed(f'"{nombre}" AND {libro.lower()}', patron, maximo=5, completo=True)
+               if libro in _html.unescape(r["revista"])]
     for r in res:
         r["revista"] = _html.unescape(r["revista"])
-    return [r for r in res if libro in r["revista"]]
+    return res
 
 
 @_registrada
@@ -781,6 +820,87 @@ def ema_epar(nombre, patron, documento="public-assessment-report", contexto=1):
         destino.write_bytes(_get(f"https://www.ema.europa.eu/en/documents/assessment-report/"
                                  f"{slug}-epar-{documento}_en.pdf", timeout=300))
     return _frases_pdf(destino, patron, contexto)
+
+
+_EMA_JSON = "https://www.ema.europa.eu/en/documents/report/medicines-output-medicines_json-report_en.json"
+
+
+@_registrada
+def ema_medicamento(nombre):
+    """Ficha de un medicamento de autorización centralizada en la EMA (datos públicos de la agencia, se renuevan
+    cada día): estado, principio activo, ATC, indicación autorizada, fechas de autorización y de la última
+    actualización, número de revisión y página del EPAR, que enlaza la información del producto (ficha técnica
+    en inglés) y el informe de evaluación. nombre: marca comercial o principio activo en inglés."""
+    ruta = CACHE / f"ema-medicamentos-{date.today().isoformat()}.json"
+    if not ruta.exists():
+        ruta.write_bytes(_get(_EMA_JSON, timeout=300))
+    buscado = nombre.strip().lower()
+    salida = []
+    for m in json.loads(ruta.read_text(encoding="utf-8"))["data"]:
+        if m.get("category") != "Human" or buscado not in (
+                m.get("name_of_medicine", "").lower(), m.get("active_substance", "").lower(),
+                m.get("international_non_proprietary_name_common_name", "").lower()):
+            continue
+        salida.append({"nombre": m["name_of_medicine"], "principio_activo": m.get("active_substance"),
+                       "estado": m.get("medicine_status"), "procedimiento": m.get("ema_product_number"),
+                       "atc": m.get("atc_code_human"), "titular": m.get(
+                           "marketing_authorisation_developer_applicant_holder"),
+                       "autorizacion": m.get("marketing_authorisation_date"),
+                       "actualizado": m.get("last_updated_date"), "revision": m.get("revision_number"),
+                       "generico": m.get("generic") == "Yes", "biosimilar": m.get("biosimilar") == "Yes",
+                       "condicional": m.get("conditional_approval") == "Yes",
+                       "indicacion": html.unescape(m.get("therapeutic_indication") or "")[:2000],
+                       "url": m.get("medicine_url")})
+    # el original antes que los genéricos y biosimilares
+    return sorted(salida, key=lambda m: (m["generico"] or m["biosimilar"], m["estado"] != "Authorised"))
+
+
+# Revistas donde se publican casi todos los ensayos pivotales (resultado principal de un ensayo de fase III).
+_REVISTAS_ENSAYOS = {"N Engl J Med", "Lancet", "JAMA", "BMJ", "Ann Intern Med", "Lancet Oncol", "J Clin Oncol",
+                     "Nat Med", "Lancet Diabetes Endocrinol", "Lancet Respir Med", "Lancet Infect Dis",
+                     "Lancet Neurol", "Lancet HIV", "Eur Heart J", "Circulation", "Blood"}
+_NO_PIVOTAL = re.compile(r"(?i)post[- ]hoc|secondary analys|subgroup|sub-?study|pooled|exploratory|"
+                         r"prespecified analys|pre-specified analys|extension|cost-effectiveness|rationale and design|"
+                         r"design and rationale|baseline characteristics|protocol")
+
+
+@_registrada
+def ensayos(farmaco, maximo=10, anios=None):
+    """Ensayos clínicos aleatorizados con el fármaco en el título (PubMed), con su número de registro (NCT).
+    Pone primero los de fase III con registro y deja detrás los análisis secundarios, los de subgrupos, las
+    extensiones y los diseños. Para el ensayo pivotal de una indicación, compáralo con la sección 14 de la ficha
+    de la FDA o la 5.1 de la ficha europea, que nombran los ensayos de la autorización; ensayo(NCT) da el registro.
+    farmaco: nombre en inglés."""
+    fecha = f' AND "last {anios} years"[dp]' if anios else ""
+    consulta = (f'{farmaco}[ti] AND (randomized controlled trial[pt] OR "clinical trial, phase iii"[pt]){fecha} '
+                f'NOT (review[pt] OR meta-analysis[pt] OR letter[pt] OR comment[pt] OR editorial[pt])')
+    resultados = pubmed(consulta, maximo=max(40, 3 * maximo))
+    for orden, r in enumerate(resultados):
+        r["puntos"] = (2 * ("Clinical Trial, Phase III" in r["tipos"]) + bool(r["ensayos"])
+                       + ("Multicenter Study" in r["tipos"]) + 2 * (r["revista"] in _REVISTAS_ENSAYOS)
+                       - 3 * bool(_NO_PIVOTAL.search(r["titulo"]))
+                       - 10 * any(a.startswith("RETRACTADO") for a in r["avisos"]))
+        r["_orden"] = orden
+    resultados.sort(key=lambda r: (-r["puntos"], r["_orden"]))  # a igualdad, el orden de relevancia de PubMed
+    return [{k: v for k, v in r.items() if k != "_orden"} for r in resultados[:maximo]]
+
+
+@_registrada
+def ensayo(nct):
+    """Registro de un ensayo en ClinicalTrials.gov: título, fase, estado, tamaño, variable principal, fechas y si
+    tiene resultados publicados en el registro."""
+    d = json.loads(_get(f"https://clinicaltrials.gov/api/v2/studies/{nct}"))
+    p = d.get("protocolSection", {})
+    ident, estado, diseno = p.get("identificationModule", {}), p.get("statusModule", {}), p.get("designModule", {})
+    return {"nct": nct, "titulo": ident.get("officialTitle") or ident.get("briefTitle"),
+            "acronimo": ident.get("acronym"), "fases": diseno.get("phases"),
+            "estado": estado.get("overallStatus"), "inicio": (estado.get("startDateStruct") or {}).get("date"),
+            "fin": (estado.get("primaryCompletionDateStruct") or {}).get("date"),
+            "participantes": (diseno.get("enrollmentInfo") or {}).get("count"),
+            "variables_principales": [o.get("measure") for o in
+                                      p.get("outcomesModule", {}).get("primaryOutcomes", [])],
+            "patrocinador": p.get("sponsorCollaboratorsModule", {}).get("leadSponsor", {}).get("name"),
+            "con_resultados": bool(d.get("hasResults")), "url": f"https://clinicaltrials.gov/study/{nct}"}
 
 
 def _frases_pdf(ruta, patron, contexto=1, maximo=None):
@@ -1014,7 +1134,9 @@ def openfda(nombre, secciones=("clinical_pharmacology", "mechanism_of_action", "
     q = urllib.parse.quote(f'openfda.generic_name:"{nombre}"')
     fichas = json.loads(_get(f"https://api.fda.gov/drug/label.json?search={q}&limit=25", timeout=90))["results"]
     r = max(fichas, key=lambda f: _puntuar_ficha(f, nombre, secciones))
-    salida = {"set_id": r.get("set_id"), "fecha": r.get("effective_time")}
+    salida = {"set_id": r.get("set_id"), "fecha": r.get("effective_time"),
+              "producto": "; ".join(r.get("openfda", {}).get("brand_name", []) + r.get("openfda", {}).get(
+                  "generic_name", [])) or None}
     for s in secciones:
         if r.get(s):
             salida[s] = " ".join(r[s])[:largo]
@@ -1025,7 +1147,8 @@ def _puntuar_ficha(ficha, nombre, secciones):
     """Orden de preferencia entre fichas de openFDA: primero la del principio activo solo (no una combinación),
     después la que tiene más secciones de las pedidas y, a igualdad, la más reciente."""
     genericos = [g.strip().upper() for g in ficha.get("openfda", {}).get("generic_name", [])]
-    solo = any(g == nombre.strip().upper() for g in genericos)
+    buscado = nombre.strip().upper()
+    solo = any(g.startswith(buscado) and not re.search(r" AND |,|/|;", g) for g in genericos)  # admite la sal
     return solo, sum(bool(ficha.get(s)) for s in secciones), ficha.get("effective_time", "")
 
 
@@ -1447,7 +1570,7 @@ if __name__ == "__main__":
     accion, *args = argv
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
                   "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones", "mesh", "mondo",
-                  "guias", "guias-titulo", "togopic", "commons", "iris", "binasss"):
+                  "guias", "guias-titulo", "togopic", "commons", "iris", "binasss", "ema", "ensayos"):
         args = [" ".join(args)]
     funciones = {"pubchem": pubchem, "chembl": chembl, "pdb-buscar": pdb_buscar, "pdb-ligandos": pdb_ligandos,
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
@@ -1464,6 +1587,7 @@ if __name__ == "__main__":
                  "lactmed": lactmed, "openfda": openfda, "openfda-eventos": openfda_eventos, "cpic": cpic,
                  "actividad": lambda nombre, diana=None: chembl_actividad(nombre, diana),
                  "bindingdb": bindingdb, "epar": ema_epar, "fda-indicaciones": fda_indicaciones,
+                 "ema": ema_medicamento, "ensayos": ensayos, "ensayo": ensayo,
                  "mesh": mesh, "mondo": mondo,
                  "guias": lambda enfermedad: guias(
                      enfermedad, **{k: v for k, v in opciones.items() if k in ("region", "titulo")}),

@@ -4,6 +4,10 @@ Uso:
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --pmid 27418577 [--tipo guia] [--sello IDSA]
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --doi 10.1093/cid/ciw353
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --url <URL> --cita "Organismo. Título. Año."
+    python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --cima empagliflozina    # ficha técnica (AEMPS)
+    python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --dailymed empagliflozin # ficha de la FDA
+    python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --ema jardiance          # EPAR de la EMA
+    python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --nct NCT01131676        # registro del ensayo
     python3 scripts/bibliografia.py comprobar ejemplos/<tema> [--en-linea]
     python3 scripts/bibliografia.py lista ejemplos/<tema> [--escribir]
     python3 scripts/bibliografia.py busqueda ejemplos/<tema> [--escribir]
@@ -185,10 +189,58 @@ def _csl_de_crossref(m):
             "volume": m.get("volume"), "issue": m.get("issue"), "page": m.get("page")}
 
 
+def _fecha(texto):
+    """Fecha de una fuente («Feb 02, 2026», «24/03/2026», «2026-03-24») en español."""
+    from datetime import datetime
+    for formato in ("%b %d, %Y", "%d/%m/%Y", "%Y-%m-%d"):
+        try:
+            return fecha_es(datetime.strptime(texto.strip(), formato).date().isoformat())
+        except (ValueError, AttributeError):
+            continue
+    return texto
+
+
+def _ficha(cima=None, dailymed=None, ema=None, nct=None):
+    """Referencia de una ficha técnica o de un registro de ensayo, con su versión y su fecha."""
+    import fuentes
+    if cima:
+        f = fuentes.cima(cima, secciones=())
+        if not f:
+            raise ValueError(f"CIMA no tiene ficha técnica de «{cima}»")
+        nombre = f["fuente"].split("ficha técnica de ")[1].split(" (n.º")[0]
+        return {"tipo": "ficha", "url": f["url"], "idioma": "es", "sello": "CIMA (AEMPS)",
+                "cita": f"Agencia Española de Medicamentos y Productos Sanitarios (AEMPS). Ficha técnica de {nombre}. "
+                        f"CIMA, n.º de registro {f['nregistro']}",
+                "version": f"del {fecha_es(f['fecha_ficha'])}" if f.get("fecha_ficha") else None,
+                "nota": None if f.get("fecha_ficha") or not f.get("autorizacion_europea") else
+                "Autorización europea: la fecha de la revisión está en el EPAR"}
+    if dailymed:
+        f = fuentes.dailymed(dailymed, secciones=())
+        if not f:
+            raise ValueError(f"DailyMed no tiene ficha de «{dailymed}»")
+        titulo = f["fuente"].removeprefix("DailyMed, ").split(" (setid")[0]
+        return {"tipo": "ficha", "url": f["url"], "sello": "Fichas de la FDA",
+                "cita": f"U.S. Food and Drug Administration. Prescribing information: {titulo}. DailyMed, set id "
+                        f"{f['setid']}", "version": f"{f['version']}, del {_fecha(f['fecha'])}"}
+    if ema:
+        m = (fuentes.ema_medicamento(ema) or [None])[0]
+        if not m:
+            raise ValueError(f"La EMA no tiene un medicamento de autorización centralizada llamado «{ema}»")
+        return {"tipo": "ficha", "url": m["url"], "sello": "EMA",
+                "cita": f"European Medicines Agency. {m['nombre']} ({m['principio_activo']}): EPAR, información del "
+                        f"producto. {m['procedimiento']}; autorizado el {_fecha(m['autorizacion'])}",
+                "version": f"{m['revision']}, del {_fecha(m['actualizado'])}"}
+    e = fuentes.ensayo(nct)
+    return {"tipo": "documento", "url": e["url"], "sello": "ClinicalTrials.gov",
+            "cita": f"{e['patrocinador']}. {e['titulo']} ({e['acronimo'] + ', ' if e.get('acronimo') else ''}"
+                    f"{nct}). ClinicalTrials.gov"}
+
+
 def nueva(carpeta, clave, pmid=None, doi=None, url=None, tipo=None, cita=None, sello=None, idioma=None,
-          version=None, nota=None):
+          version=None, nota=None, cima=None, dailymed=None, ema=None, nct=None):
     """Añade (o actualiza) una referencia. Con PMID toma los metadatos de PubMed (exportador de citas del NCBI);
-    con DOI, de Crossref; con URL hace falta la cita escrita a mano (organismo, título, año)."""
+    con DOI, de Crossref; con cima, dailymed, ema o nct, de la ficha técnica o del registro del ensayo (con su
+    versión y su fecha); con URL hace falta la cita escrita a mano (organismo, título, año)."""
     import fuentes
     if not CLAVE.match(clave):
         raise ValueError("La clave va en minúsculas, con cifras y guiones (p. ej., idsa-2016)")
@@ -206,8 +258,11 @@ def nueva(carpeta, clave, pmid=None, doi=None, url=None, tipo=None, cita=None, s
         m = json.loads(fuentes._get(f"https://api.crossref.org/works/{doi}",
                                     cabeceras={"User-Agent": "skills-docencia/1.0"}))["message"]
         ref.update({"cita": cita or vancouver(_csl_de_crossref(m)), "tipo": tipo or "articulo"})
+    elif cima or dailymed or ema or nct:
+        datos = _ficha(cima, dailymed, ema, nct)
+        ref.update({k: v for k, v in datos.items() if v and not ref.get(k)})
     elif not (url and cita):
-        raise ValueError("Indica --pmid, --doi o --url con --cita")
+        raise ValueError("Indica --pmid, --doi, --cima, --dailymed, --ema, --nct o --url con --cita")
     ref["tipo"] = ref["tipo"] or "web"
     referencias = [r for r in cargar(carpeta) if r["clave"] != clave] + [{k: v for k, v in ref.items() if v}]
     guardar(carpeta, referencias)
@@ -332,7 +387,8 @@ def main():
     accion, carpeta, *resto = sys.argv[1:]
     if accion == "nueva":
         clave, opciones = resto[0], {}
-        for nombre in ("pmid", "doi", "url", "tipo", "cita", "sello", "idioma", "version", "nota"):
+        for nombre in ("pmid", "doi", "url", "tipo", "cita", "sello", "idioma", "version", "nota", "cima", "dailymed",
+                       "ema", "nct"):
             if f"--{nombre}" in resto:
                 opciones[nombre] = resto[resto.index(f"--{nombre}") + 1]
         print(json.dumps(nueva(carpeta, clave, **opciones), ensure_ascii=False, indent=1))

@@ -157,7 +157,8 @@ def verificar_en_linea(carpeta):
             continue
         frase = _norm(e["frase"]).replace("…", "")
         trozos = [t for t in re.split(r"\s*\.\.\.\s*|\s*\[…\]\s*", frase) if t]
-        if not any(all(_norm(t) in _norm(texto) for t in trozos) for texto in textos):
+        # cada trozo de una frase con «...» basta que esté en algún fragmento (PubMed devuelve frase a frase)
+        if not all(any(_norm(t) in _norm(texto) for texto in textos) for t in trozos):
             errores.append(f"evidencia {k} ({', '.join(e['cifras'])}): la frase ya no aparece en {e['fuente']}")
     return errores
 

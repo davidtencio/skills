@@ -83,7 +83,7 @@
    "url": "https://open.fda.gov/apis/drug/label/",
    "consultado": "2026-10-02",
    "sello": "Fichas de la FDA",
-   "nota": "Fichas (set id y fecha de la versión): metformina (0fdd0255-0055-65f3-b2c0-db8fbb87beae, 2026-08-25); glipizida (00729e82-150a-464a-abe7-a3319721fbdb, 2026-08-27); pioglitazona (060e3169-46a7-419d-9acc-05586cb2406b, 2026-08-17); sitagliptina (58e23b30-451c-f451-e063-6394a90a35a7, 2026-08-12); semaglutida (42bdd912-2393-44c4-b7e0-47672ca28991, 2026-07-30); tirzepatida (487cd7e7-434c-4925-99fa-aa80b1cc776b, 2026-08-28); empagliflozina (59ed43d9-b4e0-72a2-e063-6394a90a327d, 2026-08-26); insulina glargina (0ad21db3-2b1c-4ed9-a687-bdd6a74d0aae, 2026-06-16)"
+   "nota": "Fichas (producto, set id y fecha de la versión): metformina (Metformin Hydrochloride, 073cf6d9-7142-4d8b-898e-174c62a1f76f, 2026-08-21); glipizida (Glipizide, 00729e82-150a-464a-abe7-a3319721fbdb, 2026-08-27); pioglitazona (Pioglitazone, 060e3169-46a7-419d-9acc-05586cb2406b, 2026-08-17); sitagliptina (Sitagliptin, 58e23b30-451c-f451-e063-6394a90a35a7, 2026-08-12); semaglutida (Ozempic, 42bdd912-2393-44c4-b7e0-47672ca28991, 2026-07-30); tirzepatida (Zepbound, 487cd7e7-434c-4925-99fa-aa80b1cc776b, 2026-08-28); empagliflozina (Jardiance, 59ed43d9-b4e0-72a2-e063-6394a90a327d, 2026-08-26); insulina glargina (Basaglar, 0ad21db3-2b1c-4ed9-a687-bdd6a74d0aae, 2026-06-16)"
   },
   {
    "clave": "ccss-2007",
