@@ -11,6 +11,10 @@ Puedes construirlo en `ejemplos/<nombre>/`, como indica cada skill, pero no haga
 
 La única excepción es cuando la persona usuaria pide expresamente guardar el material en el repositorio, por ejemplo como nuevo ejemplo de la skill.
 
+## Planes de entrenamiento: datos personales fuera de git
+
+Los planes de la skill `entrenamiento` contienen datos de salud de una persona. Se guardan en `planes/<nombre>/` (ignorada por git) y se entrega solo el PDF ilustrado (`scripts/plan_pdf.py`); nunca se hace commit, push ni PR con ellos.
+
 ## Mejoras a las skills: rama y PR
 
 Los cambios en cómo funciona una skill (scripts, `SKILL.md`, referencias, plantillas, estilo, ilustraciones de la biblioteca) se hacen en una rama y se proponen con un PR para que la persona usuaria lo revise. Si una mejora cambia el PDF de los ejemplos, regenera en ese mismo PR la huella de cada uno (`python3 scripts/pdf.py ejemplos/<nombre> --huella`, que escribe `huella-pdf.json`) y versiona el PDF solo de los dos ejemplos que lo guardan (neumonía nosocomial y durvalumab); los demás PDF de ejemplo no se versionan. Los módulos comunes a las dos skills deben coincidir (lo vigila `tests/test_paridad.py`): si cambias uno, copia el cambio a la otra skill. Antes de proponer el PR, ejecuta los tests (`python -m pytest`, ver el README); si fallan porque el cambio altera un ejemplo a propósito, regenera sus láminas y su PDF.

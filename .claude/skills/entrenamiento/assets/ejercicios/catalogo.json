@@ -1,0 +1,1097 @@
+[
+ {
+  "id": "sentadilla-mancuernas",
+  "nombre": "Sentadilla con mancuernas",
+  "equipo": "Mancuernas",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales",
+   "lumbares"
+  ],
+  "claves": [
+   "Pies a la anchura de los hombros, puntas algo abiertas.",
+   "Baja como si te sentaras atrás, rodillas en la dirección de los pies.",
+   "Espalda neutra y talones apoyados todo el recorrido."
+  ],
+  "imagenes": [
+   "img/sentadilla-mancuernas-1.svg",
+   "img/sentadilla-mancuernas-2.svg"
+  ],
+  "everkinetic": "0130"
+ },
+ {
+  "id": "sentadilla-banco-mancuernas",
+  "nombre": "Sentadilla a banco con mancuernas",
+  "equipo": "Mancuernas y banco",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales"
+  ],
+  "claves": [
+   "Baja controlando hasta rozar el banco, sin dejarte caer.",
+   "Sube empujando el suelo con todo el pie.",
+   "Útil para aprender la profundidad de la sentadilla."
+  ],
+  "imagenes": [
+   "img/sentadilla-banco-mancuernas-1.svg",
+   "img/sentadilla-banco-mancuernas-2.svg"
+  ],
+  "everkinetic": "0136"
+ },
+ {
+  "id": "sentadilla-barra",
+  "nombre": "Sentadilla con barra",
+  "equipo": "Barra y rack",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales",
+   "lumbares",
+   "abdomen"
+  ],
+  "claves": [
+   "Barra apoyada en el trapecio, no en el cuello.",
+   "Inspira y aprieta el abdomen antes de bajar.",
+   "Baja hasta donde mantengas la espalda neutra."
+  ],
+  "imagenes": [
+   "img/sentadilla-barra-1.svg",
+   "img/sentadilla-barra-2.svg"
+  ],
+  "everkinetic": "0122"
+ },
+ {
+  "id": "sentadilla-smith",
+  "nombre": "Sentadilla en máquina Smith",
+  "equipo": "Máquina Smith",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales"
+  ],
+  "claves": [
+   "Pies algo adelantados respecto a la barra.",
+   "Ajusta los topes de seguridad a la altura de la sentadilla.",
+   "Recorrido controlado, sin rebotar abajo."
+  ],
+  "imagenes": [
+   "img/sentadilla-smith-1.svg",
+   "img/sentadilla-smith-2.svg"
+  ],
+  "everkinetic": "0124"
+ },
+ {
+  "id": "prensa",
+  "nombre": "Prensa de piernas",
+  "equipo": "Máquina de prensa",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales"
+  ],
+  "claves": [
+   "Espalda y glúteos pegados al respaldo todo el tiempo.",
+   "Baja hasta que la cadera no se despegue del asiento.",
+   "No bloquees las rodillas arriba."
+  ],
+  "imagenes": [
+   "img/prensa-1.svg",
+   "img/prensa-2.svg"
+  ],
+  "everkinetic": "0127"
+ },
+ {
+  "id": "hack-squat",
+  "nombre": "Sentadilla hack en máquina",
+  "equipo": "Máquina hack",
+  "principales": [
+   "cuadriceps"
+  ],
+  "secundarios": [
+   "gluteos",
+   "aductores"
+  ],
+  "claves": [
+   "Espalda apoyada en el respaldo.",
+   "Baja controlado, rodillas alineadas con los pies.",
+   "Empuja con todo el pie."
+  ],
+  "imagenes": [
+   "img/hack-squat-1.svg",
+   "img/hack-squat-2.svg"
+  ],
+  "everkinetic": "0123"
+ },
+ {
+  "id": "zancada-atras-mancuernas",
+  "nombre": "Zancada atrás con mancuernas",
+  "equipo": "Mancuernas",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales",
+   "gluteo-medio"
+  ],
+  "claves": [
+   "Da un paso largo hacia atrás y baja la rodilla de atrás cerca del suelo.",
+   "El peso va sobre la pierna de delante.",
+   "Tronco erguido; alterna o completa un lado y luego el otro."
+  ],
+  "imagenes": [
+   "img/zancada-atras-mancuernas-1.svg",
+   "img/zancada-atras-mancuernas-2.svg"
+  ],
+  "everkinetic": "0129"
+ },
+ {
+  "id": "zancadas-mancuernas",
+  "nombre": "Zancadas con mancuernas",
+  "equipo": "Mancuernas",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "isquiotibiales",
+   "gluteo-medio"
+  ],
+  "claves": [
+   "Paso adelante largo; la rodilla delantera sobre el pie.",
+   "Baja en vertical, sin desplazar el tronco hacia delante.",
+   "Vuelve empujando con el talón de delante."
+  ],
+  "imagenes": [
+   "img/zancadas-mancuernas-1.svg",
+   "img/zancadas-mancuernas-2.svg"
+  ],
+  "everkinetic": "0115"
+ },
+ {
+  "id": "step-up-mancuernas",
+  "nombre": "Subida al banco con mancuernas",
+  "equipo": "Mancuernas y banco",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "isquiotibiales",
+   "gluteo-medio",
+   "gemelos"
+  ],
+  "claves": [
+   "Apoya todo el pie en el banco.",
+   "Sube empujando con la pierna de arriba, sin impulsarte con la de abajo.",
+   "Baja despacio. Empieza con un banco bajo."
+  ],
+  "imagenes": [
+   "img/step-up-mancuernas-1.svg",
+   "img/step-up-mancuernas-2.svg"
+  ],
+  "everkinetic": "0137"
+ },
+ {
+  "id": "extension-rodilla",
+  "nombre": "Extensión de rodilla en máquina",
+  "equipo": "Máquina de extensiones",
+  "principales": [
+   "cuadriceps"
+  ],
+  "secundarios": [],
+  "claves": [
+   "Rodilla alineada con el eje de la máquina.",
+   "Extiende sin golpear arriba y baja en 2–3 s.",
+   "Sujeta las asas para no levantar la cadera."
+  ],
+  "imagenes": [
+   "img/extension-rodilla-1.svg",
+   "img/extension-rodilla-2.svg"
+  ],
+  "everkinetic": "0142"
+ },
+ {
+  "id": "curl-femoral-tumbado",
+  "nombre": "Curl femoral tumbado",
+  "equipo": "Máquina de curl femoral",
+  "principales": [
+   "isquiotibiales"
+  ],
+  "secundarios": [
+   "gemelos"
+  ],
+  "claves": [
+   "Rodilla justo fuera del borde del banco.",
+   "Cadera pegada al banco; no la levantes al subir.",
+   "Baja controlado hasta casi estirar."
+  ],
+  "imagenes": [
+   "img/curl-femoral-tumbado-1.svg",
+   "img/curl-femoral-tumbado-2.svg"
+  ],
+  "everkinetic": "0117"
+ },
+ {
+  "id": "curl-femoral-sentado",
+  "nombre": "Curl femoral sentado",
+  "equipo": "Máquina de curl femoral",
+  "principales": [
+   "isquiotibiales"
+  ],
+  "secundarios": [
+   "gemelos"
+  ],
+  "claves": [
+   "Ajusta el rodillo por encima de los tobillos.",
+   "Flexiona hasta donde puedas y vuelve despacio.",
+   "Espalda apoyada en el respaldo."
+  ],
+  "imagenes": [
+   "img/curl-femoral-sentado-1.svg",
+   "img/curl-femoral-sentado-2.svg"
+  ],
+  "everkinetic": "0119"
+ },
+ {
+  "id": "peso-muerto-rumano",
+  "nombre": "Peso muerto rumano",
+  "equipo": "Barra o mancuernas",
+  "principales": [
+   "isquiotibiales",
+   "gluteos"
+  ],
+  "secundarios": [
+   "lumbares",
+   "trapecio",
+   "antebrazo"
+  ],
+  "claves": [
+   "Rodillas algo flexionadas y fijas.",
+   "Lleva la cadera atrás deslizando la barra pegada a las piernas.",
+   "Espalda neutra; baja hasta sentir estiramiento detrás del muslo."
+  ],
+  "imagenes": [
+   "img/peso-muerto-rumano-1.svg",
+   "img/peso-muerto-rumano-2.svg"
+  ],
+  "everkinetic": "0118"
+ },
+ {
+  "id": "peso-muerto-mancuernas",
+  "nombre": "Peso muerto con mancuernas",
+  "equipo": "Mancuernas",
+  "principales": [
+   "gluteos",
+   "isquiotibiales",
+   "lumbares"
+  ],
+  "secundarios": [
+   "cuadriceps",
+   "trapecio",
+   "antebrazo"
+  ],
+  "claves": [
+   "Mancuernas a los lados de los pies.",
+   "Empuja el suelo con las piernas y extiende la cadera a la vez.",
+   "Espalda neutra todo el recorrido."
+  ],
+  "imagenes": [
+   "img/peso-muerto-mancuernas-1.svg",
+   "img/peso-muerto-mancuernas-2.svg"
+  ],
+  "everkinetic": "0107"
+ },
+ {
+  "id": "peso-muerto-barra",
+  "nombre": "Peso muerto con barra",
+  "equipo": "Barra",
+  "principales": [
+   "gluteos",
+   "isquiotibiales",
+   "lumbares"
+  ],
+  "secundarios": [
+   "cuadriceps",
+   "trapecio",
+   "antebrazo",
+   "dorsal"
+  ],
+  "claves": [
+   "Barra sobre la mitad del pie, pegada a las espinillas.",
+   "Pecho arriba y espalda neutra antes de tirar.",
+   "Sube la barra pegada al cuerpo; termina de pie sin echarte atrás."
+  ],
+  "imagenes": [
+   "img/peso-muerto-barra-1.svg",
+   "img/peso-muerto-barra-2.svg"
+  ],
+  "everkinetic": "0099"
+ },
+ {
+  "id": "puente-gluteo",
+  "nombre": "Puente de glúteo",
+  "equipo": "Peso corporal (o disco sobre la cadera)",
+  "principales": [
+   "gluteos"
+  ],
+  "secundarios": [
+   "isquiotibiales",
+   "lumbares"
+  ],
+  "claves": [
+   "Tumbado, rodillas flexionadas, pies apoyados.",
+   "Eleva la cadera apretando los glúteos hasta alinear rodillas, cadera y hombros.",
+   "Pausa 1 s arriba; no arquees la zona lumbar."
+  ],
+  "imagenes": [
+   "img/puente-gluteo-1.svg",
+   "img/puente-gluteo-2.svg"
+  ],
+  "everkinetic": "0109"
+ },
+ {
+  "id": "hiperextensiones",
+  "nombre": "Hiperextensiones",
+  "equipo": "Banco de hiperextensiones",
+  "principales": [
+   "lumbares",
+   "gluteos"
+  ],
+  "secundarios": [
+   "isquiotibiales"
+  ],
+  "claves": [
+   "Cadera justo por encima del borde del apoyo.",
+   "Baja controlado y sube hasta alinear el tronco con las piernas.",
+   "No pases de esa línea."
+  ],
+  "imagenes": [
+   "img/hiperextensiones-1.svg",
+   "img/hiperextensiones-2.svg"
+  ],
+  "everkinetic": "0103"
+ },
+ {
+  "id": "elevacion-talones-maquina",
+  "nombre": "Elevación de talones de pie",
+  "equipo": "Máquina de gemelos (o escalón)",
+  "principales": [
+   "gemelos"
+  ],
+  "secundarios": [],
+  "claves": [
+   "Puntas en el borde, talones libres.",
+   "Baja hasta estirar y sube lo más alto posible.",
+   "Pausa 1 s arriba y abajo; sin rebotes."
+  ],
+  "imagenes": [
+   "img/elevacion-talones-maquina-1.svg",
+   "img/elevacion-talones-maquina-2.svg"
+  ],
+  "everkinetic": "0282"
+ },
+ {
+  "id": "abductor-maquina",
+  "nombre": "Abducción de cadera en máquina",
+  "equipo": "Máquina de abductores",
+  "principales": [
+   "gluteo-medio"
+  ],
+  "secundarios": [
+   "gluteos"
+  ],
+  "claves": [
+   "Espalda apoyada.",
+   "Abre las piernas controlando y vuelve despacio.",
+   "Sin impulsos."
+  ],
+  "imagenes": [
+   "img/abductor-maquina-1.svg",
+   "img/abductor-maquina-2.svg"
+  ],
+  "everkinetic": "0156"
+ },
+ {
+  "id": "aductor-maquina",
+  "nombre": "Aducción de cadera en máquina",
+  "equipo": "Máquina de aductores",
+  "principales": [
+   "aductores"
+  ],
+  "secundarios": [],
+  "claves": [
+   "Espalda apoyada.",
+   "Cierra las piernas controlando y vuelve despacio.",
+   "Abre solo hasta un estiramiento cómodo."
+  ],
+  "imagenes": [
+   "img/aductor-maquina-1.svg",
+   "img/aductor-maquina-2.svg"
+  ],
+  "everkinetic": "0157"
+ },
+ {
+  "id": "press-banca-barra",
+  "nombre": "Press de banca con barra",
+  "equipo": "Barra y banco plano",
+  "principales": [
+   "pecho"
+  ],
+  "secundarios": [
+   "triceps",
+   "hombros"
+  ],
+  "claves": [
+   "Escápulas juntas y hacia abajo, pies en el suelo.",
+   "Baja la barra a la parte baja del pecho, codos a ~45°.",
+   "Usa topes de seguridad o pide asistencia."
+  ],
+  "imagenes": [
+   "img/press-banca-barra-1.svg",
+   "img/press-banca-barra-2.svg"
+  ],
+  "everkinetic": "0042"
+ },
+ {
+  "id": "press-banca-mancuernas",
+  "nombre": "Press de banca con mancuernas",
+  "equipo": "Mancuernas y banco plano",
+  "principales": [
+   "pecho"
+  ],
+  "secundarios": [
+   "triceps",
+   "hombros"
+  ],
+  "claves": [
+   "Mancuernas a la altura del pecho, codos a ~45° del tronco.",
+   "Empuja hacia arriba juntándolas un poco.",
+   "Baja en 2–3 s hasta sentir estiramiento en el pecho."
+  ],
+  "imagenes": [
+   "img/press-banca-mancuernas-1.svg",
+   "img/press-banca-mancuernas-2.svg"
+  ],
+  "everkinetic": "0055"
+ },
+ {
+  "id": "press-inclinado-mancuernas",
+  "nombre": "Press inclinado con mancuernas",
+  "equipo": "Mancuernas y banco inclinado",
+  "principales": [
+   "pecho",
+   "hombros"
+  ],
+  "secundarios": [
+   "triceps"
+  ],
+  "claves": [
+   "Banco a 30–45°.",
+   "Baja a la parte alta del pecho.",
+   "Escápulas apoyadas en el banco."
+  ],
+  "imagenes": [
+   "img/press-inclinado-mancuernas-1.svg",
+   "img/press-inclinado-mancuernas-2.svg"
+  ],
+  "everkinetic": "0080"
+ },
+ {
+  "id": "press-pecho-maquina",
+  "nombre": "Press de pecho en máquina",
+  "equipo": "Máquina de press",
+  "principales": [
+   "pecho"
+  ],
+  "secundarios": [
+   "triceps",
+   "hombros"
+  ],
+  "claves": [
+   "Asas a la altura de la mitad del pecho.",
+   "Empuja sin bloquear los codos.",
+   "Vuelve despacio hasta sentir estiramiento."
+  ],
+  "imagenes": [
+   "img/press-pecho-maquina-1.svg",
+   "img/press-pecho-maquina-2.svg"
+  ],
+  "everkinetic": "0066"
+ },
+ {
+  "id": "aperturas-polea",
+  "nombre": "Aperturas con polea en banco",
+  "equipo": "Poleas y banco",
+  "principales": [
+   "pecho"
+  ],
+  "secundarios": [
+   "hombros"
+  ],
+  "claves": [
+   "Codos ligeramente flexionados y fijos.",
+   "Abre en arco hasta estirar el pecho.",
+   "Cierra como si abrazaras un barril."
+  ],
+  "imagenes": [
+   "img/aperturas-polea-1.svg",
+   "img/aperturas-polea-2.svg"
+  ],
+  "everkinetic": "0057"
+ },
+ {
+  "id": "flexiones",
+  "nombre": "Flexiones",
+  "equipo": "Peso corporal",
+  "principales": [
+   "pecho",
+   "triceps"
+  ],
+  "secundarios": [
+   "hombros",
+   "abdomen"
+  ],
+  "claves": [
+   "Cuerpo en línea de cabeza a talones.",
+   "Manos algo más anchas que los hombros; baja el pecho cerca del suelo.",
+   "Si cuesta: manos en un banco o rodillas apoyadas."
+  ],
+  "imagenes": [
+   "img/flexiones-1.svg",
+   "img/flexiones-2.svg"
+  ],
+  "everkinetic": "0077"
+ },
+ {
+  "id": "fondos-paralelas",
+  "nombre": "Fondos en paralelas",
+  "equipo": "Paralelas (o máquina asistida)",
+  "principales": [
+   "pecho",
+   "triceps"
+  ],
+  "secundarios": [
+   "hombros"
+  ],
+  "claves": [
+   "Inclina un poco el tronco hacia delante.",
+   "Baja hasta que el hombro quede a la altura del codo, sin dolor.",
+   "Usa asistencia si no completas 6 repeticiones."
+  ],
+  "imagenes": [
+   "img/fondos-paralelas-1.svg",
+   "img/fondos-paralelas-2.svg"
+  ],
+  "everkinetic": "0054"
+ },
+ {
+  "id": "jalon-supino",
+  "nombre": "Jalón al pecho con agarre supino",
+  "equipo": "Polea alta",
+  "principales": [
+   "dorsal"
+  ],
+  "secundarios": [
+   "biceps",
+   "trapecio",
+   "antebrazo"
+  ],
+  "claves": [
+   "Muslos fijos bajo el rodillo.",
+   "Lleva la barra a la parte alta del pecho, codos hacia abajo.",
+   "Sube controlando hasta estirar los brazos."
+  ],
+  "imagenes": [
+   "img/jalon-supino-1.svg",
+   "img/jalon-supino-2.svg"
+  ],
+  "everkinetic": "0093"
+ },
+ {
+  "id": "jalon-agarre-v",
+  "nombre": "Jalón al pecho con agarre en V",
+  "equipo": "Polea alta",
+  "principales": [
+   "dorsal"
+  ],
+  "secundarios": [
+   "biceps",
+   "trapecio",
+   "antebrazo"
+  ],
+  "claves": [
+   "Tronco ligeramente atrás.",
+   "Tira con los codos hacia las costillas.",
+   "Sube controlando."
+  ],
+  "imagenes": [
+   "img/jalon-agarre-v-1.svg",
+   "img/jalon-agarre-v-2.svg"
+  ],
+  "everkinetic": "0096"
+ },
+ {
+  "id": "dominadas",
+  "nombre": "Dominadas",
+  "equipo": "Barra fija (o máquina asistida)",
+  "principales": [
+   "dorsal"
+  ],
+  "secundarios": [
+   "biceps",
+   "trapecio",
+   "antebrazo",
+   "abdomen"
+  ],
+  "claves": [
+   "Empieza colgado con los brazos estirados.",
+   "Sube hasta pasar la barbilla, sin balanceo.",
+   "Usa máquina asistida o banda hasta lograr 5 repeticiones."
+  ],
+  "imagenes": [
+   "img/dominadas-1.svg",
+   "img/dominadas-2.svg"
+  ],
+  "everkinetic": "0087"
+ },
+ {
+  "id": "remo-polea-baja",
+  "nombre": "Remo en polea baja",
+  "equipo": "Polea baja",
+  "principales": [
+   "dorsal",
+   "trapecio"
+  ],
+  "secundarios": [
+   "biceps",
+   "deltoides-posterior",
+   "lumbares"
+  ],
+  "claves": [
+   "Espalda neutra, rodillas algo flexionadas.",
+   "Tira hacia el abdomen juntando los omóplatos.",
+   "Vuelve estirando los brazos sin encorvar la espalda."
+  ],
+  "imagenes": [
+   "img/remo-polea-baja-1.svg",
+   "img/remo-polea-baja-2.svg"
+  ],
+  "everkinetic": "0025"
+ },
+ {
+  "id": "remo-barra",
+  "nombre": "Remo con barra (agarre supino)",
+  "equipo": "Barra",
+  "principales": [
+   "dorsal",
+   "trapecio"
+  ],
+  "secundarios": [
+   "biceps",
+   "deltoides-posterior",
+   "lumbares"
+  ],
+  "claves": [
+   "Tronco inclinado ~45°, espalda neutra.",
+   "Lleva la barra al ombligo.",
+   "Sin impulsar con la espalda."
+  ],
+  "imagenes": [
+   "img/remo-barra-1.svg",
+   "img/remo-barra-2.svg"
+  ],
+  "everkinetic": "0026"
+ },
+ {
+  "id": "remo-invertido",
+  "nombre": "Remo invertido",
+  "equipo": "Barra en rack o máquina Smith",
+  "principales": [
+   "dorsal",
+   "trapecio"
+  ],
+  "secundarios": [
+   "biceps",
+   "deltoides-posterior",
+   "abdomen"
+  ],
+  "claves": [
+   "Cuerpo recto bajo la barra.",
+   "Lleva el pecho a la barra juntando los omóplatos.",
+   "Más fácil cuanto más vertical esté el cuerpo."
+  ],
+  "imagenes": [
+   "img/remo-invertido-1.svg",
+   "img/remo-invertido-2.svg"
+  ],
+  "everkinetic": "0086"
+ },
+ {
+  "id": "press-hombro-mancuerna",
+  "nombre": "Press de hombro con mancuerna a una mano",
+  "equipo": "Mancuerna",
+  "principales": [
+   "hombros"
+  ],
+  "secundarios": [
+   "triceps",
+   "abdomen",
+   "trapecio"
+  ],
+  "claves": [
+   "Abdomen firme; no arquees la espalda.",
+   "Empuja la mancuerna hacia arriba y un poco hacia dentro.",
+   "Baja hasta la altura de la oreja."
+  ],
+  "imagenes": [
+   "img/press-hombro-mancuerna-1.svg",
+   "img/press-hombro-mancuerna-2.svg"
+  ],
+  "everkinetic": "0038"
+ },
+ {
+  "id": "press-hombro-inclinado",
+  "nombre": "Press de hombro en banco alto",
+  "equipo": "Mancuernas y banco",
+  "principales": [
+   "hombros"
+  ],
+  "secundarios": [
+   "triceps",
+   "pecho"
+  ],
+  "claves": [
+   "Respaldo casi vertical.",
+   "Empuja arriba sin chocar las mancuernas.",
+   "Baja hasta la altura de las orejas."
+  ],
+  "imagenes": [
+   "img/press-hombro-inclinado-1.svg",
+   "img/press-hombro-inclinado-2.svg"
+  ],
+  "everkinetic": "0031"
+ },
+ {
+  "id": "elevaciones-laterales",
+  "nombre": "Elevaciones laterales",
+  "equipo": "Mancuernas",
+  "principales": [
+   "hombros"
+  ],
+  "secundarios": [
+   "trapecio"
+  ],
+  "claves": [
+   "Codos ligeramente flexionados.",
+   "Sube hasta la altura de los hombros, guiando con los codos.",
+   "Peso ligero, sin balanceo."
+  ],
+  "imagenes": [
+   "img/elevaciones-laterales-1.svg",
+   "img/elevaciones-laterales-2.svg"
+  ],
+  "everkinetic": "0018"
+ },
+ {
+  "id": "pajaros",
+  "nombre": "Pájaros con apoyo en banco",
+  "equipo": "Mancuernas y banco inclinado",
+  "principales": [
+   "deltoides-posterior"
+  ],
+  "secundarios": [
+   "trapecio"
+  ],
+  "claves": [
+   "Pecho apoyado en el banco.",
+   "Abre los brazos hacia los lados con codos algo flexionados.",
+   "Junta los omóplatos al final."
+  ],
+  "imagenes": [
+   "img/pajaros-1.svg",
+   "img/pajaros-2.svg"
+  ],
+  "everkinetic": "0032"
+ },
+ {
+  "id": "curl-biceps",
+  "nombre": "Curl de bíceps alterno",
+  "equipo": "Mancuernas",
+  "principales": [
+   "biceps"
+  ],
+  "secundarios": [
+   "antebrazo"
+  ],
+  "claves": [
+   "Codos pegados al cuerpo.",
+   "Sube girando la palma hacia ti.",
+   "Baja en 2–3 s; sin balanceo."
+  ],
+  "imagenes": [
+   "img/curl-biceps-1.svg",
+   "img/curl-biceps-2.svg"
+  ],
+  "everkinetic": "0223"
+ },
+ {
+  "id": "curl-martillo",
+  "nombre": "Curl martillo",
+  "equipo": "Mancuernas",
+  "principales": [
+   "biceps",
+   "antebrazo"
+  ],
+  "secundarios": [],
+  "claves": [
+   "Palmas enfrentadas todo el recorrido.",
+   "Codos fijos a los lados.",
+   "Baja controlando."
+  ],
+  "imagenes": [
+   "img/curl-martillo-1.svg",
+   "img/curl-martillo-2.svg"
+  ],
+  "everkinetic": "0213"
+ },
+ {
+  "id": "extension-triceps-polea",
+  "nombre": "Extensión de tríceps en polea con cuerda",
+  "equipo": "Polea alta y cuerda",
+  "principales": [
+   "triceps"
+  ],
+  "secundarios": [],
+  "claves": [
+   "Codos pegados al cuerpo y quietos.",
+   "Extiende abriendo la cuerda abajo.",
+   "Sube controlado hasta ~90°."
+  ],
+  "imagenes": [
+   "img/extension-triceps-polea-1.svg",
+   "img/extension-triceps-polea-2.svg"
+  ],
+  "everkinetic": "0206"
+ },
+ {
+  "id": "fondos-banco",
+  "nombre": "Fondos en banco",
+  "equipo": "Banco",
+  "principales": [
+   "triceps"
+  ],
+  "secundarios": [
+   "pecho",
+   "hombros"
+  ],
+  "claves": [
+   "Manos en el borde del banco, cadera cerca del banco.",
+   "Baja hasta ~90° de codo, sin dolor de hombro.",
+   "Más fácil con las rodillas flexionadas."
+  ],
+  "imagenes": [
+   "img/fondos-banco-1.svg",
+   "img/fondos-banco-2.svg"
+  ],
+  "everkinetic": "0162"
+ },
+ {
+  "id": "plancha-lateral",
+  "nombre": "Plancha lateral",
+  "equipo": "Peso corporal",
+  "principales": [
+   "oblicuos"
+  ],
+  "secundarios": [
+   "abdomen",
+   "gluteo-medio"
+  ],
+  "claves": [
+   "Codo bajo el hombro.",
+   "Cuerpo en línea; cadera elevada.",
+   "Empieza con rodillas apoyadas si cuesta."
+  ],
+  "imagenes": [
+   "img/plancha-lateral-1.svg",
+   "img/plancha-lateral-2.svg"
+  ],
+  "everkinetic": "0113"
+ },
+ {
+  "id": "crunch",
+  "nombre": "Encogimiento abdominal",
+  "equipo": "Peso corporal",
+  "principales": [
+   "abdomen"
+  ],
+  "secundarios": [
+   "oblicuos"
+  ],
+  "claves": [
+   "Despega solo los hombros del suelo.",
+   "Exhala al subir.",
+   "Sin tirar del cuello con las manos."
+  ],
+  "imagenes": [
+   "img/crunch-1.svg",
+   "img/crunch-2.svg"
+  ],
+  "everkinetic": "0291"
+ },
+ {
+  "id": "elevacion-piernas",
+  "nombre": "Elevación de piernas en banco",
+  "equipo": "Banco plano",
+  "principales": [
+   "abdomen"
+  ],
+  "secundarios": [
+   "oblicuos"
+  ],
+  "claves": [
+   "Zona lumbar pegada al banco.",
+   "Sube las piernas sin impulso.",
+   "Baja despacio; flexiona las rodillas para hacerlo más fácil."
+  ],
+  "imagenes": [
+   "img/elevacion-piernas-1.svg",
+   "img/elevacion-piernas-2.svg"
+  ],
+  "everkinetic": "0021"
+ },
+ {
+  "id": "plancha",
+  "nombre": "Plancha frontal",
+  "equipo": "Peso corporal",
+  "principales": [
+   "abdomen"
+  ],
+  "secundarios": [
+   "oblicuos",
+   "hombros",
+   "gluteos"
+  ],
+  "claves": [
+   "Antebrazos bajo los hombros.",
+   "Cuerpo en línea; aprieta glúteos y abdomen.",
+   "Respira normal; para cuando la cadera se hunda."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ },
+ {
+  "id": "dead-bug",
+  "nombre": "Dead bug (bicho muerto)",
+  "equipo": "Peso corporal",
+  "principales": [
+   "abdomen"
+  ],
+  "secundarios": [
+   "oblicuos"
+  ],
+  "claves": [
+   "Tumbado, brazos al techo, rodillas a 90°.",
+   "Extiende brazo y pierna contrarios sin despegar la zona lumbar.",
+   "Exhala al extender; alterna lados."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ },
+ {
+  "id": "pallof",
+  "nombre": "Press Pallof",
+  "equipo": "Polea o banda",
+  "principales": [
+   "oblicuos",
+   "abdomen"
+  ],
+  "secundarios": [
+   "gluteo-medio"
+  ],
+  "claves": [
+   "De lado a la polea, asa al pecho.",
+   "Empuja al frente sin dejar que el tronco gire.",
+   "Pausa 2 s y vuelve."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ },
+ {
+  "id": "face-pull",
+  "nombre": "Face pull",
+  "equipo": "Polea alta y cuerda",
+  "principales": [
+   "deltoides-posterior",
+   "trapecio"
+  ],
+  "secundarios": [
+   "biceps"
+  ],
+  "claves": [
+   "Polea a la altura de la cara.",
+   "Tira hacia la frente abriendo la cuerda y los codos altos.",
+   "Junta los omóplatos al final."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ },
+ {
+  "id": "hip-thrust",
+  "nombre": "Hip thrust",
+  "equipo": "Banco y barra (o mancuerna)",
+  "principales": [
+   "gluteos"
+  ],
+  "secundarios": [
+   "isquiotibiales",
+   "cuadriceps"
+  ],
+  "claves": [
+   "Parte alta de la espalda en el borde del banco.",
+   "Sube la cadera hasta alinear rodillas, cadera y hombros.",
+   "Barbilla recogida; pausa 1 s arriba."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ },
+ {
+  "id": "split-squat-bulgaro",
+  "nombre": "Sentadilla búlgara",
+  "equipo": "Mancuernas y banco",
+  "principales": [
+   "cuadriceps",
+   "gluteos"
+  ],
+  "secundarios": [
+   "aductores",
+   "gluteo-medio"
+  ],
+  "claves": [
+   "Pie de atrás apoyado en el banco.",
+   "Baja en vertical con el peso en la pierna de delante.",
+   "Rodilla de delante en la dirección del pie."
+  ],
+  "imagenes": [],
+  "everkinetic": null
+ }
+]
