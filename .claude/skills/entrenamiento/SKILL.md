@@ -5,7 +5,7 @@ description: Diseña planes personales de entrenamiento en gimnasio (fuerza, car
 
 # Plan de entrenamiento y nutrición basado en evidencia
 
-Produce un **plan personal** (Markdown, con opción de PDF) que una persona puede seguir desde el primer día en el gimnasio: rutina semana a semana, objetivo de calorías y proteína, ejemplo de un día de comidas, hábitos y una hoja de seguimiento. Cada recomendación sale de una fuente con nombre y año, y el plan se revisa cada 2–4 semanas con los datos reales.
+Produce un **plan personal** en PDF ilustrado (con su Markdown de origen) que una persona puede seguir desde el primer día en el gimnasio: rutina semana a semana con la ilustración de cada ejercicio y los músculos que trabaja, objetivo de calorías y proteína, ejemplo de un día de comidas, hábitos y una hoja de seguimiento. Cada recomendación sale de una fuente con nombre y año, y el plan se revisa cada 2–4 semanas con los datos reales.
 
 ## Principios
 
@@ -46,8 +46,27 @@ Sigue `references/nutricion.md`: calorías y proteína del paso 3, reparto de pr
 ### 6. Hábitos y seguimiento
 Sigue `references/habitos-y-seguimiento.md`: sueño, pasos, control semanal (peso medio, cintura, fotos, registro de cargas), reglas de ajuste cuando el peso se estanca, y cuándo consultar.
 
-### 7. Escribir el plan
-Usa `assets/plantilla-plan.md` y guárdalo en `planes/<nombre-o-alias>/plan.md` (carpeta fuera de git; ver `CLAUDE.md`). Copia `assets/registro-semanal.csv` a la misma carpeta como hoja de seguimiento. Si la persona pide PDF, conviértelo con la skill `pdf`. Las citas van entre corchetes con el número de `references/evidencia.md` y al final una lista de referencias con PMID o DOI.
+### 7. Escribir el plan y generar el PDF
+Usa `assets/plantilla-plan.md` y guárdalo en `planes/<nombre-o-alias>/plan.md` (carpeta fuera de git; ver `CLAUDE.md`). Copia `assets/registro-semanal.csv` a la misma carpeta como hoja de seguimiento. Las citas van entre corchetes con el número de `references/evidencia.md` y al final una lista de referencias con PMID o DOI.
+
+Cada ejercicio de la rutina va como tarjeta ilustrada, con una marca en su propia línea:
+
+```
+{{musculos: sentadilla-mancuernas, press-banca-mancuernas, remo-polea-baja | Sesión A}}
+{{ejercicio: sentadilla-mancuernas | 3 × 8–12 · RIR 2–3}}
+```
+
+- `ejercicio`: las dos fases del movimiento ilustradas (con el equipo o la máquina), el mapa de músculos principales y secundarios, el equipo, la prescripción (lo que va tras «|») y tres claves de técnica.
+- `musculos`: el mapa de todos los músculos que trabaja una sesión, al inicio de cada sesión.
+- Las claves de los ejercicios están en `assets/ejercicios/catalogo.json` (`python3 scripts/plan_pdf.py --lista`). Elige ejercicios con ilustración siempre que sea posible; los pocos que no la tienen (plancha, hip thrust…) salen con el mapa y las claves. Si un ejercicio no está en el catálogo, usa la alternativa más cercana que sí esté o escríbelo como texto normal.
+
+Luego genera el PDF y entrega solo el PDF:
+
+```bash
+python3 scripts/plan_pdf.py planes/<nombre>/plan.md
+```
+
+El PDF (A4) lleva paginación y, al final, los créditos de las ilustraciones (Everkinetic, CC BY-SA 4.0; ver `assets/ejercicios/ATRIBUCION.md`). Revisa las páginas antes de entregarlo (por ejemplo, convirtiéndolas a imagen con PyMuPDF). Hay un plan de ejemplo con datos ficticios en `ejemplos/principiante-3-dias/plan.md`.
 
 ### 8. Revisar el plan (siguientes conversaciones)
 Cuando la persona vuelva con su registro: calcula la tendencia (peso medio de la semana frente a la anterior), compara con el ritmo objetivo y aplica las reglas de ajuste de `references/habitos-y-seguimiento.md`. Cambia una sola variable cada vez y explica por qué.

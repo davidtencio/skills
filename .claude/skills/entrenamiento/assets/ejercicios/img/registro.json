@@ -1,0 +1,618 @@
+{
+ "abductor-maquina-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0156-relaxation.svg",
+  "titulo_original": "Thigh Abductor"
+ },
+ "abductor-maquina-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0156-tension.svg",
+  "titulo_original": "Thigh Abductor"
+ },
+ "aductor-maquina-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0157-relaxation.svg",
+  "titulo_original": "Thigh Adductor"
+ },
+ "aductor-maquina-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0157-tension.svg",
+  "titulo_original": "Thigh Adductor"
+ },
+ "aperturas-polea-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0057-relaxation.svg",
+  "titulo_original": "Flat Bench Cable Flys"
+ },
+ "aperturas-polea-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0057-tension.svg",
+  "titulo_original": "Flat Bench Cable Flys"
+ },
+ "crunch-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0291-relaxation.svg",
+  "titulo_original": "Crunches"
+ },
+ "crunch-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0291-tension.svg",
+  "titulo_original": "Crunches"
+ },
+ "curl-biceps-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0223-relaxation.svg",
+  "titulo_original": "Alternating Bicep Curl with Dumbbell"
+ },
+ "curl-biceps-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0223-tension.svg",
+  "titulo_original": "Alternating Bicep Curl with Dumbbell"
+ },
+ "curl-femoral-sentado-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0119-relaxation.svg",
+  "titulo_original": "Seated Leg Curl"
+ },
+ "curl-femoral-sentado-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0119-tension.svg",
+  "titulo_original": "Seated Leg Curl"
+ },
+ "curl-femoral-tumbado-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0117-relaxation.svg",
+  "titulo_original": "Lying Leg Curl Machine"
+ },
+ "curl-femoral-tumbado-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0117-tension.svg",
+  "titulo_original": "Lying Leg Curl Machine"
+ },
+ "curl-martillo-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0213-relaxation.svg",
+  "titulo_original": "Alternating Hammer Curl with Dumbbell"
+ },
+ "curl-martillo-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0213-tension.svg",
+  "titulo_original": "Alternating Hammer Curl with Dumbbell"
+ },
+ "dominadas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0087-relaxation.svg",
+  "titulo_original": "Pull Ups"
+ },
+ "dominadas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0087-tension.svg",
+  "titulo_original": "Pull Ups"
+ },
+ "elevacion-piernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0021-relaxation.svg",
+  "titulo_original": "Flat Bench Leg Raises"
+ },
+ "elevacion-piernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0021-tension.svg",
+  "titulo_original": "Flat Bench Leg Raises"
+ },
+ "elevacion-talones-maquina-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0282-relaxation.svg",
+  "titulo_original": "Standing Calf Raises using Machine"
+ },
+ "elevacion-talones-maquina-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0282-tension.svg",
+  "titulo_original": "Standing Calf Raises using Machine"
+ },
+ "elevaciones-laterales-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0018-relaxation.svg",
+  "titulo_original": "Lateral Dumbbell Raises"
+ },
+ "elevaciones-laterales-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0018-tension.svg",
+  "titulo_original": "Lateral Dumbbell Raises"
+ },
+ "extension-rodilla-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0142-relaxation.svg",
+  "titulo_original": "Leg Extensions"
+ },
+ "extension-rodilla-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0142-tension.svg",
+  "titulo_original": "Leg Extensions"
+ },
+ "extension-triceps-polea-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0206-relaxation.svg",
+  "titulo_original": "Triceps Pushdown with Rope and Cable"
+ },
+ "extension-triceps-polea-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0206-tension.svg",
+  "titulo_original": "Triceps Pushdown with Rope and Cable"
+ },
+ "flexiones-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0077-relaxation.svg",
+  "titulo_original": "Push Ups"
+ },
+ "flexiones-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0077-tension.svg",
+  "titulo_original": "Push Ups"
+ },
+ "fondos-banco-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0162-relaxation.svg",
+  "titulo_original": "Bench Dips"
+ },
+ "fondos-banco-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0162-tension.svg",
+  "titulo_original": "Bench Dips"
+ },
+ "fondos-paralelas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0054-relaxation.svg",
+  "titulo_original": "Chest Dips"
+ },
+ "fondos-paralelas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0054-tension.svg",
+  "titulo_original": "Chest Dips"
+ },
+ "hack-squat-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0123-relaxation.svg",
+  "titulo_original": "Hack Squat Machine"
+ },
+ "hack-squat-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0123-tension.svg",
+  "titulo_original": "Hack Squat Machine"
+ },
+ "hiperextensiones-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0103-relaxation.svg",
+  "titulo_original": "Hyperextensions"
+ },
+ "hiperextensiones-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0103-tension.svg",
+  "titulo_original": "Hyperextensions"
+ },
+ "jalon-agarre-v-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0096-relaxation.svg",
+  "titulo_original": "V Bar Pull Down"
+ },
+ "jalon-agarre-v-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0096-tension.svg",
+  "titulo_original": "V Bar Pull Down"
+ },
+ "jalon-supino-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0093-relaxation.svg",
+  "titulo_original": "Underhand Pull downs"
+ },
+ "jalon-supino-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0093-tension.svg",
+  "titulo_original": "Underhand Pull downs"
+ },
+ "pajaros-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0032-relaxation.svg",
+  "titulo_original": "Bent Over Rear Deltoid Raise With Head On Bench"
+ },
+ "pajaros-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0032-tension.svg",
+  "titulo_original": "Bent Over Rear Deltoid Raise With Head On Bench"
+ },
+ "peso-muerto-barra-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0099-relaxation.svg",
+  "titulo_original": "Barbell Dead Lifts"
+ },
+ "peso-muerto-barra-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0099-tension.svg",
+  "titulo_original": "Barbell Dead Lifts"
+ },
+ "peso-muerto-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0107-relaxation.svg",
+  "titulo_original": "Dumbbell Dead Lifts"
+ },
+ "peso-muerto-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0107-tension.svg",
+  "titulo_original": "Dumbbell Dead Lifts"
+ },
+ "peso-muerto-rumano-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0118-relaxation.svg",
+  "titulo_original": "Romanian Dead Lift"
+ },
+ "peso-muerto-rumano-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0118-tension.svg",
+  "titulo_original": "Romanian Dead Lift"
+ },
+ "plancha-lateral-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0113-relaxation.svg",
+  "titulo_original": "Side Plank"
+ },
+ "plancha-lateral-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0113-tension.svg",
+  "titulo_original": "Side Plank"
+ },
+ "prensa-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0127-relaxation.svg",
+  "titulo_original": "Leg Press"
+ },
+ "prensa-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0127-tension.svg",
+  "titulo_original": "Leg Press"
+ },
+ "press-banca-barra-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0042-relaxation.svg",
+  "titulo_original": "Bench Press"
+ },
+ "press-banca-barra-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0042-tension.svg",
+  "titulo_original": "Bench Press"
+ },
+ "press-banca-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0055-relaxation.svg",
+  "titulo_original": "Bench Press Dumbbell"
+ },
+ "press-banca-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0055-tension.svg",
+  "titulo_original": "Bench Press Dumbbell"
+ },
+ "press-hombro-inclinado-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0031-relaxation.svg",
+  "titulo_original": "Incline Shoulder Press Dumbbell"
+ },
+ "press-hombro-inclinado-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0031-tension.svg",
+  "titulo_original": "Incline Shoulder Press Dumbbell"
+ },
+ "press-hombro-mancuerna-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0038-relaxation.svg",
+  "titulo_original": "One Arm Dumbbell Shoulder Press"
+ },
+ "press-hombro-mancuerna-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0038-tension.svg",
+  "titulo_original": "One Arm Dumbbell Shoulder Press"
+ },
+ "press-inclinado-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0080-relaxation.svg",
+  "titulo_original": "Incline Dumbbell Press"
+ },
+ "press-inclinado-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0080-tension.svg",
+  "titulo_original": "Incline Dumbbell Press"
+ },
+ "press-pecho-maquina-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0066-relaxation.svg",
+  "titulo_original": "Machine Bench Press"
+ },
+ "press-pecho-maquina-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0066-tension.svg",
+  "titulo_original": "Machine Bench Press"
+ },
+ "puente-gluteo-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0109-relaxation.svg",
+  "titulo_original": "Bridging"
+ },
+ "puente-gluteo-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0109-tension.svg",
+  "titulo_original": "Bridging"
+ },
+ "remo-barra-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0026-relaxation.svg",
+  "titulo_original": "Reverse Grips Bent Over Barbell Rows"
+ },
+ "remo-barra-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0026-tension.svg",
+  "titulo_original": "Reverse Grips Bent Over Barbell Rows"
+ },
+ "remo-invertido-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0086-relaxation.svg",
+  "titulo_original": "Body Row"
+ },
+ "remo-invertido-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0086-tension.svg",
+  "titulo_original": "Body Row"
+ },
+ "remo-polea-baja-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0025-relaxation.svg",
+  "titulo_original": "Seated Cable Rows"
+ },
+ "remo-polea-baja-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0025-tension.svg",
+  "titulo_original": "Seated Cable Rows"
+ },
+ "sentadilla-banco-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0136-relaxation.svg",
+  "titulo_original": "Squat to Bench with Dumbbells"
+ },
+ "sentadilla-banco-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0136-tension.svg",
+  "titulo_original": "Squat to Bench with Dumbbells"
+ },
+ "sentadilla-barra-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0122-relaxation.svg",
+  "titulo_original": "Barbell Squat"
+ },
+ "sentadilla-barra-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0122-tension.svg",
+  "titulo_original": "Barbell Squat"
+ },
+ "sentadilla-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0130-relaxation.svg",
+  "titulo_original": "Squats using Dumbbells"
+ },
+ "sentadilla-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0130-tension.svg",
+  "titulo_original": "Squats using Dumbbells"
+ },
+ "sentadilla-smith-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0124-relaxation.svg",
+  "titulo_original": "Smith Machine Squats"
+ },
+ "sentadilla-smith-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0124-tension.svg",
+  "titulo_original": "Smith Machine Squats"
+ },
+ "step-up-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0137-relaxation.svg",
+  "titulo_original": "Step Ups with Dumbbells"
+ },
+ "step-up-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0137-tension.svg",
+  "titulo_original": "Step Ups with Dumbbells"
+ },
+ "zancada-atras-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0129-relaxation.svg",
+  "titulo_original": "Rear Lunges with Dumbbell"
+ },
+ "zancada-atras-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0129-tension.svg",
+  "titulo_original": "Rear Lunges with Dumbbell"
+ },
+ "zancadas-mancuernas-1.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0115-relaxation.svg",
+  "titulo_original": "Dumbbell Lunges"
+ },
+ "zancadas-mancuernas-2.svg": {
+  "fecha": "2026-10-03",
+  "fuente": "Everkinetic (everkinetic.com, Greg Priday)",
+  "licencia": "CC BY-SA 4.0",
+  "origen": "https://github.com/everkinetic/data/blob/main/dist/svg/0115-tension.svg",
+  "titulo_original": "Dumbbell Lunges"
+ }
+}

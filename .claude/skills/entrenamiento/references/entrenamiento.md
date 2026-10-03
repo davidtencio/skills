@@ -44,7 +44,7 @@ Con déficit calórico es normal que la fuerza progrese más despacio; mantenerl
 
 ## Plantillas
 
-Cada ejercicio lleva alternativas para que el plan funcione con cualquier equipo. Ajusta el volumen a los minutos disponibles: una sesión de 45–60 min admite ~5–6 ejercicios de 2–3 series.
+Cada ejercicio lleva alternativas para que el plan funcione con cualquier equipo. En el plan, cada ejercicio va como tarjeta ilustrada con su clave de `assets/ejercicios/catalogo.json` (ver `SKILL.md`, paso 7). Ajusta el volumen a los minutos disponibles: una sesión de 45–60 min admite ~5–6 ejercicios de 2–3 series.
 
 ### A. Cuerpo completo, 2 días (mínimo eficaz) o 3 días (recomendado para empezar)
 
@@ -52,7 +52,7 @@ Días no consecutivos (lunes, miércoles, viernes). Alterna A y B.
 
 | Sesión A | Series × reps | Alternativas |
 |---|---|---|
-| Sentadilla goblet o prensa | 3 × 8–12 | Sentadilla en máquina Smith, sentadilla a caja |
+| Sentadilla con mancuernas (o goblet) o prensa | 3 × 8–12 | Sentadilla en máquina Smith, sentadilla a banco |
 | Press de banca con mancuernas | 3 × 8–12 | Press en máquina, flexiones (inclinadas si cuesta) |
 | Remo en polea baja o con mancuerna | 3 × 10–12 | Remo en máquina, remo invertido |
 | Peso muerto rumano con mancuernas | 2 × 10–12 | Hip thrust, curl femoral en máquina |

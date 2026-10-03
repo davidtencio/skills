@@ -9,3 +9,4 @@ __pycache__/
 
 # Planes personales de la skill entrenamiento (datos de salud): nunca se versionan.
 planes/
+.claude/skills/entrenamiento/ejemplos/*/*.html

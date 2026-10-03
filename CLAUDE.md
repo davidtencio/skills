@@ -13,7 +13,7 @@ La única excepción es cuando la persona usuaria pide expresamente guardar el m
 
 ## Planes de entrenamiento: datos personales fuera de git
 
-Los planes de la skill `entrenamiento` contienen datos de salud de una persona. Se guardan en `planes/<nombre>/` (ignorada por git) y se entregan como archivo; nunca se hace commit, push ni PR con ellos.
+Los planes de la skill `entrenamiento` contienen datos de salud de una persona. Se guardan en `planes/<nombre>/` (ignorada por git) y se entrega solo el PDF ilustrado (`scripts/plan_pdf.py`); nunca se hace commit, push ni PR con ellos.
 
 ## Mejoras a las skills: rama y PR
 

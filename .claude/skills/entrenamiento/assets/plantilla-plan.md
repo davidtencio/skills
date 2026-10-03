@@ -28,9 +28,13 @@
 
 ### Sesión A
 
-| Ejercicio | Series × reps | RIR | Descanso | Alternativa |
-|---|---|---|---|---|
-| | | | | |
+{{musculos: <clave-1>, <clave-2>, <clave-3> | Sesión A: <tipo>}}
+
+{{ejercicio: <clave-1> | <series × reps · RIR · descanso>}}
+
+{{ejercicio: <clave-2> | <…>}}
+
+<Alternativas si una máquina está ocupada: una línea por ejercicio.>
 
 <Calentamiento, progresión (doble progresión), aeróbico por semanas, meta de pasos, descarga.>
 
@@ -67,4 +71,4 @@
 
 ## Referencias
 
-<Lista numerada con autor, título abreviado, revista, año, PMID o DOI, solo de las citadas.>
+<Lista con viñetas que empiezan por el número de `references/evidencia.md` (- **[7]** Bull FC, et al. … PMID …), solo de las citadas.>
