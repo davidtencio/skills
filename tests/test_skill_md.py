@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from conftest import SKILLS, SKILLS_DIR
+from conftest import SKILLS, SKILLS_DIR, SKILLS_TODAS
 
 LIMITE_DESCRIPCION = 1024  # especificación de Agent Skills; claude.ai rechaza descripciones más largas
 
@@ -20,7 +20,7 @@ def documentos(skill):
     return [raiz / "SKILL.md", *sorted((raiz / "references").glob("*.md"))]
 
 
-@pytest.mark.parametrize("skill", SKILLS)
+@pytest.mark.parametrize("skill", SKILLS_TODAS)
 def test_frontmatter(skill):
     datos = frontmatter(skill)
     assert datos.get("name") == skill
@@ -29,7 +29,7 @@ def test_frontmatter(skill):
     assert len(descripcion) <= LIMITE_DESCRIPCION, f"Descripción de {len(descripcion)} caracteres"
 
 
-@pytest.mark.parametrize("skill", SKILLS)
+@pytest.mark.parametrize("skill", SKILLS_TODAS)
 def test_rutas_citadas_existen(skill):
     raiz = SKILLS_DIR / skill
     faltan = []

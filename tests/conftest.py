@@ -10,7 +10,9 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
 SKILLS_DIR = RAIZ / ".claude" / "skills"
-SKILLS = sorted(p.name for p in SKILLS_DIR.iterdir() if (p / "SKILL.md").exists())
+SKILLS_TODAS = sorted(p.name for p in SKILLS_DIR.iterdir() if (p / "SKILL.md").exists())
+# Skills de láminas (mecanismo-accion, fisiopatologia): comparten módulos, biblioteca de ilustraciones y fuentes.
+SKILLS = [s for s in SKILLS_TODAS if (SKILLS_DIR / s / "scripts" / "revisar_lamina.py").exists()]
 
 
 def versionados(patron):
