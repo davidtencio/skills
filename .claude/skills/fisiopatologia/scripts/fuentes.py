@@ -23,6 +23,8 @@ Uso rápido desde la terminal:
   python3 fuentes.py texto 27418577 "MRSA"          # texto completo: PMC y, si no, acceso abierto (Unpaywall)
   python3 fuentes.py iris "AWaRe antibiotic book" [--ops]   # documentos de la OMS (o de la OPS) con su PDF
   python3 fuentes.py binasss "infecciones"          # protocolos y normas de la CCSS (BINASSS, Costa Rica)
+  python3 fuentes.py nice-guias "type 2 diabetes"   # guías del NICE (no están en PubMed), con su fecha
+  python3 fuentes.py nice-guia NG28 "SGLT"          # recomendaciones con su número, año y fuerza
   python3 fuentes.py ema jardiance                  # medicamento de la EMA: estado, fechas y página del EPAR
   python3 fuentes.py ensayos empagliflozin          # ensayos aleatorizados (fase III primero) con su NCT
   python3 fuentes.py ensayo NCT01131676             # registro del ensayo en ClinicalTrials.gov
@@ -1508,6 +1510,80 @@ def iris(consulta, repositorio="oms", maximo=6, pdf=True, orden="relevancia"):
     return salida
 
 
+_NICE = "https://www.nice.org.uk"
+_GUIAS_NICE = {"NICE guideline", "Clinical guideline", "Public health guideline", "Quality standard"}
+
+
+@_registrada
+def nice_guias(enfermedad, maximo=6, evaluaciones=False):
+    """Guías del NICE (Reino Unido) sobre una enfermedad, de su buscador: código (NG28, CG191…), título, tipo y
+    fecha de publicación o de la última actualización. Las guías NICE no están en PubMed, así que `guias` no las
+    encuentra. Con evaluaciones=True incluye también las evaluaciones de tecnologías (TA), que tratan un fármaco.
+    enfermedad: en inglés."""
+    contenido = _get(f"{_NICE}/search?q={urllib.parse.quote(enfermedad)}&ndt=Guidance",
+                     cabeceras=_NAVEGADOR).decode("utf-8", "ignore")
+    salida = []
+    for enlace, cuerpo in re.findall(r'data-component="card" headinglink="(/guidance/[a-z]+\d+)">(.*?)</dl>',
+                                     contenido, re.S):
+        titulo = re.search(r'card__heading">(.*?)</p>', cuerpo, re.S)
+        datos = dict(re.findall(r"<dt[^>]*>(.*?)</dt><dd>(.*?)</dd>", cuerpo))
+        tipo = datos.get("Result type", "")
+        if not evaluaciones and tipo not in _GUIAS_NICE:
+            continue
+        salida.append({"codigo": enlace.rsplit("/", 1)[-1].upper(),
+                       "titulo": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", titulo.group(1)))).strip()
+                       if titulo else None, "tipo": tipo,
+                       "actualizada": datos.get("Last updated"), "publicada": datos.get("Published"),
+                       "url": _NICE + enlace})
+    return salida[:maximo]
+
+
+def _fuerza_nice(texto):
+    """Fuerza de una recomendación NICE según su verbo: «offer», «do not offer» y similares son recomendaciones
+    fuertes; «consider», una más débil (el beneficio es probable, pero otras opciones pueden valer igual)."""
+    if re.search(r"\bmust\b", texto, re.I):
+        return "obligación legal o de seguridad («must»)"
+    if re.search(r"\bconsider\b", texto, re.I) and not re.search(r"\b(?:offer|do not)\b", texto, re.I):
+        return "más débil («consider»)"
+    if re.search(r"\b(?:offer|do not|should|advise|refer|measure|use|give|ensure|start|stop)\b", texto, re.I):
+        return "fuerte"
+    return None
+
+
+@_registrada
+def nice_guia(codigo, patrones=(), capitulos=None, maximo=40):
+    """Recomendaciones de una guía del NICE (p. ej., NG28), cada una con su número, su capítulo, el año de su
+    última revisión («[2026]»), su fuerza según el verbo y la dirección del capítulo para citarla y verificarla.
+    Devuelve también las fechas de publicación y de la última actualización de la guía.
+    patrones: regex; solo se devuelven las recomendaciones que cumplen alguno (sin patrones, todas).
+    capitulos: regex sobre el nombre del capítulo («medicines|blood-glucose») para leer menos páginas."""
+    codigo = codigo.lower()
+    base = f"{_NICE}/guidance/{codigo}"
+    portada = _get(base, cabeceras=_NAVEGADOR).decode("utf-8", "ignore")
+    titulo = re.search(r"<title>(?:Overview \| )?(.*?)(?: \| Guidance \| NICE)?</title>", portada, re.S)
+    fechas = dict((k, v) for k, v in re.findall(r'(Published|Last updated):(?:&nbsp;|\s)*<time[^>]*datetime="([\d-]+)"',
+                                                 portada))
+    enlaces = list(dict.fromkeys(re.findall(rf'href="(/guidance/{codigo}/chapter/[^"#?]+)"', portada)))
+    if capitulos:
+        enlaces = [e for e in enlaces if re.search(capitulos, e, re.I)]
+    recomendaciones = []
+    for enlace in enlaces:
+        contenido = _get(_NICE + enlace, cabeceras=_NAVEGADOR).decode("utf-8", "ignore")
+        for numero, cuerpo in re.findall(r'<article[^>]*class="numbered-paragraph"[^>]*>\s*<h4>([\d.]+)</h4>(.*?)'
+                                         r'</article>', contenido, re.S):
+            texto = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", cuerpo))).strip()
+            texto = re.sub(r"\s+([,.;:)])", r"\1", texto)
+            if patrones and not any(re.search(p, texto, re.I) for p in patrones):
+                continue
+            anio = re.findall(r"\[((?:19|20)\d{2}[^\]]*)\]", texto)
+            recomendaciones.append({"numero": numero, "capitulo": enlace.rsplit("/", 1)[-1].replace("-", " "),
+                                    "texto": texto, "anio": anio[-1] if anio else None,
+                                    "fuerza": _fuerza_nice(texto), "url": _NICE + enlace})
+    return {"codigo": codigo.upper(), "titulo": html.unescape(titulo.group(1)).strip() if titulo else None,
+            "url": base, "publicada": fechas.get("Published"), "actualizada": fechas.get("Last updated"),
+            "recomendaciones": recomendaciones[:maximo]}
+
+
 def _plano(texto):
     import unicodedata
     return unicodedata.normalize("NFKD", texto or "").encode("ascii", "ignore").decode().lower()
@@ -1570,7 +1646,8 @@ if __name__ == "__main__":
     accion, *args = argv
     if accion in ("pubchem", "chembl", "pdb-buscar", "bioicons", "dailymed", "cima", "reactome", "nci", "livertox",
                   "medlineplus", "lactmed", "openfda", "openfda-eventos", "cpic", "fda-indicaciones", "mesh", "mondo",
-                  "guias", "guias-titulo", "togopic", "commons", "iris", "binasss", "ema", "ensayos"):
+                  "guias", "guias-titulo", "togopic", "commons", "iris", "binasss", "ema", "ensayos",
+                  "nice-guias"):
         args = [" ".join(args)]
     funciones = {"pubchem": pubchem, "chembl": chembl, "pdb-buscar": pdb_buscar, "pdb-ligandos": pdb_ligandos,
                  "bioicons": bioicons, "servier-kits": servier_kits, "servier-diapositivas": servier_diapositivas,
@@ -1596,6 +1673,8 @@ if __name__ == "__main__":
                  "iris": lambda consulta: iris(
                      consulta, **{k: v for k, v in opciones.items() if k in ("repositorio", "orden")}),
                  "binasss": binasss,
+                 "nice-guias": lambda enfermedad: nice_guias(enfermedad),
+                 "nice-guia": lambda codigo, *patrones: nice_guia(codigo, patrones),
                  "togopic": togopic, "togopic-descargar": togopic_descargar, "commons": commons,
                  "commons-descargar": commons_descargar,
                  "pmc": lambda pmcid, *patrones: pmc_texto(pmcid, patrones),

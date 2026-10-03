@@ -8,6 +8,7 @@ Uso:
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --dailymed empagliflozin # ficha de la FDA
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --ema jardiance          # EPAR de la EMA
     python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --nct NCT01131676        # registro del ensayo
+    python3 scripts/bibliografia.py nueva ejemplos/<tema> <clave> --nice NG28              # guía del NICE
     python3 scripts/bibliografia.py comprobar ejemplos/<tema> [--en-linea]
     python3 scripts/bibliografia.py lista ejemplos/<tema> [--escribir]
     python3 scripts/bibliografia.py busqueda ejemplos/<tema> [--escribir]
@@ -200,7 +201,7 @@ def _fecha(texto):
     return texto
 
 
-def _ficha(cima=None, dailymed=None, ema=None, nct=None):
+def _ficha(cima=None, dailymed=None, ema=None, nct=None, nice=None):
     """Referencia de una ficha técnica o de un registro de ensayo, con su versión y su fecha."""
     import fuentes
     if cima:
@@ -230,6 +231,13 @@ def _ficha(cima=None, dailymed=None, ema=None, nct=None):
                 "cita": f"European Medicines Agency. {m['nombre']} ({m['principio_activo']}): EPAR, información del "
                         f"producto. {m['procedimiento']}; autorizado el {_fecha(m['autorizacion'])}",
                 "version": f"{m['revision']}, del {_fecha(m['actualizado'])}"}
+    if nice:
+        g = fuentes.nice_guia(nice, capitulos="^$")  # solo la portada: título y fechas
+        anio = (g.get("publicada") or "")[:4]
+        return {"tipo": "guia", "url": g["url"], "idioma": "en", "sello": "NICE (Reino Unido)",
+                "cita": f"National Institute for Health and Care Excellence (NICE). {g['titulo']}. Guía "
+                        f"{g['codigo']}. Londres: NICE; {anio}",
+                "version": f"del {fecha_es(g['actualizada'])}" if g.get("actualizada") else None}
     e = fuentes.ensayo(nct)
     return {"tipo": "documento", "url": e["url"], "sello": "ClinicalTrials.gov",
             "cita": f"{e['patrocinador']}. {e['titulo']} ({e['acronimo'] + ', ' if e.get('acronimo') else ''}"
@@ -237,10 +245,10 @@ def _ficha(cima=None, dailymed=None, ema=None, nct=None):
 
 
 def nueva(carpeta, clave, pmid=None, doi=None, url=None, tipo=None, cita=None, sello=None, idioma=None,
-          version=None, nota=None, cima=None, dailymed=None, ema=None, nct=None):
+          version=None, nota=None, cima=None, dailymed=None, ema=None, nct=None, nice=None):
     """Añade (o actualiza) una referencia. Con PMID toma los metadatos de PubMed (exportador de citas del NCBI);
     con DOI, de Crossref; con cima, dailymed, ema o nct, de la ficha técnica o del registro del ensayo (con su
-    versión y su fecha); con URL hace falta la cita escrita a mano (organismo, título, año)."""
+    versión y su fecha); con nice, de la guía del NICE (con su última actualización); con URL hace falta la cita escrita a mano (organismo, título, año)."""
     import fuentes
     if not CLAVE.match(clave):
         raise ValueError("La clave va en minúsculas, con cifras y guiones (p. ej., idsa-2016)")
@@ -258,11 +266,11 @@ def nueva(carpeta, clave, pmid=None, doi=None, url=None, tipo=None, cita=None, s
         m = json.loads(fuentes._get(f"https://api.crossref.org/works/{doi}",
                                     cabeceras={"User-Agent": "skills-docencia/1.0"}))["message"]
         ref.update({"cita": cita or vancouver(_csl_de_crossref(m)), "tipo": tipo or "articulo"})
-    elif cima or dailymed or ema or nct:
-        datos = _ficha(cima, dailymed, ema, nct)
+    elif cima or dailymed or ema or nct or nice:
+        datos = _ficha(cima, dailymed, ema, nct, nice)
         ref.update({k: v for k, v in datos.items() if v and not ref.get(k)})
     elif not (url and cita):
-        raise ValueError("Indica --pmid, --doi, --cima, --dailymed, --ema, --nct o --url con --cita")
+        raise ValueError("Indica --pmid, --doi, --cima, --dailymed, --ema, --nct, --nice o --url con --cita")
     ref["tipo"] = ref["tipo"] or "web"
     referencias = [r for r in cargar(carpeta) if r["clave"] != clave] + [{k: v for k, v in ref.items() if v}]
     guardar(carpeta, referencias)
@@ -338,7 +346,11 @@ _BASES = {"pubmed": "PubMed", "guias": "PubMed (guías)", "vigencia": "PubMed (v
           "mondo": "MONDO", "pdf_texto": "documentos en PDF", "pagina": "páginas web", "openfda": "openFDA",
           "dailymed": "DailyMed", "cima": "CIMA (AEMPS)", "iris": "IRIS (OMS/OPS)", "binasss": "BINASSS (CCSS)",
           "reactome": "Reactome", "uniprot": "UniProt", "medlineplus": "MedlinePlus", "ema_epar": "EMA (EPAR)",
-          "fda_indicaciones": "Drugs@FDA", "chembl": "ChEMBL", "pubchem": "PubChem", "cpic": "CPIC"}
+          "fda_indicaciones": "Drugs@FDA", "chembl": "ChEMBL", "pubchem": "PubChem", "cpic": "CPIC",
+          "nice_guias": "NICE (guías)", "nice_guia": "NICE (recomendaciones)", "ema_medicamento": "EMA",
+          "ensayos": "PubMed (ensayos)", "ensayo": "ClinicalTrials.gov", "nci_tesauro": "NCI Thesaurus",
+          "livertox": "LiverTox", "lactmed": "LactMed", "ncbi_gene": "NCBI Gene", "chembl_actividad": "ChEMBL (actividades)",
+          "bindingdb": "BindingDB", "openfda_eventos": "FAERS (openFDA)", "pdb_buscar": "RCSB PDB"}
 
 
 def resumen_busqueda(carpeta):
@@ -357,7 +369,8 @@ def resumen_busqueda(carpeta):
              f"{len(lineas)} consultas en total.", "",
              "- **Fuentes consultadas:** " + "; ".join(f"{n} ({c})" for n, c in sorted(cuenta.items(),
                                                                                           key=lambda x: -x[1])) + "."]
-    literatura = [x for x in lineas if x["funcion"] in ("guias", "pubmed", "europepmc", "vigencia")]
+    literatura = [x for x in lineas if x["funcion"] in ("guias", "nice_guias", "pubmed", "europepmc", "vigencia",
+                                                          "ensayos")]
     if literatura:
         texto.append("- **Búsquedas de literatura:**")
         for x in literatura:
@@ -388,7 +401,7 @@ def main():
     if accion == "nueva":
         clave, opciones = resto[0], {}
         for nombre in ("pmid", "doi", "url", "tipo", "cita", "sello", "idioma", "version", "nota", "cima", "dailymed",
-                       "ema", "nct"):
+                       "ema", "nct", "nice"):
             if f"--{nombre}" in resto:
                 opciones[nombre] = resto[resto.index(f"--{nombre}") + 1]
         print(json.dumps(nueva(carpeta, clave, **opciones), ensure_ascii=False, indent=1))
